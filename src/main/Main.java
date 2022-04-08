@@ -24,16 +24,8 @@ public class Main extends Application{
 
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("en"));
+        Locale.setDefault(new Locale("fr"));
 
-        Locale france = new Locale("en", "EN");
-
-
-        ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
-
-        if (Locale.getDefault().getLanguage().equals("fr")){
-            System.out.println(rb.getString("hello") + " " + rb.getString("world") + " " + rb.getString("login"));
-        }
 
         JDBC.openConnection();
         JDBC.closeConnection();
