@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 
 public class Main extends Application{
@@ -23,18 +24,19 @@ public class Main extends Application{
 
 
     public static void main(String[] args) {
-        Locale.setDefault(new Locale("fr"));
-        launch(args);
+        Locale.setDefault(new Locale("en"));
 
-        ResourceBundle rb = ResourceBundle.getBundle("/main/Nat", Locale.getDefault());
+        Locale france = new Locale("en", "EN");
 
-        if(Locale.getDefault().getLanguage().equals("es") || Locale.getDefault().getLanguage().equals("fr")){
-            System.out.println(rb.getString("hello") + " " + rb.getString("world"));
+
+        ResourceBundle rb = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
+
+        if (Locale.getDefault().getLanguage().equals("fr")){
+            System.out.println(rb.getString("hello") + " " + rb.getString("world") + " " + rb.getString("login"));
         }
 
         JDBC.openConnection();
         JDBC.closeConnection();
-
-
+        launch(args);
     }
 }
