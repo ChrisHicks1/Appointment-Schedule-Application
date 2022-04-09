@@ -44,6 +44,7 @@ public class LoginController implements Initializable {
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
             loginButton.setText(resourceBundle.getString("login"));
+            exitApp.setText(resourceBundle.getString("exit"));
         }
     }
 
