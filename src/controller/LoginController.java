@@ -34,15 +34,23 @@ interface LoginActivity{
 
 public class LoginController implements Initializable {
 
+
+
     LoginActivity loginActivity = () -> {
         return "login_activity.txt";
     };
 
     private ResourceBundle resourceBundle;
     @FXML
+    private Label timeZone;
+    @FXML
+    private TextField timeField;
+    @FXML
+    private TextField country;
+    @FXML
     private Label loginLabel;
     @FXML
-    private Label ZoneId;
+    private Label location;
     @FXML
     private Label userName;
     @FXML
@@ -65,16 +73,16 @@ public class LoginController implements Initializable {
 
         resourceBundle = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 
-        if (Locale.getDefault().getLanguage().equals("fr")) {
+        if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            ZoneId.setText(resourceBundle.getString("location"));
+            location.setText(resourceBundle.getString("location"));
+            country.setText(resourceBundle.getString("country"));
+            timeField.setText(resourceBundle.getString("timezone"));
+            timeZone.setText(String.valueOf(TimeZone.getDefault().getID()));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
             loginButton.setText(resourceBundle.getString("login"));
             exitApp.setText(resourceBundle.getString("exit"));
-            //timezone label and field
-            //country
-
         }
     }
 
@@ -82,7 +90,9 @@ public class LoginController implements Initializable {
 
     /**button logs into app*/
     public void onLogin(ActionEvent actionEvent) throws IOException {
-        userNameEmpty(userName.getText());
+
+
+       /* userNameEmpty(userName.getText());
         passwordEmpty(password.getText());
 
         fileCreate();
@@ -121,7 +131,7 @@ public class LoginController implements Initializable {
         }
         }catch (SQLException e){
             e.printStackTrace();
-        }
+        } */
     }
 
 
@@ -136,8 +146,8 @@ public class LoginController implements Initializable {
 
 
 
-    /**Writes Successful login attmept*/
-    private void loginSucess(){
+    /**Writes Successful login attempt*/
+    private void loginSuccess(){
 
     alertAppointment();
 
@@ -170,28 +180,30 @@ public class LoginController implements Initializable {
 
     /**Checks if username field is filled in*/
     private void userNameEmpty(String userName){
-        if(userName.isEmpty()){
-            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en"));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resourceBundle.getString("error"));
-            alert.setContentText(resourceBundle.getString("userNameRequired"));
-            alert.showAndWait();
+        if(userName.isEmpty()) {
+            if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resourceBundle.getString("error"));
+                alert.setContentText(resourceBundle.getString("userNameRequired"));
+                alert.showAndWait();
+            }
         }
     }
 
     /**Checks if password field is filled in*/
     private void passwordEmpty(String password){
-        if(password.isEmpty()){
-            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en"));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resourceBundle.getString("error"));
-            alert.setContentText(resourceBundle.getString("passwordRequired"));
-            alert.showAndWait();
+        if(password.isEmpty()) {
+            if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resourceBundle.getString("error"));
+                alert.setContentText(resourceBundle.getString("passwordRequired"));
+                alert.showAndWait();
+            }
         }
     }
 
 
-    private void fileCreate(){
+     private void fileCreate(){
         try {
             File file = new File(loginActivity.getFileName());
             if(file.createNewFile()){
