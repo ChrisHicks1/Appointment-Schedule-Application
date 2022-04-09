@@ -11,20 +11,24 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <TextField alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="40" prefWidth="180.0" promptText="Auto Generated" />
-      <TextField alignment="CENTER" layoutX="170.0" layoutY="145.0" prefHeight="40" prefWidth="180.0" promptText="Customer Name" />
-      <TextField alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="40" prefWidth="180.0" promptText="99999" />
-      <TextField alignment="CENTER" layoutX="170.0" layoutY="265.0" prefHeight="40" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
-      <TextField alignment="CENTER" layoutX="170.0" layoutY="325.0" prefHeight="40" prefWidth="180.0" promptText="999-999-9999" />
-      <ChoiceBox layoutX="170.0" layoutY="385.0" prefHeight="40" prefWidth="180.0" />
+      <TextField alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="20" prefWidth="180.0" promptText="Auto Generated" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="135.0" prefHeight="20" prefWidth="180.0" promptText="Customer Name" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="185.0" prefHeight="20" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="235.0" prefHeight="20" prefWidth="180.0" promptText="Apt. 999" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="285.0" prefHeight="20" prefWidth="180.0" promptText="99999" />
+      <ChoiceBox layoutX="170.0" layoutY="335.0" prefHeight="20" prefWidth="180.0" />
+      <ChoiceBox layoutX="170.0" layoutY="385.0" prefHeight="20" prefWidth="180.0" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="435.0" prefHeight="20" prefWidth="180.0" promptText="999-999-9999" />
 
 
-      <Label layoutX="62.0" layoutY="85.0" prefHeight="40" prefWidth="100.0" text="Customer ID" />
-      <Label layoutX="62.0" layoutY="145.0" prefHeight="40" prefWidth="100.0" text="Customer Name" />
-      <Label layoutX="62.0" layoutY="205.0" prefHeight="40" prefWidth="100.0" text="Address" />
-      <Label layoutX="62.0" layoutY="265.0" prefHeight="40" prefWidth="100.0" text="Postal Code" />
-      <Label layoutX="62.0" layoutY="325.0" prefHeight="40" prefWidth="100" text="Phone Number" />
-      <Label layoutX="62.0" layoutY="385.0" prefHeight="40" prefWidth="100.0" text="Country" />
+      <Label layoutX="62.0" layoutY="85.0" prefHeight="20" prefWidth="100.0" text="Customer ID" />
+      <Label layoutX="62.0" layoutY="135.0" prefHeight="20" prefWidth="100.0" text="Customer Name" />
+      <Label layoutX="62.0" layoutY="185.0" prefHeight="20" prefWidth="100.0" text="Address Line 1" />
+      <Label layoutX="62.0" layoutY="235.0" prefHeight="20" prefWidth="100.0" text="Address Line 2" />
+      <Label layoutX="62.0" layoutY="285.0" prefHeight="20" prefWidth="100" text="Postal Code" />
+      <Label layoutX="62.0" layoutY="335.0" prefHeight="20" prefWidth="100.0" text="Country" />
+      <Label layoutX="62.0" layoutY="385.0" prefHeight="20" prefWidth="100.0" text="State" />
+      <Label layoutX="62.0" layoutY="435.0" prefHeight="20" prefWidth="100" text="Phone Number" />
 
       <Button layoutX="310.0" layoutY="494.0" mnemonicParsing="false" text="Save" />
       <Button layoutX="365.0" layoutY="494.0" mnemonicParsing="false" text="Cancel" />
