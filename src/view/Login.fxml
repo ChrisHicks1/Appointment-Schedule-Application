@@ -19,6 +19,6 @@
 
       <Button fx:id="loginButton" layoutX="187.0" layoutY="369.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
       <Label fx:id="ZoneId" layoutX="369.0" layoutY="25.0" prefHeight="25.0" prefWidth="67.0" text="Label" />
-      <Button layoutX="289.0" layoutY="369.0" mnemonicParsing="false" text="Exit" />
+      <Button fx:id="exitApp" layoutX="289.0" layoutY="369.0" mnemonicParsing="false" onAction="#onExitApp" text="Exit" />
    </children>
 </AnchorPane>

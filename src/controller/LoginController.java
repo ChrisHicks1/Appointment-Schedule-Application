@@ -3,10 +3,8 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 
 
 import java.net.URL;
@@ -14,16 +12,25 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    public Label loginLabel;
-    public Label ZoneId;
-    public Label userName;
-    public Label password;
+    @FXML
+    private Label loginLabel;
+    @FXML
+    private Label ZoneId;
+    @FXML
+    private Label userName;
+    @FXML
+    private Label password;
+    @FXML
+    private Button exitApp;
     @FXML
     private TextField txtUserName;
     @FXML
     private PasswordField txtPassword;
     @FXML
     private Button loginButton;
+
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -40,6 +47,28 @@ public class LoginController implements Initializable {
         }
     }
 
+
+
+    /**button logs into app*/
     public void onLogin(ActionEvent actionEvent) {
+    }
+
+
+
+
+    /**button exits app*/
+    public void onExitApp(ActionEvent actionEvent){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Application");
+        alert.setHeaderText("Are you sure you want to exit?");
+        alert.setContentText("Press OK to exit. \nPress Cancel to stay.");
+        alert.showAndWait();
+        if (alert.getResult() == ButtonType.OK) {
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        }
+        else{
+            alert.close();
+        }
     }
 }
