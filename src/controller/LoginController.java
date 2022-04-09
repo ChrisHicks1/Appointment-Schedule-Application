@@ -72,6 +72,9 @@ public class LoginController implements Initializable {
             password.setText(resourceBundle.getString("passWord"));
             loginButton.setText(resourceBundle.getString("login"));
             exitApp.setText(resourceBundle.getString("exit"));
+            //timezone label and field
+            //country
+
         }
     }
 
