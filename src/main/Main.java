@@ -1,15 +1,14 @@
 package main;
 
-import helper.JDBC;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Database.DBConnection;
 
 import java.util.Locale;
-import java.util.ResourceBundle;
-import java.util.Scanner;
 
 
 public class Main extends Application{
@@ -27,8 +26,9 @@ public class Main extends Application{
         Locale.setDefault(new Locale("fr"));
 
 
-        JDBC.openConnection();
-        JDBC.closeConnection();
+        DBConnection.startConnection();
+
         launch(args);
+        DBConnection.closeConnection();
     }
 }
