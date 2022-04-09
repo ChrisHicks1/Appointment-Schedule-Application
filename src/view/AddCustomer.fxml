@@ -1,14 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="view.AddCustomer"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddCustomerController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" prefHeight="53.0" prefWidth="253.0" text="Add Customer">
+         <font>
+            <Font name="System Bold" size="36.0" />
+         </font>
+      </Label>
+      <TextField alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="40" prefWidth="180.0" promptText="Auto Generated" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="145.0" prefHeight="40" prefWidth="180.0" promptText="Customer Name" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="40" prefWidth="180.0" promptText="99999" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="265.0" prefHeight="40" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
+      <TextField alignment="CENTER" layoutX="170.0" layoutY="325.0" prefHeight="40" prefWidth="180.0" promptText="999-999-9999" />
+      <ChoiceBox layoutX="170.0" layoutY="385.0" prefHeight="40" prefWidth="180.0" />
 
+
+      <Label layoutX="62.0" layoutY="85.0" prefHeight="40" prefWidth="100.0" text="Customer ID" />
+      <Label layoutX="62.0" layoutY="145.0" prefHeight="40" prefWidth="100.0" text="Customer Name" />
+      <Label layoutX="62.0" layoutY="205.0" prefHeight="40" prefWidth="100.0" text="Address" />
+      <Label layoutX="62.0" layoutY="265.0" prefHeight="40" prefWidth="100.0" text="Postal Code" />
+      <Label layoutX="62.0" layoutY="325.0" prefHeight="40" prefWidth="100" text="Phone Number" />
+      <Label layoutX="62.0" layoutY="385.0" prefHeight="40" prefWidth="100.0" text="Country" />
+
+      <Button layoutX="310.0" layoutY="494.0" mnemonicParsing="false" text="Save" />
+      <Button layoutX="365.0" layoutY="494.0" mnemonicParsing="false" text="Cancel" />
+
+   </children>
 </AnchorPane>
