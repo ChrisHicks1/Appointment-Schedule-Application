@@ -26,7 +26,9 @@
 
         </columns>
       </TableView>
-      <RadioButton layoutX="810.0" layoutY="105.0" mnemonicParsing="false" text="Month" />
-      <RadioButton layoutX="900.0" layoutY="105.0" mnemonicParsing="false" text="Week" />
+      <RadioButton layoutX="700.0" layoutY="105.0" mnemonicParsing="false" text="Month Appointments" />
+      <RadioButton layoutX="850.0" layoutY="105.0" mnemonicParsing="false" text="Week Appointments" />
+      <RadioButton layoutX="575.0" layoutY="105.0" mnemonicParsing="false" selected="true" text="All Appointments" />
+      <Button layoutX="915.0" layoutY="391.0" mnemonicParsing="false" text="Back" />
    </children>
 </AnchorPane>
