@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 
-public class DBCountries {
+public class CountryQuery {
 
     public static ObservableList<Countries> getAllCountries(){
         ObservableList<Countries> clist = FXCollections.observableArrayList();
@@ -49,4 +49,3 @@ public class DBCountries {
         }
     }
 }
-

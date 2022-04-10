@@ -1,7 +1,7 @@
 package main;
 
 
-import Database.DBCountries;
+import Database.CountryQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -28,7 +28,7 @@ public class Main extends Application{
 
 
         DBConnection.startConnection();
-        DBCountries.checkDateConversion();
+        CountryQuery.checkDateConversion();
 
         launch(args);
         DBConnection.closeConnection();

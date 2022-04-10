@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
 
-public class SearchCustomers {
+public class CustomerQuery {
 
 
    /* public static ObservableList<Customer> getCustomer() throws SQLException{
