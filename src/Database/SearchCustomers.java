@@ -10,7 +10,7 @@ import java.sql.SQLException;
 public class SearchCustomers {
 
 
-    public static ObservableList<Customer> getCustomer() throws SQLException{
+   /* public static ObservableList<Customer> getCustomer() throws SQLException{
         ObservableList<Customer> customers = FXCollections.observableArrayList();
 
         String searchStatement = "SELECT * from customers AS c INNER JOIN first_level_divisions AS d ON c.Division_ID = d.Division_ID INNER JOIN countries AS co ON co.Country_ID=d.COUNTRY_ID;";
@@ -19,7 +19,8 @@ public class SearchCustomers {
         PreparedStatment preparedStatment = DBSearch.getPreparedStatement();
 
 
-    }
+    } */
+
 
 
 

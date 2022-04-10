@@ -15,7 +15,7 @@ import java.util.Locale;
 public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 450, 450));
         primaryStage.show();
