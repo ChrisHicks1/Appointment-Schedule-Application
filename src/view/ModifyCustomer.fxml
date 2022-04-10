@@ -11,13 +11,13 @@
                 <Font name="System Bold" size="36.0" />
             </font>
         </Label>
-        <TextField alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="35" prefWidth="180.0" promptText="Auto Generated" />
-        <TextField alignment="CENTER" layoutX="170.0" layoutY="145.0" prefHeight="35" prefWidth="180.0" promptText="Customer Name" />
-        <TextField alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="35" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
-        <TextField alignment="CENTER" layoutX="170.0" layoutY="265.0" prefHeight="35" prefWidth="180.0" promptText="99999" />
-        <TextField alignment="CENTER" layoutX="170.0" layoutY="325.0" prefHeight="35" prefWidth="180.0" promptText="999-999-9999" />
-        <ChoiceBox layoutX="170.0" layoutY="385.0" prefHeight="35" prefWidth="180.0" />
-        <ChoiceBox layoutX="170.0" layoutY="445.0" prefHeight="35" prefWidth="180.0" />
+        <TextField fx:id="txtModifyCusId" alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="35" prefWidth="180.0" promptText="Auto Generated" />
+        <TextField fx:id="txtModifyCusName" alignment="CENTER" layoutX="170.0" layoutY="145.0" prefHeight="35" prefWidth="180.0" promptText="Customer Name" />
+        <TextField fx:id="txtModifyCusAddress" alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="35" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
+        <TextField fx:id="txtModifyPostal" alignment="CENTER" layoutX="170.0" layoutY="265.0" prefHeight="35" prefWidth="180.0" promptText="99999" />
+        <TextField fx:id="txtModifyPhone" alignment="CENTER" layoutX="170.0" layoutY="325.0" prefHeight="35" prefWidth="180.0" promptText="999-999-9999" />
+        <ChoiceBox fx:id="comModifyCountry" layoutX="170.0" layoutY="385.0" prefHeight="35" prefWidth="180.0" />
+        <ChoiceBox fx:id="comModifyDivision" layoutX="170.0" layoutY="445.0" prefHeight="35" prefWidth="180.0" />
 
 
 
@@ -29,8 +29,8 @@
         <Label layoutX="62.0" layoutY="385.0" prefHeight="35" prefWidth="100.0" text="Country" />
         <Label layoutX="62.0" layoutY="445.0" prefHeight="35" prefWidth="100.0" text="Division" />
 
-        <Button layoutX="310.0" layoutY="494.0" mnemonicParsing="false" text="Save" />
-        <Button layoutX="365.0" layoutY="494.0" mnemonicParsing="false" text="Cancel" />
+        <Button fx:id="modifySave" layoutX="310.0" layoutY="494.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
+        <Button layoutX="365.0" layoutY="494.0" mnemonicParsing="false" onAction="#toMain" text="Cancel" />
 
     </children>
 </AnchorPane>
