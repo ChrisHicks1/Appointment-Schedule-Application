@@ -7,13 +7,13 @@ public class Customer {
     private int customerId;
     private String customerName;
     private String address;
-    private int postal;
+    private String postal;
     private String phone;
     private String country;
     private String division;
     private int divisionId;
 
-    public Customer(int customerId, String customerName, String address, int postal, String phone, String country, String division, int divisionId){
+    public Customer(int customerId, String customerName, String address, String postal, String phone, String country, String division, int divisionId){
         this.customerId = customerId;
         this.customerName = customerName;
         this.address = address;
@@ -37,9 +37,9 @@ public class Customer {
 
     public void setAddress(String address){this.address = address;}
 
-    public int getPostal(){return postal;}
+    public String getPostal(){return postal;}
 
-    public void setPostal(int postal){this.postal = postal;}
+    public void setPostal(String postal){this.postal = postal;}
 
     public String getPhone(){return phone;}
 

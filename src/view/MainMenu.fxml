@@ -17,7 +17,7 @@
                <Font size="20.0" />
            </font>
        </Label>
-      <TableView layoutX="30.0" layoutY="410.0" prefHeight="200.0" prefWidth="790.0">
+      <TableView fx:id="appTableView" layoutX="30.0" layoutY="410.0" prefHeight="200.0" prefWidth="790.0">
         <columns>
           <TableColumn fx:id="appIdCol" prefWidth="120.0" text="Appointment ID" />
             <TableColumn fx:id="appCusIdCol" prefWidth="90.0" text="Customer ID" />
@@ -34,7 +34,7 @@
                <Font size="20.0" />
            </font>
        </Label>
-      <TableView layoutX="30.0" layoutY="125.0" prefHeight="200.0" prefWidth="380.0">
+      <TableView fx:id="cusTableView" layoutX="30.0" layoutY="125.0" prefHeight="200.0" prefWidth="380.0">
         <columns>
           <TableColumn fx:id="cusIdCol" prefWidth="80.0" text="Customer ID" />
           <TableColumn fx:id="cusNameCol" prefWidth="130.0" text="Customer Name" />
