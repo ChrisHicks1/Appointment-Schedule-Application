@@ -37,10 +37,9 @@
        </Label>
       <TableView layoutX="30.0" layoutY="125.0" prefHeight="200.0" prefWidth="380.0">
         <columns>
-          <TableColumn prefWidth="90.0" text="Customer ID" />
-          <TableColumn prefWidth="100.0" text="Customer Name" />
-            <TableColumn prefWidth="80.0" text="Address ID" />
-            <TableColumn prefWidth="110.0" text="Customer Phone" />
+          <TableColumn prefWidth="80.0" text="Customer ID" />
+          <TableColumn prefWidth="130.0" text="Customer Name" />
+            <TableColumn prefWidth="170.0" text="Customer Phone" />
         </columns>
       </TableView>
 
