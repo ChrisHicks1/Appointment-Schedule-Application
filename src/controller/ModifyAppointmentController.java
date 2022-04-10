@@ -55,7 +55,7 @@ public class ModifyAppointmentController {
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 850, 430);
+        Scene scene = new Scene(addPartCancel, 850, 700);
         stage.setTitle("Back to Main Screen");
         stage.setScene(scene);
         stage.show();

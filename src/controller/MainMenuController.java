@@ -50,7 +50,15 @@ public class MainMenuController {
 
     }
 
-    public void toCusModify(ActionEvent actionEvent) {
+    public void toCusModify(ActionEvent actionEvent) throws IOException{
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
+            Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 450, 550);
+            stage.setTitle("Add Product");
+            stage.setScene(scene);
+            stage.show();
+
     }
 
     public void toCusDelete(ActionEvent actionEvent) {
@@ -69,7 +77,15 @@ public class MainMenuController {
         stage.show();
     }
 
-    public void toAppModify(ActionEvent actionEvent) {
+    public void toAppModify(ActionEvent actionEvent) throws IOException{
+
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+        Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 450, 550);
+        stage.setTitle("Add Product");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     public void toAppDelete(ActionEvent actionEvent) {

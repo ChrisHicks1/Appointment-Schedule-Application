@@ -42,7 +42,7 @@
         </columns>
       </TableView>
 
-      <Separator layoutX="0.0" layoutY="349.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="850.0" />
+      <Separator layoutX="0.0" layoutY="349.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="850" />
       <Separator layoutX="530.0" layoutY="0.0" maxHeight="-Infinity" minHeight="-Infinity" orientation="VERTICAL" prefHeight="353.0" prefWidth="10.0" />
        <Separator layoutX="0" layoutY="69.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="533.0" />
 
