@@ -1,7 +1,7 @@
 package model;
 
 public class Customer {
-    private int id;
+  /*  private int id;
     private String name;
     private String address1;
     private String address2;
@@ -17,7 +17,7 @@ public class Customer {
         this.state = state;
         this.country = country;
         this.number = number;
-    }
+    } */
 
 
 
