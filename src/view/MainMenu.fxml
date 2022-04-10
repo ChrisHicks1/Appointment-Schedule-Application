@@ -37,9 +37,9 @@
        </Label>
       <TableView layoutX="30.0" layoutY="125.0" prefHeight="200.0" prefWidth="380.0">
         <columns>
-          <TableColumn prefWidth="80.0" text="Customer ID" />
-          <TableColumn prefWidth="130.0" text="Customer Name" />
-            <TableColumn prefWidth="170.0" text="Customer Phone" />
+          <TableColumn fx:id="cusIdCol" prefWidth="80.0" text="Customer ID" />
+          <TableColumn fx:id="cusNameCol" prefWidth="130.0" text="Customer Name" />
+            <TableColumn fx:id="cusPhoneCol" prefWidth="170.0" text="Customer Phone" />
         </columns>
       </TableView>
 
@@ -48,9 +48,9 @@
        <Separator layoutX="0" layoutY="69.0" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="10.0" prefWidth="533.0" />
 
 
-       <Button layoutX="450.0" layoutY="210.0" mnemonicParsing="false" prefWidth="60" text="Add" />
-      <Button layoutX="450.0" layoutY="255.0" mnemonicParsing="false" prefWidth="60" text="Modify" />
-      <Button layoutX="450.0" layoutY="300.0" mnemonicParsing="false" prefWidth="60" text="Delete" />
+       <Button layoutX="450.0" layoutY="210.0" mnemonicParsing="false" onAction="#toCusAdd" prefWidth="60" text="Add" />
+      <Button layoutX="450.0" layoutY="255.0" mnemonicParsing="false" onAction="#toCusModify" prefWidth="60" text="Modify" />
+      <Button layoutX="450.0" layoutY="300.0" mnemonicParsing="false" onAction="#toCusDelete" prefWidth="60" text="Delete" />
 
 
       <Button layoutX="760.0" layoutY="633.0" mnemonicParsing="false" prefWidth="60" text="Delete" />

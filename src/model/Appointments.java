@@ -7,6 +7,7 @@ public class Appointments {
     private int appointmentId;
     private String title;
     private String description;
+    private String location;
     private String type;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -15,10 +16,11 @@ public class Appointments {
     private int contactId;
     private String contactName;
 
-    public Appointments(int appointmentId, String title, String description, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int userId, int contactId, String contactName){
+    public Appointments(int appointmentId, String title, String description, String location, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int userId, int contactId, String contactName){
         this.appointmentId = appointmentId;
         this.title = title;
         this.description = description;
+        this.location = location;
         this. type = type;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -45,6 +47,14 @@ public class Appointments {
         this.description = description;
     }
 
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
     public String getType() {
         return type;
