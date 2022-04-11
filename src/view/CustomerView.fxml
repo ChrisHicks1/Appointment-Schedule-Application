@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="800.0" maxHeight="-Infinity" minHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerViewController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CustomerViewController">
 
 
     <Label layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="522.0" text="Customer View">
@@ -15,15 +15,15 @@
 
 
 
-    <TableView layoutX="50.0" layoutY="100.0" prefHeight="200.0" prefWidth="700.0">
+    <TableView fx:id="cusTableView" layoutX="50.0" layoutY="100.0" prefHeight="200.0" prefWidth="700.0">
         <columns>
-            <TableColumn prefWidth="100.0" text="Customer ID" />
-            <TableColumn prefWidth="100.0" text="Customer Name" />
-            <TableColumn prefWidth="100.0" text="Address" />
-            <TableColumn prefWidth="100.0" text="Postal Code" />
-            <TableColumn prefWidth="100.0" text="Phone Number" />
-            <TableColumn prefWidth="100.0" text="Country" />
-            <TableColumn prefWidth="100.0" text="Division" />
+            <TableColumn fx:id="cusIdCol" prefWidth="100.0" text="Customer ID" />
+            <TableColumn fx:id="cusNameCol" prefWidth="100.0" text="Customer Name" />
+            <TableColumn fx:id="addressCol" prefWidth="100.0" text="Address" />
+            <TableColumn fx:id="postalCol" prefWidth="100.0" text="Postal Code" />
+            <TableColumn fx:id="phoneCol" prefWidth="100.0" text="Phone Number" />
+            <TableColumn fx:id="countryCol" prefWidth="100.0" text="Country" />
+            <TableColumn fx:id="divisionCol" prefWidth="100.0" text="Division" />
 
 
         </columns>

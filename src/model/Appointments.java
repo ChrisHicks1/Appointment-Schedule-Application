@@ -4,110 +4,104 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointments {
-    private int appointmentId;
-    private String title;
-    private String description;
-    private String location;
-    private String type;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private int customerId;
-    private int userId;
-    private int contactId;
-    private String contactName;
+    private int Appointment_Id;
+    private String Title;
+    private String Description;
+    private String Location;
+    private String Type;
+    private LocalDateTime Start;
+    private LocalDateTime End;
+    private int Customer_Id;
+    private int User_Id;
+    private int Contact_Id;
 
-    public Appointments(int appointmentId, String title, String description, String location, String type, LocalDateTime startTime, LocalDateTime endTime, int customerId, int userId, int contactId, String contactName){
-        this.appointmentId = appointmentId;
-        this.title = title;
-        this.description = description;
-        this.location = location;
-        this. type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.customerId = customerId;
-        this.userId = userId;
-        this.contactId = contactId;
-        this.contactName = contactName;
+
+    public Appointments(int Appointment_Id, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_Id, int User_Id, int Contact_Id){
+        this.Appointment_Id = Appointment_Id;
+        this.Title = Title;
+        this.Description = Description;
+        this.Location = Location;
+        this.Type = Type;
+        this.Start = Start;
+        this.End = End;
+        this.Customer_Id = Customer_Id;
+        this.User_Id = User_Id;
+        this.Contact_Id = Contact_Id;
+
     }
 
-    public int getAppointmentId(){return appointmentId;}
-    public void setAppointmentId(){this.appointmentId = appointmentId;}
+
+    public int getAppointment_Id(){return Appointment_Id;}
+    public void setAppointment_Id(){this.Appointment_Id = Appointment_Id;}
 
 
     public String getTitle() {
-        return title;
+        return Title;
     }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setTitle(String Title) {
+        this.Title = Title;
     }
 
 
-    public String getDescription(){return description;}
-    public void setDescription(String description) {
-        this.description = description;
+    public String getDescription(){return Description;}
+    public void setDescription(String Description) {
+        this.Description = Description;
     }
 
 
     public String getLocation() {
-        return location;
+        return Location;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setLocation(String Location) {
+        this.Location = Location;
     }
 
     public String getType() {
-        return type;
+        return Type;
     }
-    public void setType(String type) {
-        this.type = type;
-    }
-
-
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
-    public void setStartTime(LocalDateTime startTime) {
-        this.startTime = startTime;
+    public void setType(String Type) {
+        this.Type = Type;
     }
 
 
-    public LocalDateTime getEndTime() {
-        return endTime;
+    public LocalDateTime getStart() {
+        return Start;
     }
-    public void setEndTime(LocalDateTime endTime) {
-        this.endTime = endTime;
-    }
-
-
-    public int getCustomerId() {
-        return customerId;
-    }
-    public void setCustomerId(){
-        this.customerId = customerId;
+    public void setStart(LocalDateTime Start) {
+        this.Start = Start;
     }
 
 
-    public int getUserId() {
-        return userId;
+    public LocalDateTime getEnd() {
+        return End;
     }
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-
-    public int getContactId() {
-        return contactId;
-    }
-    public void setContactId(int contactId) {
-        this.contactId = contactId;
+    public void setEnd(LocalDateTime End) {
+        this.End = End;
     }
 
 
-    public String getContactName() {
-        return contactName;
+    public int getCustomer_Id() {
+        return Customer_Id;
     }
-    public void setContactName(String contactName) {
-        this.contactName = contactName;
+    public void setCustomer_Id(){
+        this.Customer_Id = Customer_Id;
     }
+
+
+    public int getUser_Id() {
+        return User_Id;
+    }
+    public void setUser_Id(int userId) {
+        this.User_Id = User_Id;
+    }
+
+
+    public int getContact_Id() {
+        return Contact_Id;
+    }
+    public void setContact_Id(int Contact_Id) {
+        this.Contact_Id = Contact_Id;
+    }
+
 }

@@ -29,7 +29,7 @@ import java.util.*;
 
 interface LoginActivity{
     public String getFileName();
-}
+}//maybe something different
 
 
 public class LoginController implements Initializable {
@@ -38,7 +38,7 @@ public class LoginController implements Initializable {
 
     LoginActivity loginActivity = () -> {
         return "login_activity.txt";
-    };
+    };//maybe something different
 
     private ResourceBundle resourceBundle;
     @FXML

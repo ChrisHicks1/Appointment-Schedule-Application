@@ -1,21 +1,47 @@
 package controller;
 
+import Database.CustomerQuery;
+import Database.DBConnection;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Customer;
 
 import java.io.IOException;
+import java.net.URL;
+import java.sql.ResultSet;
+import java.util.ResourceBundle;
 
-public class CustomerViewController {
+public class CustomerViewController implements Initializable {
 
 
-
-
-
+    @FXML
+    private TableView<Customer> cusTableView;
+    @FXML
+    private TableColumn<Customer, Integer> cusIdCol;
+    @FXML
+    private TableColumn<Customer, String> cusNameCol;
+    @FXML
+    private TableColumn<Customer, String> addressCol;
+    @FXML
+    private TableColumn<Customer, String> postalCol;
+    @FXML
+    private TableColumn<Customer, String> phoneCol;
+    @FXML
+    private TableColumn<Customer, String> countryCol;
+    @FXML
+    private TableColumn<Customer, Integer> divisionCol;
 
 
     public void toCusAdd(ActionEvent actionEvent) throws IOException {
@@ -53,5 +79,12 @@ public class CustomerViewController {
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
     }
 }

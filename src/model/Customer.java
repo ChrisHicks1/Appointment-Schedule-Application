@@ -4,6 +4,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Customer {
+
+
+
     private int customerId;
     private String customerName;
     private String address;
@@ -56,6 +59,8 @@ public class Customer {
     public int getDivisionId(){return divisionId;}
 
     public void setDivisionId(int divisionId){this.divisionId = divisionId;}
+
+
 
 
 }
