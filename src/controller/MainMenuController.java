@@ -84,7 +84,7 @@ public class MainMenuController {
         public void toAppTypes(ActionEvent actionEvent) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentType.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1000, 450);
+            Scene scene = new Scene(root, 600, 400);
             stage.setTitle("Appointment Types");
             stage.setScene(scene);
             stage.show();
@@ -93,7 +93,7 @@ public class MainMenuController {
         public void toContactSched(ActionEvent actionEvent) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/ContactSchedule.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 1000, 450);
+            Scene scene = new Scene(root, 775, 450);
             stage.setTitle("Contact Schedule");
             stage.setScene(scene);
             stage.show();
