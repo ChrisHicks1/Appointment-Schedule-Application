@@ -42,10 +42,10 @@ public class ModifyCustomerController {
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 850, 700);
-        stage.setTitle("Back to Main Screen");
+        Scene scene = new Scene(addPartCancel, 800, 400);
+        stage.setTitle("Customer View");
         stage.setScene(scene);
         stage.show();
     }

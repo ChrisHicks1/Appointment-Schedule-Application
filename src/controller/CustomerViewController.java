@@ -10,34 +10,35 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class AppointmentCalendarController {
+public class CustomerViewController {
 
 
 
 
 
 
-    public void toAppAdd(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
+
+    public void toCusAdd(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 450, 550);
-        stage.setTitle("Add Appointment");
+        stage.setTitle("Add Customer");
         stage.setScene(scene);
         stage.show();
     }
 
-    public void toAppModify(ActionEvent actionEvent) throws IOException {
+    public void toCusModify(ActionEvent actionEvent) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 450, 550);
-        stage.setTitle("Modify Appointment");
+        stage.setTitle("Modify Customer");
         stage.setScene(scene);
         stage.show();
 
     }
 
-    public void toAppDelete(ActionEvent actionEvent) {
+    public void toCusDelete(ActionEvent actionEvent) {
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}

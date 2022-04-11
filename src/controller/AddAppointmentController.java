@@ -53,10 +53,10 @@ public class AddAppointmentController {
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 850, 700);
-        stage.setTitle("Back to Main Screen");
+        Scene scene = new Scene(addPartCancel, 1000, 450);
+        stage.setTitle("Appointment Calendar");
         stage.setScene(scene);
         stage.show();
     }

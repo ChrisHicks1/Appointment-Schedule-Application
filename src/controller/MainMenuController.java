@@ -55,67 +55,54 @@ public class MainMenuController {
 
 
 
-        public void toCusAdd(ActionEvent actionEvent) throws IOException {
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AddCustomer.fxml"));
+
+
+
+
+
+        public void toViewCalendar(ActionEvent actionEvent) throws IOException {
+                Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(root, 1000, 450);
+                stage.setTitle("Appointment Calendar");
+                stage.setScene(scene);
+                stage.show();
+            }
+
+
+        public void toViewCustomers(ActionEvent actionEvent) throws IOException {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 450, 550);
-            stage.setTitle("Add Product");
-            stage.setScene(scene);
-            stage.show();
-
-        }
-
-        public void toCusModify(ActionEvent actionEvent) throws IOException {
-
-            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 450, 550);
-            stage.setTitle("Add Product");
-            stage.setScene(scene);
-            stage.show();
-
-        }
-
-        public void toCusDelete(ActionEvent actionEvent) {
-        }
-
-
-        public void toAppAdd(ActionEvent actionEvent) throws IOException {
-            Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 450, 550);
-            stage.setTitle("Add Product");
+            Scene scene = new Scene(root, 800, 400);
+            stage.setTitle("Customer View");
             stage.setScene(scene);
             stage.show();
         }
 
-        public void toAppModify(ActionEvent actionEvent) throws IOException {
 
-            Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
+        public void toAppTypes(ActionEvent actionEvent) throws IOException {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/AppointmentType.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 450, 550);
-            stage.setTitle("Add Product");
+            Scene scene = new Scene(root, 1000, 450);
+            stage.setTitle("Appointment Types");
             stage.setScene(scene);
             stage.show();
-
         }
 
-        public void toAppDelete(ActionEvent actionEvent) {
-        }
-
-
-        public void toViewCalendar(ActionEvent actionEvent) {
-        }
-
-        public void toAppTypes(ActionEvent actionEvent) {
-        }
-
-        public void toContactSched(ActionEvent actionEvent) {
+        public void toContactSched(ActionEvent actionEvent) throws IOException {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/ContactSchedule.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 1000, 450);
+            stage.setTitle("Contact Schedule");
+            stage.setScene(scene);
+            stage.show();
         }
 
         public void toLogOut(ActionEvent actionEvent) {
         }
+
+
 
 
     public class MainMenu implements Initializable {

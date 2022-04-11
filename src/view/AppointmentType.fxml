@@ -28,6 +28,6 @@
           <TableColumn prefWidth="75.0" text="Amount" />
         </columns>
       </TableView>
-      <Button layoutX="525.0" layoutY="339.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="525.0" layoutY="339.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
    </children>
 </AnchorPane>

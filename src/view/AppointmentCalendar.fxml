@@ -29,6 +29,11 @@
       <RadioButton layoutX="700.0" layoutY="105.0" mnemonicParsing="false" text="Month Appointments" />
       <RadioButton layoutX="850.0" layoutY="105.0" mnemonicParsing="false" text="Week Appointments" />
       <RadioButton layoutX="575.0" layoutY="105.0" mnemonicParsing="false" selected="true" text="All Appointments" />
-      <Button layoutX="915.0" layoutY="391.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="915.0" layoutY="391.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
+       <Button layoutX="760.0" layoutY="391.0" mnemonicParsing="false" onAction="#toAppDelete" prefWidth="60" text="Delete" />
+       <Button layoutX="680.0" layoutY="391.0" mnemonicParsing="false" onAction="#toAppModify" prefWidth="60" text="Modify" />
+       <Button layoutX="600.0" layoutY="391.0" mnemonicParsing="false" onAction="#toAppAdd" prefWidth="60" text="Add" />
+
+
    </children>
 </AnchorPane>

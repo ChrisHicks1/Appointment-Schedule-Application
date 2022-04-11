@@ -23,7 +23,7 @@
 
             </columns>
         </TableView>
-      <Button layoutX="704.0" layoutY="360.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="704.0" layoutY="360.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
       <ChoiceBox layoutX="303.0" layoutY="360.0" prefWidth="150.0" />
 
 
