@@ -26,22 +26,24 @@ import java.util.ResourceBundle;
 public class CustomerViewController implements Initializable {
 
 
-    @FXML
-    private TableView<Customer> cusTableView;
-    @FXML
-    private TableColumn<Customer, Integer> cusIdCol;
-    @FXML
-    private TableColumn<Customer, String> cusNameCol;
-    @FXML
-    private TableColumn<Customer, String> addressCol;
-    @FXML
-    private TableColumn<Customer, String> postalCol;
-    @FXML
-    private TableColumn<Customer, String> phoneCol;
-    @FXML
-    private TableColumn<Customer, String> countryCol;
-    @FXML
-    private TableColumn<Customer, Integer> divisionCol;
+
+    public TableView<Customer> cusTableView;
+
+    public TableColumn<Customer, Integer> cusIdCol;
+
+    public TableColumn<Customer, String> cusNameCol;
+
+    public TableColumn<Customer, String> addressCol;
+
+    public TableColumn<Customer, String> postalCol;
+
+    public TableColumn<Customer, String> phoneCol;
+
+    public TableColumn<Customer, String> countryCol;
+
+    public TableColumn<Customer, String> divisionCol;
+
+    public TableColumn<Customer, Integer> divisionIdCol;
 
 
     public void toCusAdd(ActionEvent actionEvent) throws IOException {
@@ -86,5 +88,27 @@ public class CustomerViewController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        cusTableView.setItems(CustomerQuery.getCustomer());
+
+
+        cusIdCol.setCellFactory(new PropertyValueFactory<>("Customer_ID"));
+        cusNameCol.setCellFactory(new PropertyValueFactory<>("Customer_Name"));
+        addressCol.setCellFactory(new PropertyValueFactory<>("Address"));
+        postalCol.setCellFactory(new PropertyValueFactory<>("Postal_Code"));
+        phoneCol.setCellFactory(new PropertyValueFactory<>("Phone"));
+        countryCol.setCellFactory(new PropertyValueFactory<>("Country"));
+        divisionCol.setCellFactory(new PropertyValueFactory<>("Division"));
+        divisionIdCol.setCellFactory(new PropertyValueFactory<>("Division_ID"));
+
+        populateCustomerFields();
+
+
+
+
+    }
+    void populateCustomerFields(){
+
     }
 }
+
+
