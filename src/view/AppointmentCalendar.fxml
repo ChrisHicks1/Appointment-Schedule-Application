@@ -11,18 +11,19 @@
             <Font name="System Bold" size="48.0" />
          </font>
       </Label>
-      <TableView fx:id="appTableView" layoutX="8.0" layoutY="145.0" prefHeight="200.0" prefWidth="945.0">
+      <TableView fx:id="appTableView" layoutX="8.0" layoutY="145.0" prefHeight="200.0" prefWidth="985.0">
         <columns>
             <TableColumn fx:id="appID" prefWidth="120.0" text="Appointment ID" />
-            <TableColumn fx:id="appTitle" prefWidth="75.0" text="Title" />
-            <TableColumn fx:id="appDesc" prefWidth="75.0" text="Description" />
-            <TableColumn fx:id="appLocation" prefWidth="75.0" text="Location" />
+            <TableColumn fx:id="appTitle" prefWidth="70.0" text="Title" />
+            <TableColumn fx:id="appDesc" prefWidth="70.0" text="Description" />
+            <TableColumn fx:id="appLocation" prefWidth="70.0" text="Location" />
+            <TableColumn fx:id="appContact" prefWidth="70.0" text="Contact" />
             <TableColumn fx:id="appType" prefWidth="95.0" text="Type" />
             <TableColumn fx:id="appStart" prefWidth="140.0" text="Start Date and Time" />
             <TableColumn fx:id="appEnd" prefWidth="140.0" text="End Date and Time" />
-            <TableColumn fx:id="appCusId" prefWidth="75.0" text="Customer ID" />
-            <TableColumn fx:id="appUserId" prefWidth="75.0" text="User ID" />
-            <TableColumn fx:id="appContactId" prefWidth="75.0" text="Contact ID" />
+            <TableColumn fx:id="appCusId" prefWidth="70.0" text="Customer ID" />
+            <TableColumn fx:id="appUserId" prefWidth="70.0" text="User ID" />
+            <TableColumn fx:id="appContactId" prefWidth="70.0" text="Contact ID" />
 
         </columns>
       </TableView>

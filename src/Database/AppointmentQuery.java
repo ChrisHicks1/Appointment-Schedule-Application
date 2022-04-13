@@ -40,4 +40,33 @@ public class AppointmentQuery {
         }
         return aList;
     }
+
+    public static void createAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID){
+        try{
+            String sqla = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, NULL, NULL, NULL)";
+
+            PreparedStatement psa = DBConnection.getConnection().prepareStatement(sqla);
+
+            psa.setInt(1, Appointment_ID);
+            psa.setString(2, Title);
+            psa.setString(3, Description);
+            psa.setString(4, Location);
+            psa.setString(5, Type);
+            psa.setInt(8, Customer_ID);
+            psa.setInt(9, User_ID);
+            psa.setInt(10, Contact_ID);
+
+            psa.execute();
+
+            ResultSet rs = psa.getResultSet();
+            rs.next();
+
+
+
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
+    }
+
+
 }

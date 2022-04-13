@@ -16,6 +16,8 @@ import java.io.IOException;
 
 public class ModifyAppointmentController {
     @FXML
+    private TextField txtModifyContactId;
+    @FXML
     private Button modifySave;
     @FXML
     private TextField txtModifyAppId;

@@ -11,10 +11,13 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import Database.AppointmentQuery;
 
 import java.io.IOException;
 
 public class AddAppointmentController {
+    @FXML
+    private TextField addTextContactId;
     @FXML
     private Button addSave;
     @FXML
@@ -46,7 +49,20 @@ public class AddAppointmentController {
     @FXML
     private DatePicker addEndDate;
 
-    public void onSave(ActionEvent actionEvent) {
+    public void onSave(ActionEvent actionEvent) throws IOException{
+        String Appointment_ID = txtAddAppId.getId();
+        String Title = txtAddTitle.getText();
+        String Description = txtAddDesc.getText();
+        String Location = txtAddLocation.getText();
+        String Type = addTextType.getText();
+
+        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(addPartCancel, 1000, 450);
+        stage.setTitle("Appointment Calendar");
+        stage.setScene(scene);
+        stage.show();
+
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
