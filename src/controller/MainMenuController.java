@@ -74,7 +74,7 @@ public class MainMenuController {
         public void toViewCustomers(ActionEvent actionEvent) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 800, 400);
+            Scene scene = new Scene(root, 900, 400);
             stage.setTitle("Customer View");
             stage.setScene(scene);
             stage.show();

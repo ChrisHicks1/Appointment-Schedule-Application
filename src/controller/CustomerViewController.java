@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,29 +22,31 @@ import model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CustomerViewController implements Initializable {
 
 
+    static ObservableList<Customer> customers;
 
     public TableView<Customer> cusTableView;
 
-    public TableColumn<Customer, Integer> cusIdCol;
+    public TableColumn cusIdCol;
 
-    public TableColumn<Customer, String> cusNameCol;
+    public TableColumn cusNameCol;
 
-    public TableColumn<Customer, String> addressCol;
+    public TableColumn addressCol;
 
-    public TableColumn<Customer, String> postalCol;
+    public TableColumn postalCol;
 
-    public TableColumn<Customer, String> phoneCol;
+    public TableColumn phoneCol;
 
-    public TableColumn<Customer, String> countryCol;
+    public TableColumn countryCol;
 
-    public TableColumn<Customer, String> divisionCol;
+    public TableColumn divisionCol;
 
-    public TableColumn<Customer, Integer> divisionIdCol;
+    public TableColumn divisionIdCol;
 
 
     public void toCusAdd(ActionEvent actionEvent) throws IOException {
@@ -85,30 +88,34 @@ public class CustomerViewController implements Initializable {
 
 
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        cusTableView.setItems(CustomerQuery.getCustomer());
+        try {
+
+            customers = CustomerQuery.getCustomer();
 
 
-        cusIdCol.setCellFactory(new PropertyValueFactory<>("Customer_ID"));
-        cusNameCol.setCellFactory(new PropertyValueFactory<>("Customer_Name"));
-        addressCol.setCellFactory(new PropertyValueFactory<>("Address"));
-        postalCol.setCellFactory(new PropertyValueFactory<>("Postal_Code"));
-        phoneCol.setCellFactory(new PropertyValueFactory<>("Phone"));
-        countryCol.setCellFactory(new PropertyValueFactory<>("Country"));
-        divisionCol.setCellFactory(new PropertyValueFactory<>("Division"));
-        divisionIdCol.setCellFactory(new PropertyValueFactory<>("Division_ID"));
-
-        populateCustomerFields();
-
+            cusIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
+            cusNameCol.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));
+            addressCol.setCellValueFactory(new PropertyValueFactory<>("Address"));
+            postalCol.setCellValueFactory(new PropertyValueFactory<>("Postal_Code"));
+            phoneCol.setCellValueFactory(new PropertyValueFactory<>("Phone"));
+            countryCol.setCellValueFactory(new PropertyValueFactory<>("Country"));
+            divisionCol.setCellValueFactory(new PropertyValueFactory<>("Division"));
+            divisionIdCol.setCellValueFactory(new PropertyValueFactory<>("Division_ID"));
+            cusTableView.setItems(customers);
 
 
+
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
 
     }
-    void populateCustomerFields(){
 
-    }
 }
 
 
