@@ -25,5 +25,8 @@ public class ContactScheduleController {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
 }
 

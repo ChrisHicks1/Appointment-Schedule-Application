@@ -42,9 +42,9 @@ public class AppointmentQuery {
         return aList;
     }
 
-    public static void createAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID){
-        try{
-            String sqla = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, NULL, NULL, NULL)";
+    public static int createAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, Timestamp Start, Timestamp End, int Customer_ID, int User_ID, int Contact_ID) {
+        try {
+            String sqla = "INSERT INTO appointments VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement psa = DBConnection.getConnection().prepareStatement(sqla);
 
@@ -53,20 +53,22 @@ public class AppointmentQuery {
             psa.setString(3, Description);
             psa.setString(4, Location);
             psa.setString(5, Type);
+            psa.setTimestamp(6, Timestamp.valueOf(String.valueOf(Start)));
+            psa.setTimestamp(7, Timestamp.valueOf(String.valueOf(End)));
             psa.setInt(8, Customer_ID);
             psa.setInt(9, User_ID);
             psa.setInt(10, Contact_ID);
 
-            psa.execute();
+            int rowsAffected = psa.executeUpdate();
 
-            ResultSet rs = psa.getResultSet();
-            rs.next();
+            return rowsAffected;
+            //  ResultSet rs = psa.getResultSet();
+            //  rs.next();
 
 
-
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        }
+        }return 0;
     }
 
 

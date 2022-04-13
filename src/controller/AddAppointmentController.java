@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import Database.AppointmentQuery;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class AddAppointmentController {
@@ -51,11 +52,6 @@ public class AddAppointmentController {
     private DatePicker addEndDate;
 
     public void onSave(ActionEvent actionEvent) throws IOException{
-        String Appointment_ID = txtAddAppId.getId();
-        String Title = txtAddTitle.getText();
-        String Description = txtAddDesc.getText();
-        String Location = txtAddLocation.getText();
-        String Type = addTextType.getText();
 
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
