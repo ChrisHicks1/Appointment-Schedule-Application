@@ -88,6 +88,7 @@ public class AppointmentCalendarController implements Initializable{
         appTitle.setCellValueFactory(new PropertyValueFactory<>("Title"));
         appDesc.setCellValueFactory(new PropertyValueFactory<>("Description"));
         appLocation.setCellValueFactory(new PropertyValueFactory<>("Location"));
+        appContact.setCellValueFactory(new PropertyValueFactory<>("Contact_Name"));
         appType.setCellValueFactory(new PropertyValueFactory<>("Type"));
         appStart.setCellValueFactory(new PropertyValueFactory<>("Start"));
         appEnd.setCellValueFactory(new PropertyValueFactory<>("End"));

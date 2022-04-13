@@ -8,6 +8,7 @@ public class Appointments {
     private String Title;
     private String Description;
     private String Location;
+    private String Contact_Name;
     private String Type;
     private LocalDateTime Start;
     private LocalDateTime End;
@@ -16,11 +17,12 @@ public class Appointments {
     private int Contact_ID;
 
 
-    public Appointments(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID){
+    public Appointments(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID){
         this.Appointment_ID = Appointment_ID;
         this.Title = Title;
         this.Description = Description;
         this.Location = Location;
+        this.Contact_Name = Contact_Name;
         this.Type = Type;
         this.Start = Start;
         this.End = End;
@@ -32,7 +34,7 @@ public class Appointments {
 
 
     public int getAppointment_ID(){return Appointment_ID;}
-    public void setAppointment_ID(){this.Appointment_ID = Appointment_ID;}
+    public void setAppointment_ID(int Appointment_ID){this.Appointment_ID = Appointment_ID;}
 
 
     public String getTitle() {
@@ -55,6 +57,15 @@ public class Appointments {
 
     public void setLocation(String Location) {
         this.Location = Location;
+    }
+
+
+    public String getContact_Name() {
+        return Contact_Name;
+    }
+
+    public void setContact_Name(String Contact_Name) {
+        this.Contact_Name = Contact_Name;
     }
 
     public String getType() {

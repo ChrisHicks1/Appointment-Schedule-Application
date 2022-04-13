@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 import Database.AppointmentQuery;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class AddAppointmentController {
     @FXML
@@ -55,6 +56,7 @@ public class AddAppointmentController {
         String Description = txtAddDesc.getText();
         String Location = txtAddLocation.getText();
         String Type = addTextType.getText();
+
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
