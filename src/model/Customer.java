@@ -7,58 +7,58 @@ public class Customer {
 
 
 
-    private int customerId;
-    private String customerName;
-    private String address;
-    private String postal;
-    private String phone;
-    private String country;
-    private String division;
-    private int divisionId;
+    private int Customer_ID;
+    private String Customer_Name;
+    private String Address;
+    private String Postal_Code;
+    private String Phone;
+    private String Country;
+    private String Division;
+    private int Division_ID;
 
-    public Customer(int customerId, String customerName, String address, String postal, String phone, String country, String division, int divisionId){
-        this.customerId = customerId;
-        this.customerName = customerName;
-        this.address = address;
-        this.postal = postal;
-        this.phone = phone;
-        this.country = country;
-        this.division = division;
-        this.divisionId = divisionId;
+    public Customer(int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division, int Division_ID){
+        this.Customer_ID = Customer_ID;
+        this.Customer_Name = Customer_Name;
+        this.Address = Address;
+        this.Postal_Code = Postal_Code;
+        this.Phone = Phone;
+        this.Country = Country;
+        this.Division = Division;
+        this.Division_ID = Division_ID;
     }
 
 
-    public int getCustomerId(){return customerId;}
+    public int getCustomer_ID(){return Customer_ID;}
 
-    public void setCustomerId(int customerId){this.customerId = customerId;}
+    public void setCustomer_ID(int Customer_ID){this.Customer_ID = Customer_ID;}
 
-    public String getCustomerName(){return customerName;}
+    public String getCustomer_Name(){return Customer_Name;}
 
-    public void setCustomerName(String customerName){this.customerName = customerName;}
+    public void setCustomer_Name(String Customer_Name){this.Customer_Name = Customer_Name;}
 
-    public String getAddress(){return address;}
+    public String getAddress(){return Address;}
 
-    public void setAddress(String address){this.address = address;}
+    public void setAddress(String Address){this.Address = Address;}
 
-    public String getPostal(){return postal;}
+    public String getPostal_Code(){return Postal_Code;}
 
-    public void setPostal(String postal){this.postal = postal;}
+    public void setPostal_Code(String Postal_Code){this.Postal_Code = Postal_Code;}
 
-    public String getPhone(){return phone;}
+    public String getPhone(){return Phone;}
 
-    public void setPhone(String phone){this.phone = phone;}
+    public void setPhone(String Phone){this.Phone = Phone;}
 
-    public String getCountry(){return country;}
+    public String getCountry(){return Country;}
 
-    public void setCountry(String country){this.country = country;}
+    public void setCountry(String Country){this.Country = Country;}
 
-    public String getDivision(){return division;}
+    public String getDivision(){return Division;}
 
-    public void setDivision(String division){this.division = division;}
+    public void setDivision(String Division){this.Division = Division;}
 
-    public int getDivisionId(){return divisionId;}
+    public int getDivision_ID(){return Division_ID;}
 
-    public void setDivisionId(int divisionId){this.divisionId = divisionId;}
+    public void setDivision_ID(int Division_ID){this.Division_ID = Division_ID;}
 
 
 

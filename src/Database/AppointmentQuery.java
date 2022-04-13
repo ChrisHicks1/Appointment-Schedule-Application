@@ -15,7 +15,7 @@ public class AppointmentQuery {
 
         try{
 
-            String sql = "SELECT Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID";
+            String sql = "SELECT * FROM appointments AS a LEFT JOIN customers AS c ON a.Customer_ID = c.Customer_ID INNER JOIN users AS u ON u.User_ID = a.User_ID INNER JOIN contacts AS co ON co.Contact_ID = a.Contact_ID";
 
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
 

@@ -15,7 +15,7 @@ public class CustomerQuery {
 
 
     public static ObservableList<Customer> getCustomer() throws SQLException{
-        ObservableList<Customer> customers = FXCollections.observableArrayList();
+        ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
 
         try {
@@ -37,23 +37,16 @@ public class CustomerQuery {
                 String Country = rs.getString("Country");
                 int Division_ID = rs.getInt("Division_ID");
 
-                Customer c = new Customer(rs.getInt("Customer_ID"),
-                        rs.getString("Customer_Name"),
-                        rs.getString("Address"),
-                        rs.getString("Postal_Code"),
-                        rs.getString("Phone"),
-                        rs.getString("Division"),
-                        rs.getString("Country"),
-                        rs.getInt("Division_ID"));
+                Customer c = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division, Country, Division_ID);
 
-                customers.add(c);
+                customersList.add(c);
             }
 
         }catch (SQLException ex){
             ex.printStackTrace();
         }
 
-        return customers;
+        return customersList;
     }
 
     public static void createCustomer(){
