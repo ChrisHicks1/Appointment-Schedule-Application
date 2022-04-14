@@ -1,6 +1,7 @@
 package controller;
 
 
+import Database.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +30,7 @@ import java.util.*;
 
 interface LoginActivity{
     public String getFileName();
-}//maybe something different
+}
 
 
 public class LoginController implements Initializable {
@@ -38,7 +39,7 @@ public class LoginController implements Initializable {
 
     LoginActivity loginActivity = () -> {
         return "login_activity.txt";
-    };//maybe something different
+    };
 
     private ResourceBundle resourceBundle;
     @FXML
@@ -89,28 +90,28 @@ public class LoginController implements Initializable {
 
 
     /**button logs into app*/
-    public void onLogin(ActionEvent actionEvent) throws IOException {
+    public void onLogin(ActionEvent actionEvent) throws IOException{
 
 
-       /* userNameEmpty(userName.getText());
-        passwordEmpty(password.getText());
+        userNameEmpty(txtUserName.getText());
+        passwordEmpty(txtPassword.getText());
 
         fileCreate();
 
         try{
-            boolean valid = userSearch.checkUserAndPassword(userName.getText(), password.getText());
+            boolean valid = UserQuery.checkUserAndPassword(txtUserName.getText(), txtPassword.getText());
         if (valid) {
-            loginSucess();
+            loginSuccess();
 
             try{
             Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(root, 850, 700);
-            stage.setTitle("Add Product");
+            Scene scene = new Scene(root, 250, 450);
+            stage.setTitle("Main Menu");
             stage.setScene(scene);
             stage.show();
         }
-            catch (Exception e){
+            catch (IOException e){
                 e.printStackTrace();
 
                 if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en"));
@@ -129,9 +130,9 @@ public class LoginController implements Initializable {
             alert.setContentText(resourceBundle.getString("invalidLogin"));
             alert.showAndWait();
         }
-        }catch (SQLException e){
-            e.printStackTrace();
-        } */
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }
     }
 
 
@@ -155,7 +156,7 @@ public class LoginController implements Initializable {
             FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
-            fileWriter.write("Successful Login: Username: " + userName.getText() + " Password: " + password.getText() + " TimeStamp: " + simpleDateFormat);
+            fileWriter.write("Successful Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + simpleDateFormat);
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -168,7 +169,7 @@ public class LoginController implements Initializable {
             FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
             Date date = new Date(System.currentTimeMillis());
-            fileWriter.write("Failed Login: Username: " + userName.getText() + " Password: " + password.getText() + " TimeStamp: " + simpleDateFormat);
+            fileWriter.write("Failed Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + simpleDateFormat);
             fileWriter.close();
         } catch (IOException e){
             e.printStackTrace();
@@ -179,8 +180,8 @@ public class LoginController implements Initializable {
 
 
     /**Checks if username field is filled in*/
-    private void userNameEmpty(String userName){
-        if(userName.isEmpty()) {
+    private void userNameEmpty(String txtUserName){
+        if(txtUserName.isEmpty()) {
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(resourceBundle.getString("error"));
@@ -191,8 +192,8 @@ public class LoginController implements Initializable {
     }
 
     /**Checks if password field is filled in*/
-    private void passwordEmpty(String password){
-        if(password.isEmpty()) {
+    private void passwordEmpty(String txtPassword){
+        if(txtPassword.isEmpty()) {
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(resourceBundle.getString("error"));
