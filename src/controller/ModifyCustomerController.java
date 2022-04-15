@@ -1,5 +1,6 @@
 package controller;
 
+import Database.CustomerQuery;
 import Database.DBConnection;
 import Database.DBQuery;
 import javafx.event.ActionEvent;
@@ -13,6 +14,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Customer;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -36,8 +38,28 @@ public class ModifyCustomerController {
     @FXML
     private ComboBox<String> comModifyDivision;
 
-    public void onSave(ActionEvent actionEvent) throws IOException{
+    int customerIndex;
 
+    public void init(Customer customer){
+        customerIndex = Customer.getAllCustomers().indexOf(customer);
+        txtModifyCusName.setText(customer.getCustomer_Name());
+        txtModifyCusAddress.setText(customer.getAddress());
+        txtModifyPostal.setText(customer.getPostal_Code());
+        txtModifyPhone.setText(customer.getPostal_Code());
+
+    }
+
+
+
+
+    public void onSave(ActionEvent actionEvent) throws IOException{
+        boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
+
+        if(valid){
+            try {
+                boolean success = CustomerQuery.updateCustomer(Integer.parseInt(txtModifyCusId.getText()), txtModifyCusName.getText(), txtModifyPostal.getText(), txtModifyPhone.getText(), comModifyCountry.getValue(), comModifyDivision.getValue());
+            }
+        }
 
 
         {
@@ -55,13 +77,7 @@ public class ModifyCustomerController {
  //   }
 
 
-    public static int update ( int Customer_ID, String Cusomter_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
 
-        String sql = "UPDATE customers SET Cusomter_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ?";
-        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
-
-        ps.setString(1, Customer_Name);
-    }
 
 
 

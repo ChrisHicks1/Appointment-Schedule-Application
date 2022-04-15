@@ -58,17 +58,37 @@ public class CustomerViewController implements Initializable {
         stage.show();
     }
 
+    private static Customer selectedCustomer;
+    private static int selectedCustomerIndex;
+
+
     public void toCusModify(ActionEvent actionEvent) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyCustomer.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 450, 550);
-        stage.setTitle("Modify Customer");
-        stage.setScene(scene);
-        stage.show();
+        selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
+        selectedCustomerIndex = getAllCustomers().indexOf(selectedCustomer);
+        if (selectedCustomer == null) {
+            Alert nullAlert = new Alert(Alert.AlertType.ERROR);
+            nullAlert.setTitle("Error");
+            nullAlert.setHeaderText("Customer can NOT be Modified");
+            nullAlert.setContentText("No Customer Selected");
+            nullAlert.showAndWait();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ModifyCustomer.fxml"));
+                Parent modifyCustomer = loader.load();
+                ModifyCustomerController modifiedCustomer = loader.getController();
+                modifiedCustomer.init(selectedCustomer);
 
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(modifyCustomer, 450, 550);
+                stage.setTitle("Modify Customer");
+                stage.setScene(scene);
+                stage.show();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
-
     public void toCusDelete(ActionEvent actionEvent) {
     }
 

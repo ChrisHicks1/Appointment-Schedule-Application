@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 
 public class Customer {
 
+    private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
 
 
     private int Customer_ID;
@@ -60,7 +61,7 @@ public class Customer {
 
     public void setDivision_ID(int Division_ID){this.Division_ID = Division_ID;}
 
-
+    public static ObservableList<Customer> getAllCustomers(){ return allCustomers; }
 
 
 }
