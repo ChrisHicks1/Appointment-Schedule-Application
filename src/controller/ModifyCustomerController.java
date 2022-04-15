@@ -53,7 +53,7 @@ public class ModifyCustomerController {
 
 
     public void onSave(ActionEvent actionEvent) throws IOException{
-        boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
+       /* boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
 
         if(valid){
             try {
@@ -69,7 +69,7 @@ public class ModifyCustomerController {
             stage.setTitle("Customer View");
             stage.setScene(scene);
             stage.show();
-        }
+        }*/
     }
 
   //  private boolean isEmpty(String User_Name, String Address, String Postal_Code, String Phone, String Country, String Division){

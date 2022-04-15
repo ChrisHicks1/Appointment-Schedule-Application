@@ -50,12 +50,32 @@ public class CustomerQuery {
         return customersList;
     }
 
-    public static void createCustomer(){
+    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone){
+        try{
+            String sqlcc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?)";
 
+            PreparedStatement pscc = DBConnection.getConnection().prepareStatement(sqlcc);
+
+            pscc.setString(1, Customer_Name);
+            pscc.setString(2, Address);
+            pscc.setString(3, Postal_Code);
+            pscc.setString(4, Phone);
+
+            pscc.execute();
+
+            ResultSet rs = pscc.getResultSet();
+            rs.next();
+            int Customer_ID = rs.getInt(1);
+
+
+
+        }catch (SQLException ex) {
+            ex.printStackTrace();
+        }
     }
 
 
-    public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
+   /* public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
 
         String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
@@ -76,7 +96,7 @@ public class CustomerQuery {
 
     }
 
-
+*/
 
 
 

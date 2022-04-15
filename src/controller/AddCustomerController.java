@@ -13,6 +13,7 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,7 +45,18 @@ public class AddCustomerController implements Initializable {
 
 
     public void onSave(ActionEvent actionEvent) throws IOException{
+        String Customer_ID = txtAddCusId.getText();
+        String Customer_Name = txtAddCusName.getText();
+        String Address = txtAddCusAddress.getText();
+        String Postal_Code = txtAddCusPost.getText();
+        String Phone = txtAddCusPhone.getText();
 
+        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(addPartCancel, 900, 400);
+        stage.setTitle("Customer View");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
