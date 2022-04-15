@@ -1,6 +1,13 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 public class Division {
+
+    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
+
+
     public int divisionId;
     public String division;
     public int countryId;
@@ -10,6 +17,7 @@ public class Division {
         this.division = division;
         this.countryId = countryId;
     }
+
 
     public int getDivisionId() {
         return divisionId;
@@ -34,5 +42,16 @@ public class Division {
 
     public void setCountryId(int countryId) {
         this.countryId = countryId;
+    }
+
+
+
+    public static ObservableList<Division> getAllDivisions() {
+        return allDivisions;
+    }
+
+    @Override
+    public String toString(){
+        return (Integer.toString(divisionId) + " " + division);
     }
 }

@@ -1,6 +1,15 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+
+
+
 public class Countries {
+
+    private static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
+
     private int countryId;
     private String countryName;
 
@@ -8,6 +17,7 @@ public class Countries {
         this.countryId = countryId;
         this.countryName = countryName;
     }
+
 
     public int getCountryId() {
         return countryId;
@@ -24,5 +34,17 @@ public class Countries {
 
     public void setCountryName(String countryName) {
         this.countryName = countryName;
+    }
+
+
+
+    public static ObservableList<Countries> getAllCountries() {
+        return allCountries;
+    }
+
+
+    @Override
+    public String toString(){
+        return (Integer.toString(countryId) + " " + countryName);
     }
 }

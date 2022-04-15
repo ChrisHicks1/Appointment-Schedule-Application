@@ -50,9 +50,9 @@ public class CustomerQuery {
         return customersList;
     }
 
-    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone){
+    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division){
         try{
-            String sqlcc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?)";
+            String sqlcc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pscc = DBConnection.getConnection().prepareStatement(sqlcc);
 
@@ -60,6 +60,8 @@ public class CustomerQuery {
             pscc.setString(2, Address);
             pscc.setString(3, Postal_Code);
             pscc.setString(4, Phone);
+            pscc.setString(5, String.valueOf(Country));
+            pscc.setString(6, String.valueOf(Division));
 
             pscc.execute();
 
@@ -75,7 +77,7 @@ public class CustomerQuery {
     }
 
 
-   /* public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
+    public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
 
         String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
@@ -84,7 +86,7 @@ public class CustomerQuery {
         ps.setString(2, Address);
         ps.setString(3, Postal_Code);
         ps.setString(4, Phone);
-        ps.setString(5, ComboBox.valueOf(Country));
+        ps.setString(5, String.valueOf(Country));
         ps.setString(6, String.valueOf(Division));
 
         int rowsAffected = ps.executeUpdate();
@@ -96,7 +98,7 @@ public class CustomerQuery {
 
     }
 
-*/
+
 
 
 

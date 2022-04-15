@@ -10,6 +10,8 @@ import java.sql.*;
 
 public class CountryQuery {
 
+
+
     public static ObservableList<Countries> getAllCountries(){
         ObservableList<Countries> clist = FXCollections.observableArrayList();
 
