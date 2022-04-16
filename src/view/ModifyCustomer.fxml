@@ -16,8 +16,8 @@
         <TextField fx:id="txtModifyCusAddress" alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="35" prefWidth="180.0" promptText="123 ABC Street, White Plains" />
         <TextField fx:id="txtModifyPostal" alignment="CENTER" layoutX="170.0" layoutY="265.0" prefHeight="35" prefWidth="180.0" promptText="99999" />
         <TextField fx:id="txtModifyPhone" alignment="CENTER" layoutX="170.0" layoutY="325.0" prefHeight="35" prefWidth="180.0" promptText="999-999-9999" />
-        <ComboBox fx:id="comModifyCountry" layoutX="170.0" layoutY="385.0" prefHeight="35" prefWidth="180.0" />
-        <ComboBox fx:id="comModifyDivision" layoutX="170.0" layoutY="445.0" prefHeight="35" prefWidth="180.0" />
+        <ComboBox fx:id="comModifyCountry" layoutX="170.0" layoutY="385.0" onAction="#onComboCountry" prefHeight="35" prefWidth="180.0" />
+        <ComboBox fx:id="comModifyDivision" layoutX="170.0" layoutY="445.0" onAction="#onComboDivision" prefHeight="35" prefWidth="180.0" />
 
 
 

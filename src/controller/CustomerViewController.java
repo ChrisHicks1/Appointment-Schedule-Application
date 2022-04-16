@@ -64,8 +64,8 @@ public class CustomerViewController implements Initializable {
 
     public void toCusModify(ActionEvent actionEvent) throws IOException {
 
-      /*  selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
-        selectedCustomerIndex = getAllCustomers().indexOf(selectedCustomer);
+        selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
+        selectedCustomerIndex = Customer.getAllCustomers().indexOf(selectedCustomer);
         if (selectedCustomer == null) {
             Alert nullAlert = new Alert(Alert.AlertType.ERROR);
             nullAlert.setTitle("Error");
@@ -87,7 +87,7 @@ public class CustomerViewController implements Initializable {
             }catch (IOException e){
                 e.printStackTrace();
             }
-        }*/
+        }
     }
     public void toCusDelete(ActionEvent actionEvent) {
     }

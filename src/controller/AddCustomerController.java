@@ -55,7 +55,7 @@ public class AddCustomerController implements Initializable {
         Countries Country = comAddCusCountry.getValue();
         Division Division = comAddCusDiv.getValue();
 
-     //   Customer newCustomer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
+      //  Customer newCustomer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
      //   Customer.addCustomer(newCustomer);
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
@@ -91,6 +91,7 @@ public class AddCustomerController implements Initializable {
         comAddCusCountry.setPromptText("Select Country");
 
         comAddCusDiv.setItems(allDivisions);
+        comAddCusDiv.setPromptText("Select Division");
 
 
 

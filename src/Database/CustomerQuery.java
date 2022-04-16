@@ -34,11 +34,11 @@ public class CustomerQuery {
                 String Address = rs.getString("Address");
                 String Postal_Code = rs.getString("Postal_Code");
                 String Phone = rs.getString("Phone");
-                String Division = rs.getString("Division");
                 String Country = rs.getString("Country");
+                String Division = rs.getString("Division");
                 int Division_ID = rs.getInt("Division_ID");
 
-                Customer c = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division, Country, Division_ID);
+                Customer c = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division, Division_ID);
 
                 customersList.add(c);
             }

@@ -1,11 +1,11 @@
 package controller;
 
-import Database.CustomerQuery;
-import Database.DBConnection;
-import Database.DBQuery;
+import Database.*;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -14,13 +14,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.Countries;
 import model.Customer;
+import model.Division;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class ModifyCustomerController {
+public class ModifyCustomerController implements Initializable {
     @FXML
     private Button modifySave;
     @FXML
@@ -34,18 +38,21 @@ public class ModifyCustomerController {
     @FXML
     private TextField txtModifyPhone;
     @FXML
-    private ComboBox<String> comModifyCountry;
+    private ComboBox<Countries> comModifyCountry;
     @FXML
-    private ComboBox<String> comModifyDivision;
+    private ComboBox<Division> comModifyDivision;
 
     int customerIndex;
 
     public void init(Customer customer){
         customerIndex = Customer.getAllCustomers().indexOf(customer);
+        txtModifyCusId.setText(Integer.toString(customer.getCustomer_ID()));
         txtModifyCusName.setText(customer.getCustomer_Name());
         txtModifyCusAddress.setText(customer.getAddress());
         txtModifyPostal.setText(customer.getPostal_Code());
         txtModifyPhone.setText(customer.getPostal_Code());
+        comModifyCountry.setPromptText(customer.getCountry());
+        comModifyDivision.setPromptText(customer.getDivision());
 
     }
 
@@ -53,7 +60,7 @@ public class ModifyCustomerController {
 
 
     public void onSave(ActionEvent actionEvent) throws IOException{
-       /* boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
+     /*   boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
 
         if(valid){
             try {
@@ -91,5 +98,28 @@ public class ModifyCustomerController {
         stage.setTitle("Customer View");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
+        ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
+
+
+        comModifyCountry.setItems(allCountries);
+
+
+        comModifyDivision.setItems(allDivisions);
+
+
+
+    }
+
+    public void onComboCountry(ActionEvent actionEvent) {
+    }
+
+    public void onComboDivision(ActionEvent actionEvent) {
     }
 }

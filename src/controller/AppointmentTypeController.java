@@ -48,7 +48,7 @@ public class AppointmentTypeController implements Initializable {
         appTypeTable.setItems(appointments);
 
         appType.setCellValueFactory(new PropertyValueFactory<>("Type"));
-        //amount.setCellValueFactory(new PropertyValueFactory<>());
+      //  amount.setCellValueFactory(new PropertyValueFactory<>("Amount"));
 
     }
 }
