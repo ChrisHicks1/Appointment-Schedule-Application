@@ -11,20 +11,20 @@
                 <Font name="System Bold" size="48.0" />
             </font>
         </Label>
-        <TableView layoutX="8.0" layoutY="125.0" prefHeight="200.0" prefWidth="737.0">
+        <TableView fx:id="contactTableView" layoutX="8.0" layoutY="125.0" prefHeight="200.0" prefWidth="737.0">
             <columns>
-                <TableColumn prefWidth="120.0" text="Appointment ID" />
-                <TableColumn prefWidth="80.0" text="Title" />
-                <TableColumn prefWidth="85.0" text="Description" />
-                <TableColumn prefWidth="85.0" text="Type" />
-                <TableColumn prefWidth="140.0" text="Start Date and Time" />
-                <TableColumn prefWidth="140.0" text="End Date and Time" />
-                <TableColumn prefWidth="85.0" text="Customer ID" />
+                <TableColumn fx:id="appCol" prefWidth="120.0" text="Appointment ID" />
+                <TableColumn fx:id="titleCol" prefWidth="80.0" text="Title" />
+                <TableColumn fx:id="descCol" prefWidth="85.0" text="Description" />
+                <TableColumn fx:id="typeCol" prefWidth="85.0" text="Type" />
+                <TableColumn fx:id="startCol" prefWidth="140.0" text="Start Date and Time" />
+                <TableColumn fx:id="endCol" prefWidth="140.0" text="End Date and Time" />
+                <TableColumn fx:id="customerCol" prefWidth="85.0" text="Customer ID" />
 
             </columns>
         </TableView>
       <Button layoutX="704.0" layoutY="360.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
-      <ChoiceBox layoutX="303.0" layoutY="360.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="comContact" layoutX="303.0" layoutY="360.0" prefWidth="150.0" />
 
 
     </children>

@@ -15,10 +15,11 @@ public class ContactQuery {
 
 
     public static ObservableList<Contacts> getAllContacts() {
-      /*  ObservableList<Contacts> coList = FXCollections.observableArrayList();
+        ObservableList<Contacts> coList = FXCollections.observableArrayList();
 
         try {
-            String sqlco = "SELECT * FROM contacts AS co INNER JOIN appointments AS a ON a.Appointment_ID = co.Appointment_ID INNER JOIN customers AS c ON c.Customer_ID = co.Customer_ID";
+            //String sqlco = "SELECT * FROM contacts AS co INNER JOIN appointments AS a ON a.Appointment_ID = co.Appointment_ID INNER JOIN customers AS c ON c.Customer_ID = co.Customer_ID";
+            String sqlco = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON co.Contact_ID = a.Contact_ID";
 
             PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqlco);
 
@@ -39,8 +40,6 @@ public class ContactQuery {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return coList; */
-       return null;
-
+        return coList;
     }
 }

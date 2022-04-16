@@ -15,9 +15,11 @@ public class Contacts {
         this.Email = Email;
     }
 
-  /*  public Contacts(int Appointment_ID, String Title, String Description, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID) {
 
-    } */
+
+    public Contacts(int Appointment_ID, String Title, String Description, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID) {
+
+    }
 
 
     public int getContact_ID() {

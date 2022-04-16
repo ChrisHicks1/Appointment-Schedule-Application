@@ -95,9 +95,7 @@ public class AddCustomerController implements Initializable {
         comAddCusDiv.setItems(allDivisions);
 
 
-        if(comAddCusCountry.getSelectionModel().isSelected(1)){
-            comAddCusDiv.selectionModelProperty().
-        }
+
 
     }
 
