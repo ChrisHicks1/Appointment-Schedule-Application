@@ -44,8 +44,6 @@ public class AddCustomerController implements Initializable {
     private ComboBox<Division> comAddCusDiv;
 
 
-    private static ObservableList<Countries> allCountries = FXCollections.observableArrayList();
-    private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
 
 
     public void onSave(ActionEvent actionEvent) throws IOException{

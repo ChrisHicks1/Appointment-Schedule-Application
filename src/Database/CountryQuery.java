@@ -29,8 +29,8 @@ public class CountryQuery {
                 clist.add(C);
             }
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
 
         return clist;

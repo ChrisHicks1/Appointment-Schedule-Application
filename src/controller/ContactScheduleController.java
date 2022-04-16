@@ -1,6 +1,8 @@
 package controller;
 
 import Database.AppointmentQuery;
+import Database.ContactQuery;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,12 +11,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Contacts;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,26 +26,27 @@ import java.util.ResourceBundle;
 public class ContactScheduleController implements Initializable {
 
 
-    static ObservableList<Appointments> appointments;
+    private static ObservableList<Appointments> appointments = FXCollections.observableArrayList();;
+    static ObservableList<Contacts> contacts = FXCollections.observableArrayList();
 
     @FXML
-    private TableView contactTableView;
+    public TableView<Appointments> contactTableView;
     @FXML
-    private TableColumn appCol;
+    public TableColumn appCol;
     @FXML
-    private TableColumn titleCol;
+    public TableColumn titleCol;
     @FXML
-    private TableColumn descCol;
+    public TableColumn descCol;
     @FXML
-    private TableColumn typeCol;
+    public TableColumn typeCol;
     @FXML
-    private TableColumn startCol;
+    public TableColumn startCol;
     @FXML
-    private TableColumn endCol;
+    public TableColumn endCol;
     @FXML
-    private TableColumn customerCol;
+    public TableColumn customerCol;
     @FXML
-    private ChoiceBox comContact;
+    public ComboBox<Contacts> comContact;
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
@@ -59,13 +63,24 @@ public class ContactScheduleController implements Initializable {
     }
 
 
+    public void onCombo(ActionEvent actionEvent) {
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+
+
+        comContact.setItems(allContacts);
+        comContact.setPromptText("Select Contact");
+
+
+
+
         appointments = AppointmentQuery.getAllAppointments();
 
-        contactTableView.setItems(appointments);
 
         appCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
         titleCol.setCellValueFactory(new PropertyValueFactory<>("Title"));
@@ -74,11 +89,18 @@ public class ContactScheduleController implements Initializable {
         startCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("End"));
         customerCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
+        contactTableView.setItems(appointments);
+
+
+
+
+
 
 
 
 
     }
+
 
 
 }

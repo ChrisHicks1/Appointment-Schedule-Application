@@ -1,10 +1,14 @@
 package model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
 public class Contacts {
+
+    private static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
+
     public int Contact_ID;
     public String Contact_Name;
     public String Email;
@@ -16,10 +20,6 @@ public class Contacts {
     }
 
 
-
-    public Contacts(int Appointment_ID, String Title, String Description, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID) {
-
-    }
 
 
     public int getContact_ID() {
@@ -46,5 +46,17 @@ public class Contacts {
 
     public void setEmail(String Email) {
         this.Email = Email;
+    }
+
+
+
+    public static ObservableList<Contacts> getAllContacts() {
+        return allContacts;
+    }
+
+
+    @Override
+    public String toString(){
+        return (Integer.toString(Contact_ID) + " " + Contact_Name);
     }
 }
