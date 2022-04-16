@@ -1,6 +1,7 @@
 package controller;
 
 import Database.*;
+import com.sun.jdi.Value;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,10 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Countries;
 import model.Customer;
@@ -20,8 +19,7 @@ import model.Division;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyCustomerController implements Initializable {
@@ -42,7 +40,10 @@ public class ModifyCustomerController implements Initializable {
     @FXML
     private ComboBox<Division> comModifyDivision;
 
+    private static Customer selectedCustomer;
+
     int customerIndex;
+
 
     public void init(Customer customer){
         customerIndex = Customer.getAllCustomers().indexOf(customer);
@@ -52,36 +53,59 @@ public class ModifyCustomerController implements Initializable {
         txtModifyPostal.setText(customer.getPostal_Code());
         txtModifyPhone.setText(customer.getPostal_Code());
         comModifyCountry.setPromptText(customer.getCountry());
-        comModifyDivision.setPromptText(customer.getDivision());
+       comModifyDivision.setPromptText(customer.getDivision());
 
     }
 
 
 
-
     public void onSave(ActionEvent actionEvent) throws IOException{
-     /*   boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText());
+        boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText(), comModifyCountry.getPromptText(), comModifyDivision.getPromptText());
 
-        if(valid){
+        if(valid) {
             try {
                 boolean success = CustomerQuery.updateCustomer(Integer.parseInt(txtModifyCusId.getText()), txtModifyCusName.getText(), txtModifyPostal.getText(), txtModifyPhone.getText(), comModifyCountry.getValue(), comModifyDivision.getValue());
+
+                if (success){
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Success");
+                    alert.setHeaderText("Modify Success");
+                    alert.setContentText("Successfully Modified Customer");
+                    Optional<ButtonType> result = alert.showAndWait();
+
+                    if(result.isPresent() && (result.get() == ButtonType.OK)){
+                        Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                        Scene scene = new Scene(modifyCancel, 900, 400);
+                        stage.setTitle("Customer View");
+                        stage.setScene(scene);
+                        stage.show();
+                    }
+                    }
+                } catch (IOException e){
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Error Loading");
+
             }
+            }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Failed to Modify Customer");
         }
 
-
+/*
         {
-            Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+            Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(addPartCancel, 900, 400);
+            Scene scene = new Scene(modifyCancel, 900, 400);
             stage.setTitle("Customer View");
             stage.setScene(scene);
             stage.show();
         }*/
     }
 
-  //  private boolean isEmpty(String User_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
-
- //   }
 
 
 
@@ -98,6 +122,52 @@ public class ModifyCustomerController implements Initializable {
         stage.setTitle("Customer View");
         stage.setScene(scene);
         stage.show();
+    }
+
+    private boolean notEmpty(String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
+        if(Customer_Name.isEmpty()) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Customer Name Required");
+                alert.showAndWait();
+                return false;
+        }
+        if(Address.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Address Required");
+            alert.showAndWait();
+            return false;
+        }
+        if(Postal_Code.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Postal_Code Required");
+            alert.showAndWait();
+            return false;
+        }
+        if(Phone.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Phone Required");
+            alert.showAndWait();
+            return false;
+        }
+        if(Country.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Country Required");
+            alert.showAndWait();
+            return false;
+        }
+        if(Division.isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Division Required");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
 

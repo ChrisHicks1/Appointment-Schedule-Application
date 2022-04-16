@@ -1,6 +1,7 @@
 package Database;
 
 import javafx.scene.control.ComboBox;
+import model.Countries;
 import model.Customer;
 import model.Division;
 import javafx.collections.FXCollections;
@@ -77,9 +78,9 @@ public class CustomerQuery {
     }
 
 
-    public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division) throws SQLException {
+    public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division) throws SQLException {
 
-        String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ? WHERE Customer_ID = ?";
+        String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
         ps.setString(1, Customer_Name);
@@ -97,8 +98,6 @@ public class CustomerQuery {
     public static void deleteCustomer(){
 
     }
-
-
 
 
 
