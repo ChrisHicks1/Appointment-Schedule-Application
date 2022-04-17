@@ -1,6 +1,7 @@
 package controller;
 
 import Database.CountryQuery;
+import Database.CustomerQuery;
 import Database.DivisionQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -57,6 +58,8 @@ public class AddCustomerController implements Initializable {
 
       //  Customer newCustomer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
      //   Customer.addCustomer(newCustomer);
+        CustomerQuery.createCustomer(Customer_Name, Address, Postal_Code, Phone, Country.getCountryName(), Division.getDivision());
+
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -93,6 +96,9 @@ public class AddCustomerController implements Initializable {
         comAddCusDiv.setItems(allDivisions);
         comAddCusDiv.setPromptText("Select Division");
 
+
+        comAddCusCountry.setItems(CountryQuery.getAllCountries());
+        comAddCusDiv.setItems(DivisionQuery.getAllDivisions());
 
 
 

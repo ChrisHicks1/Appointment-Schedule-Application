@@ -99,8 +99,15 @@ public class MainMenuController {
             stage.show();
         }
 
-        public void toLogOut(ActionEvent actionEvent) {
+        public void toLogOut(ActionEvent actionEvent) throws IOException {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root, 450, 450);
+            stage.setTitle("Login");
+            stage.setScene(scene);
+            stage.show();
         }
+        
 
 
 

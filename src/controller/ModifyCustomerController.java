@@ -19,6 +19,7 @@ import model.Division;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -59,43 +60,54 @@ public class ModifyCustomerController implements Initializable {
 
 
 
-    public void onSave(ActionEvent actionEvent) throws IOException{
-        boolean valid = notEmpty(txtModifyCusName.getText(), txtModifyCusAddress.getText(), txtModifyPostal.getText(), txtModifyPhone.getText(), comModifyCountry.getPromptText(), comModifyDivision.getPromptText());
-
+    public void onSave(ActionEvent actionEvent) {
+     /*   boolean valid = notEmpty(txtModifyCusName.getText(),
+                txtModifyCusAddress.getText(),
+                txtModifyPostal.getText(),
+                txtModifyPhone.getText(),
+                comModifyCountry.setItems(CountryQuery.getAllCountries()),
+                comModifyDivision.getValue());
+    }
         if(valid) {
             try {
-                boolean success = CustomerQuery.updateCustomer(Integer.parseInt(txtModifyCusId.getText()), txtModifyCusName.getText(), txtModifyPostal.getText(), txtModifyPhone.getText(), comModifyCountry.getValue(), comModifyDivision.getValue());
+               boolean success = CustomerQuery.updateCustomer((Integer.parseInt(txtModifyCusId.getText())),
+                       txtModifyCusName.getText(),
+                       txtModifyCusAddress.getText(),
+                       txtModifyPostal.getText(),
+                       txtModifyPhone.getText(),
+                       comModifyCountry.getPromptText(),
+                       comModifyDivision.getPromptText());
 
-                if (success){
+                if (success) {
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText("Modify Success");
                     alert.setContentText("Successfully Modified Customer");
                     Optional<ButtonType> result = alert.showAndWait();
 
-                    if(result.isPresent() && (result.get() == ButtonType.OK)){
-                        Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
-                        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                        Scene scene = new Scene(modifyCancel, 900, 400);
-                        stage.setTitle("Customer View");
-                        stage.setScene(scene);
-                        stage.show();
+                        if (result.isPresent() && (result.get() == ButtonType.OK)) {
+                            Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+                            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                            Scene scene = new Scene(modifyCancel, 900, 400);
+                            stage.setTitle("Customer View");
+                            stage.setScene(scene);
+                            stage.show();
+                        }
+                    }} catch (IOException | SQLException e) {
+                        e.printStackTrace();
+                        Alert newAlert = new Alert(Alert.AlertType.ERROR);
+                        newAlert.setTitle("Error");
+                        newAlert.setContentText("Error Loading");
                     }
-                    }
-                } catch (IOException e){
-                e.printStackTrace();
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Error Loading");
 
-            }
+
             }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Failed to Modify Customer");
         }
 
-/*
+
         {
             Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();

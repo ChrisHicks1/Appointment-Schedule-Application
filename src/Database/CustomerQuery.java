@@ -51,7 +51,7 @@ public class CustomerQuery {
         return customersList;
     }
 
-    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, ComboBox Country, ComboBox Division){
+    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
         try{
             String sqlcc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?)";
 
@@ -70,6 +70,14 @@ public class CustomerQuery {
             rs.next();
             int Customer_ID = rs.getInt(1);
 
+            String sqlc = "INSERT INTO customers VALUES(NULL, ?, ?)";
+            PreparedStatement psc = DBConnection.getConnection().prepareStatement(sqlc);
+
+
+            psc.setString(1, Customer_Name);
+            psc.setInt(2, Customer_ID);
+
+            psc.execute();
 
 
         }catch (SQLException ex) {
@@ -78,20 +86,22 @@ public class CustomerQuery {
     }
 
 
-    public static int updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division) throws SQLException {
+    public static boolean updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division) throws SQLException {
 
         String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
-        ps.setString(1, Customer_Name);
-        ps.setString(2, Address);
-        ps.setString(3, Postal_Code);
-        ps.setString(4, Phone);
-        ps.setString(5, String.valueOf(Country));
-        ps.setString(6, String.valueOf(Division));
+        ps.setInt(1, Customer_ID);
+        ps.setString(2, Customer_Name);
+        ps.setString(3, Address);
+        ps.setString(4, Postal_Code);
+        ps.setString(5, Phone);
+        ps.setString(6, String.valueOf(Country));
+        ps.setString(7, String.valueOf(Division));
+
 
         int rowsAffected = ps.executeUpdate();
-        return rowsAffected;
+        return true;
 
     }
 
