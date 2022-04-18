@@ -1,6 +1,8 @@
 package controller;
 
 import Database.AppointmentQuery;
+import Database.DBConnection;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -17,6 +19,7 @@ import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -84,7 +87,21 @@ public class AppointmentCalendarController implements Initializable{
         }
     }
 
-    public void toAppDelete(ActionEvent actionEvent) {
+    public void toAppDelete(ActionEvent actionEvent) throws SQLException{
+        selectedApp = appTableView.getSelectionModel().getSelectedItem();
+        if(selectedApp == null){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Appointment can NOT be Deleted");
+            alert.setContentText("No Appointment Selected");
+            alert.showAndWait();
+        }else{
+            try{
+                AppointmentQuery.deleteAppointment(selectedAppIndex);
+            }catch (SQLException ex){
+                ex.printStackTrace();
+            }
+        }
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}

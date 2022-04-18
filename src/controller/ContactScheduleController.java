@@ -21,6 +21,7 @@ import model.Contacts;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class ContactScheduleController implements Initializable {
@@ -63,8 +64,8 @@ public class ContactScheduleController implements Initializable {
     }
 
 
-    public void onCombo(ActionEvent actionEvent) {
-        Contacts selcon = comContact.getSelectionModel().getSelectedItem();
+    public void onCombo(ActionEvent actionEvent) throws SQLException {
+        AppointmentQuery.select();
     }
 
 

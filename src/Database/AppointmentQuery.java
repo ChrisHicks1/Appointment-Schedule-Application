@@ -70,6 +70,24 @@ public class AppointmentQuery {
             ex.printStackTrace();
         }return 0;
     }
+        public static int deleteAppointment(int Appointment_ID) throws SQLException {
+            String sqld = "DELETE FROM appointments WHERE Appointment_ID = ?";
+            PreparedStatement ps = DBConnection.conn.prepareStatement(sqld);
+            ps.setInt(1, Appointment_ID);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected;
+        }
 
+    public static void select() throws SQLException {
+        String sqls = "SELECT * FROM appointments AS a FULL JOIN contacts AS c ON a.Contact_ID = c.Contact_ID";
+        PreparedStatement ps = DBConnection.conn.prepareStatement(sqls);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            int Appointment_ID = rs.getInt("Appointment_ID");
+            String Contact_Name = rs.getString("Contact_Name");
+            System.out.print(Appointment_ID + " | ");
+            System.out.print(Contact_Name + "\n");
+        }
+    }
 
 }

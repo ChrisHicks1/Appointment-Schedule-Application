@@ -89,8 +89,29 @@ public class CustomerViewController implements Initializable {
             }
         }
     }
-    public void toCusDelete(ActionEvent actionEvent) {
+    public void toCusDelete(ActionEvent actionEvent) throws SQLException {
+        selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
+        selectedCustomerIndex = CustomerQuery.getCustomer().indexOf(selectedCustomer);
+
+        if (selectedCustomer == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Customer can NOT be Deleted");
+            alert.setContentText("No Customer Selected");
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setHeaderText("Are You Sure You Want To Delete?");
+            alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                CustomerQuery.deleteCustomer(selectedCustomer);
+                cusTableView.setItems(CustomerQuery.getCustomer());
+            }
+        }
     }
+
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
