@@ -64,6 +64,7 @@ public class ContactScheduleController implements Initializable {
 
 
     public void onCombo(ActionEvent actionEvent) {
+        Contacts selcon = comContact.getSelectionModel().getSelectedItem();
     }
 
 
@@ -76,7 +77,18 @@ public class ContactScheduleController implements Initializable {
         comContact.setItems(allContacts);
         comContact.setPromptText("Select Contact");
 
-
+        /*
+        contactTableView.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
+            if(newSelection != null){
+                for(int i = 0; i < comContact.getItems().size(); i++){
+                    Contacts abp = comContact.getItems().get(i);
+                    if(abp.getContact_ID() == newSelection.getContact_ID() && abp.getContact_Name().equals(newSelection.getContact_Name())){
+                        comContact.setValue(abp);
+                        break;
+                    }
+                }
+            }
+        }); */
 
 
         appointments = AppointmentQuery.getAllAppointments();
@@ -91,17 +103,6 @@ public class ContactScheduleController implements Initializable {
         customerCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
         contactTableView.setItems(appointments);
 
-
-
-
-
-
-
-
-
     }
-
-
-
 }
 
