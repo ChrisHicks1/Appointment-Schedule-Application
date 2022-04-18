@@ -27,9 +27,12 @@
 
         </columns>
       </TableView>
-      <RadioButton layoutX="700.0" layoutY="105.0" mnemonicParsing="false" text="Month Appointments" />
-      <RadioButton layoutX="850.0" layoutY="105.0" mnemonicParsing="false" text="Week Appointments" />
-      <RadioButton layoutX="575.0" layoutY="105.0" mnemonicParsing="false" selected="true" text="All Appointments" />
+      <RadioButton fx:id="radioMonth" layoutX="700.0" layoutY="105.0" mnemonicParsing="false" onAction="#onMonth" text="Month Appointments">
+         <toggleGroup>
+            <ToggleGroup fx:id="tGroup" />
+         </toggleGroup></RadioButton>
+      <RadioButton fx:id="radioWeek" layoutX="850.0" layoutY="105.0" mnemonicParsing="false" onAction="#onWeek" text="Week Appointments" toggleGroup="$tGroup" />
+      <RadioButton fx:id="radioAll" layoutX="575.0" layoutY="105.0" mnemonicParsing="false" onAction="#onAll" selected="true" text="All Appointments" toggleGroup="$tGroup" />
       <Button layoutX="915.0" layoutY="391.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
        <Button layoutX="760.0" layoutY="391.0" mnemonicParsing="false" onAction="#toAppDelete" prefWidth="60" text="Delete" />
        <Button layoutX="680.0" layoutY="391.0" mnemonicParsing="false" onAction="#toAppModify" prefWidth="60" text="Modify" />

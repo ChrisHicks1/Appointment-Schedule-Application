@@ -1,9 +1,17 @@
 package model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointments {
+
+    private static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
+
+
+
     private int Appointment_ID;
     private String Title;
     private String Description;
@@ -114,5 +122,7 @@ public class Appointments {
     public void setContact_ID(int Contact_ID) {
         this.Contact_ID = Contact_ID;
     }
+
+    public static ObservableList<Appointments> getAllAppointments(){ return allAppointments; }
 
 }

@@ -34,12 +34,10 @@
         <Label layoutX="52.0" layoutY="400.0" prefHeight="25" prefWidth="110.0" text="User_ID" />
         <Label layoutX="52.0" layoutY="435.0" prefHeight="25" prefWidth="110.0" text="Contact_ID" />
 
-        <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="295.0" prefHeight="25.0" prefWidth="50.0" />
-        <ComboBox fx:id="addStartMin" layoutX="320.0" layoutY="295.0" prefHeight="25.0" prefWidth="50.0" />
+        <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
         <DatePicker fx:id="addStartDate" layoutX="170.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
 
-        <ComboBox fx:id="addEndHour" layoutX="270.0" layoutY="330.0" prefHeight="25.0" prefWidth="50.0" />
-        <ComboBox fx:id="addEndMin" layoutX="320.0" layoutY="330.0" prefHeight="25.0" prefWidth="50.0" />
+        <ComboBox fx:id="addEndHour" layoutX="270.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
         <DatePicker fx:id="addEndDate" layoutX="170.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
 
 

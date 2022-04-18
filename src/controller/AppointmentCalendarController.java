@@ -8,12 +8,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Customer;
 
 
 import java.io.IOException;
@@ -38,6 +37,15 @@ public class AppointmentCalendarController implements Initializable{
     public TableColumn appUserId;
     public TableView<Appointments> appTableView;
     public TableColumn appContactId;
+    public RadioButton radioMonth;
+    public ToggleGroup tGroup;
+    public RadioButton radioWeek;
+    public RadioButton radioAll;
+
+    private static Appointments selectedApp;
+    private static int selectedAppIndex;
+
+
 
     public void toAppAdd(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
@@ -50,13 +58,30 @@ public class AppointmentCalendarController implements Initializable{
 
     public void toAppModify(ActionEvent actionEvent) throws IOException {
 
-        Parent root = FXMLLoader.load(getClass().getResource("/view/ModifyAppointment.fxml"));
-        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 450, 550);
-        stage.setTitle("Modify Appointment");
-        stage.setScene(scene);
-        stage.show();
+        selectedApp = appTableView.getSelectionModel().getSelectedItem();
+        selectedAppIndex = Customer.getAllCustomers().indexOf(selectedApp);
+        if (selectedApp == null) {
+            Alert nullAlert = new Alert(Alert.AlertType.ERROR);
+            nullAlert.setTitle("Error");
+            nullAlert.setHeaderText("Appointment can NOT be Modified");
+            nullAlert.setContentText("No Appointment Selected");
+            nullAlert.showAndWait();
+        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/ModifyAppointment.fxml"));
+                Parent modifyApp = loader.load();
+                ModifyAppointmentController modifiedApp = loader.getController();
+                modifiedApp.init(selectedApp);
 
+                Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(modifyApp, 450, 550);
+                stage.setTitle("Modify Appointment");
+                stage.setScene(scene);
+                stage.show();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
     public void toAppDelete(ActionEvent actionEvent) {
@@ -98,5 +123,14 @@ public class AppointmentCalendarController implements Initializable{
 
 
 
+    }
+
+    public void onMonth(ActionEvent actionEvent) {
+    }
+
+    public void onWeek(ActionEvent actionEvent) {
+    }
+
+    public void onAll(ActionEvent actionEvent) {
     }
 }
