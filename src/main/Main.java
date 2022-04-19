@@ -1,6 +1,7 @@
 package main;
 
 
+import Database.AppointmentQuery;
 import Database.CountryQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -31,7 +32,6 @@ public class Main extends Application{
 
         DBConnection.startConnection();
         CountryQuery.checkDateConversion();
-
 
         launch(args);
         DBConnection.closeConnection();

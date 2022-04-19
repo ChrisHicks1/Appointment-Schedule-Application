@@ -19,7 +19,7 @@
       <Button layoutX="55.0" layoutY="190.0" mnemonicParsing="false" onAction="#toViewCustomers" prefHeight="30" prefWidth="140" text="View Customers" />
       <Button layoutX="55.0" layoutY="240.0" mnemonicParsing="false" onAction="#toAppTypes" prefHeight="30" prefWidth="140" text="Appointment Types" />
       <Button layoutX="55.0" layoutY="290.0" mnemonicParsing="false" onAction="#toContactSched" prefHeight="30" prefWidth="140" text="Contact Schedule" />
-      <Button layoutX="55.0" layoutY="340.0" mnemonicParsing="false" prefHeight="30" prefWidth="140" text="I dont know yet" />
+      <Button layoutX="55.0" layoutY="340.0" mnemonicParsing="false" onAction="#toNotYet" prefHeight="30" prefWidth="140" text="I dont know yet" />
       <Button layoutX="55.0" layoutY="390.0" mnemonicParsing="false" onAction="#toLogOut" prefHeight="30" prefWidth="140" text="Log Out" />
 
 

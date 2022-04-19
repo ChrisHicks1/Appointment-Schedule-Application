@@ -4,13 +4,13 @@ import Database.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Appointments {
 
     private static ObservableList<Appointments> allAppointments = FXCollections.observableArrayList();
-
 
 
     private int Appointment_ID;
@@ -20,7 +20,9 @@ public class Appointments {
     private String Contact_Name;
     private String Type;
     private LocalDateTime Start;
+
     private LocalDateTime End;
+
     private int Customer_ID;
     private int User_ID;
     private int Contact_ID;
@@ -34,7 +36,9 @@ public class Appointments {
         this.Contact_Name = Contact_Name;
         this.Type = Type;
         this.Start = Start;
+
         this.End = End;
+
         this.Customer_ID = Customer_ID;
         this.User_ID = User_ID;
         this.Contact_ID = Contact_ID;
@@ -93,12 +97,17 @@ public class Appointments {
     }
 
 
+
+
+
     public LocalDateTime getEnd() {
         return End;
     }
     public void setEnd(LocalDateTime End) {
         this.End = End;
     }
+
+
 
 
     public int getCustomer_ID() {
@@ -126,8 +135,12 @@ public class Appointments {
 
     public static ObservableList<Appointments> getAllAppointments(){ return allAppointments; }
 
+
+    //Doesnt really work need to fix
     private static ObservableList<AppointmentQuery> associatedCustomers = FXCollections.observableArrayList();
 
-    public static ObservableList<AppointmentQuery> getAllAssociatedCustomers(){ return associatedCustomers; }
+    public static ObservableList<AppointmentQuery> getAllAssociatedCustomers() {
+        return associatedCustomers;
+    }
 
 }

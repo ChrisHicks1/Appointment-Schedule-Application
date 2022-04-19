@@ -87,6 +87,10 @@ public class CustomerViewController implements Initializable {
             }
         }
     }
+
+
+
+    //need to finish
     public void toCusDelete(ActionEvent actionEvent) throws SQLException {
         selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
         selectedCustomerIndex = CustomerQuery.getCustomer().indexOf(selectedCustomer);
@@ -98,21 +102,32 @@ public class CustomerViewController implements Initializable {
             alert.setContentText("No Customer Selected");
             alert.showAndWait();
 
-        } else if (selectedCustomer != null && Appointments.getAllAssociatedCustomers().size() > 0) {
+        }/* else if (AppointmentQuery.getAllAssociatedCustomers(selectedCustomer.getCustomer_ID(i).size) > 0) {
             Alert alert1 = new Alert(Alert.AlertType.ERROR);
             alert1.setTitle("Error");
             alert1.setHeaderText("Associated Appointments");
             alert1.setContentText("Can NOT Delete Customers With Appointments");
 
-        } else if (selectedCustomer != null && Appointments.getAllAssociatedCustomers().size() == 0) {
+        }*/ else {//if(AppointmentQuery.getAllAssociatedCustomers(selectedCustomer.getCustomer_ID()) == 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete");
             alert.setHeaderText("Are You Sure You Want To Delete?");
             alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                CustomerQuery.deleteCustomer(selectedCustomer.getCustomer_ID());
-                cusTableView.setItems(CustomerQuery.getCustomer());
+                for (int i = 0; i < AppointmentQuery.getAllAppointments().size(); i++) {
+                    if (AppointmentQuery.getAllAppointments().get(i).getAllAssociatedCustomers().contains(selectedCustomer)) {
+                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                        alert1.setTitle("Error");
+                        alert1.setHeaderText("Associated Appointments");
+                        alert1.setContentText("Can NOT Delete Customers With Appointments");
+                    } else {
+                        CustomerQuery.deleteCustomer(selectedCustomer.getCustomer_ID());
+                        cusTableView.setItems(CustomerQuery.getCustomer());
+                    }
+
+
+                }
             }
         }
     }

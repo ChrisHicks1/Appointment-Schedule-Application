@@ -1,5 +1,6 @@
 package controller;
 
+import Database.AppointmentQuery;
 import Database.CustomerQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -107,9 +108,10 @@ public class MainMenuController {
             stage.setScene(scene);
             stage.show();
         }
-        
 
+    public void toNotYet(ActionEvent actionEvent) throws SQLException {
 
+    }
 
 
     public class MainMenu implements Initializable {
