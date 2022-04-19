@@ -1,6 +1,7 @@
 package controller;
 
 import Database.AppointmentQuery;
+import Database.CustomerQuery;
 import Database.DBConnection;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.collections.ObservableList;
@@ -95,11 +96,15 @@ public class AppointmentCalendarController implements Initializable{
             alert.setHeaderText("Appointment can NOT be Deleted");
             alert.setContentText("No Appointment Selected");
             alert.showAndWait();
-        }else{
-            try{
-                AppointmentQuery.deleteAppointment(selectedAppIndex);
-            }catch (SQLException ex){
-                ex.printStackTrace();
+        }else {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Delete");
+            alert.setHeaderText("Are You Sure You Want To Delete?");
+            alert.setContentText("Press OK to delete this Appointment. \nPress Cancel to cancel.");
+            alert.showAndWait();
+            if (alert.getResult() == ButtonType.OK) {
+                CustomerQuery.deleteCustomer(selectedApp.getAppointment_ID());
+                appTableView.setItems(AppointmentQuery.getAllAppointments());
             }
         }
     }

@@ -1,5 +1,6 @@
 package model;
 
+import Database.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -124,5 +125,9 @@ public class Appointments {
     }
 
     public static ObservableList<Appointments> getAllAppointments(){ return allAppointments; }
+
+    private static ObservableList<AppointmentQuery> associatedCustomers = FXCollections.observableArrayList();
+
+    public static ObservableList<AppointmentQuery> getAllAssociatedCustomers(){ return associatedCustomers; }
 
 }

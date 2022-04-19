@@ -2,6 +2,7 @@ package Database;
 import model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Customer;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -74,8 +75,8 @@ public class AppointmentQuery {
             String sqld = "DELETE FROM appointments WHERE Appointment_ID = ?";
             PreparedStatement ps = DBConnection.conn.prepareStatement(sqld);
             ps.setInt(1, Appointment_ID);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected;
+            int results = ps.executeUpdate();
+            return results;
         }
 
     public static void select() throws SQLException {
@@ -89,5 +90,6 @@ public class AppointmentQuery {
             System.out.print(Contact_Name + "\n");
         }
     }
+
 
 }

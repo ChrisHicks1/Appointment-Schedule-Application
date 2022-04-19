@@ -1,11 +1,10 @@
 package controller;
 
+import Database.AppointmentQuery;
 import Database.CustomerQuery;
-import Database.DBConnection;
-import javafx.collections.FXCollections;
+import model.Appointments;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -21,7 +20,6 @@ import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -99,18 +97,27 @@ public class CustomerViewController implements Initializable {
             alert.setHeaderText("Customer can NOT be Deleted");
             alert.setContentText("No Customer Selected");
             alert.showAndWait();
-        } else {
+
+        } else if (selectedCustomer != null && Appointments.getAllAssociatedCustomers().size() > 0) {
+            Alert alert1 = new Alert(Alert.AlertType.ERROR);
+            alert1.setTitle("Error");
+            alert1.setHeaderText("Associated Appointments");
+            alert1.setContentText("Can NOT Delete Customers With Appointments");
+
+        } else if (selectedCustomer != null && Appointments.getAllAssociatedCustomers().size() == 0) {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete");
             alert.setHeaderText("Are You Sure You Want To Delete?");
             alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                CustomerQuery.deleteCustomer(selectedCustomer);
+                CustomerQuery.deleteCustomer(selectedCustomer.getCustomer_ID());
                 cusTableView.setItems(CustomerQuery.getCustomer());
             }
         }
     }
+
+
 
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}

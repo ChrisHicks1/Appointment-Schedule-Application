@@ -107,13 +107,17 @@ public class CustomerQuery {
 
 
 
-    public static void deleteCustomer(Customer Customer_ID) throws SQLException {
+    public static int deleteCustomer(int Customer_ID) throws SQLException {
         String sqld = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sqld);
-       // ps.setInt(1, Customer_ID);
-        ps.executeUpdate();
-
+        ps.setInt(1, Customer_ID);
+        int results = ps.executeUpdate();
+        return results;
     }
+
+
+
+
 
     public static void select() throws SQLException {
         String sqls = "SELECT * FROM customers";
