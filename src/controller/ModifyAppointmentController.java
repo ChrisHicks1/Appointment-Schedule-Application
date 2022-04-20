@@ -1,5 +1,6 @@
 package controller;
 
+import Database.AppointmentQuery;
 import Database.ContactQuery;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,8 +20,11 @@ import model.Contacts;
 
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalTime;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.*;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class ModifyAppointmentController implements Initializable {
     @FXML
@@ -36,7 +40,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     private TextField txtModifyLocation;
     @FXML
-    private ComboBox<Contacts> modifyContact;
+    private ComboBox modifyContact;
     @FXML
     private TextField txtModifyType;
     @FXML
@@ -44,11 +48,11 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     private TextField txtModifyUserId;
     @FXML
-    private ComboBox modifyStartHour;
+    private ComboBox<LocalTime> modifyStartHour;
     @FXML
     private DatePicker modifyStartDate;
     @FXML
-    private ComboBox modifyEndHour;
+    private ComboBox<LocalTime> modifyEndHour;
     @FXML
     private DatePicker modifyEndDate;
 
@@ -56,20 +60,25 @@ public class ModifyAppointmentController implements Initializable {
     public int selectedAppIndex;
 
 
+
+
+
     public void init(Appointments appointments){
         selectedAppIndex = Appointments.getAllAppointments().indexOf(appointments);
+
+
         txtModifyAppId.setText(Integer.toString(appointments.getAppointment_ID()));
         txtModifyTitle.setText(appointments.getTitle());
         txtModifyDesc.setText(appointments.getDescription());
         txtModifyLocation.setText(appointments.getLocation());
-     //   modifyContact.setValue(appointments.getContact_Name(allContacts));
+        modifyContact.setValue(appointments.getContact_Name());
         txtModifyType.setText(appointments.getType());
-      //  modifyStartDate.setDayCellFactory();
-      //  modifyStartHour.setItems(appointments.getStart());
 
-     //   modifyEndDate;
-    //    modifyEndHour;
-      //  modifyEndMin;
+        modifyStartHour.setValue(String.valueOf(LocalDateTime.of(appointments.getStart())));
+        modifyStartDate.setValue(appointments.getStartDate());
+        modifyEndHour.setValue(LocalTime.of(appointments.getEnd()));
+        modifyEndDate.setValue(appointments.getEndDate());
+
         txtModifyCusId.setText(Integer.toString(appointments.getCustomer_ID()));
         txtModifyUserId.setText(Integer.toString(appointments.getUser_ID()));
         txtModifyContactId.setText(Integer.toString(appointments.getContact_ID()));
@@ -79,7 +88,22 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-    public void onSave(ActionEvent actionEvent) {
+    public void onSave(ActionEvent actionEvent) throws SQLException {
+        int Appointment_ID = Integer.parseInt(txtModifyAppId.getId());
+        String Title = txtModifyTitle.getText();
+        String Description = txtModifyDesc.getText();
+        String Location = txtModifyLocation.getText();
+        String Contact_Name = modifyContact.getId();
+        String Type = txtModifyType.getText();
+        LocalDateTime Start = modifyStartHour.getValue();
+        LocalDate startDate = modifyStartDate.getValue();
+        LocalDateTime End = modifyEndHour.getValue();
+        LocalDate endDate = modifyEndDate.getValue();
+        int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
+        int User_ID = Integer.parseInt(txtModifyUserId.getId());
+        int Contact_ID = Integer.parseInt(txtModifyContactId.getId());
+
+        AppointmentQuery.modifyAppointment(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
@@ -96,27 +120,40 @@ public class ModifyAppointmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+
         ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
 
         modifyContact.setItems(allContacts);
 
-        LocalTime start = LocalTime.of(6, 0);
-        LocalTime end = LocalTime.of(16, 45);
+
+
+
+
+   /*     LocalDateTime start = modifyStartHour.getValue();
+        LocalDateTime end = modifyEndHour.getValue();
 
         while(start.isBefore(end.plusSeconds(1))){
-            modifyStartHour.getItems().add(start);
+            modifyStartHour.getItems().add(LocalDateTime.from(start));
             start = start.plusMinutes(15);
         }
-        modifyStartHour.getSelectionModel().select(LocalTime.of(6, 0));
 
-        LocalTime start1 = LocalTime.of(6, 15);
-        LocalTime end1 = LocalTime.of(17, 0);
+
+        LocalDateTime start1 = modifyStartHour.getValue();
+        LocalDateTime end1 = modifyEndHour.getValue();
 
         while(start1.isBefore(end1.plusSeconds(1))){
-            modifyEndHour.getItems().add(start1);
+            modifyEndHour.getItems().add(LocalDateTime.from(start1));
             start1 = start1.plusMinutes(15);
         }
-        modifyEndHour.getSelectionModel().select(LocalTime.of(6, 15));
+*/
 
+    }
+
+    public void onStartDate(ActionEvent actionEvent) {
+    }
+
+    public void onEndDate(ActionEvent actionEvent) {
     }
 }

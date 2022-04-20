@@ -57,6 +57,7 @@ public class CustomerQuery {
 
             PreparedStatement pscc = DBConnection.getConnection().prepareStatement(sqlcc);
 
+
             pscc.setString(1, Customer_Name);
             pscc.setString(2, Address);
             pscc.setString(3, Postal_Code);
@@ -69,17 +70,22 @@ public class CustomerQuery {
             ResultSet rs = pscc.getResultSet();
             rs.next();
             int Customer_ID = rs.getInt(1);
-
-            String sqlc = "INSERT INTO customers VALUES(NULL, ?, ?)";
+/*
+            String sqlc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?)";
             PreparedStatement psc = DBConnection.getConnection().prepareStatement(sqlc);
 
 
-            psc.setString(1, Customer_Name);
-            psc.setInt(2, Customer_ID);
+            psc.setInt(1, Customer_ID);
+            psc.setString(2, Customer_Name);
+            pscc.setString(3, Address);
+            pscc.setString(4, Postal_Code);
+            pscc.setString(5, Phone);
+            pscc.setString(6, String.valueOf(Country));
+            pscc.setString(7, String.valueOf(Division));
 
             psc.execute();
 
-
+*/
         }catch (SQLException ex) {
             ex.printStackTrace();
         }

@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 
 public class AppointmentQuery {
@@ -31,11 +32,13 @@ public class AppointmentQuery {
                 String Contact_Name = rs.getString("Contact_Name");
                 String Type = rs.getString("Type");
                 LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDate startDate = rs.getDate("Start").toLocalDate();
                 LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+                LocalDate endDate = rs.getDate("End").toLocalDate();
                 int Customer_ID = rs.getInt("Customer_ID");
                 int User_ID = rs.getInt("User_ID");
                 int Contact_ID = rs.getInt("Contact_ID");
-                Appointments a = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, Contact_ID);
+                Appointments a = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
                 aList.add(a);
             }
         } catch (SQLException ex) {
@@ -68,6 +71,31 @@ public class AppointmentQuery {
         //  rs.next();
     }
 
+
+    public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDate startDate, LocalDateTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID) throws SQLException{
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Contact_Name = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Customer_ID = ? WHERE Appointment_ID = ?";
+        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
+        ps.setString(1, Title);
+        ps.setString(2, Description);
+        ps.setString(3, Location);
+        ps.setString(4, Contact_Name);
+        ps.setString(5, Type);
+        ps.setTimestamp(6, Timestamp.valueOf(Start));
+        ps.setDate(6, Date.valueOf(startDate));
+        ps.setTimestamp(7, Timestamp.valueOf(End));
+        ps.setDate(7, Date.valueOf(endDate));
+        ps.setInt(8, Customer_ID);
+        ps.setInt(9, User_ID);
+        ps.setInt(10, Contact_ID);
+        ps.setInt(11, Appointment_ID);
+
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+
+
+
+
     public static int deleteAppointment(int Appointment_ID) throws SQLException {
         String sqld = "DELETE FROM appointments WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sqld);
@@ -75,6 +103,9 @@ public class AppointmentQuery {
         int results = ps.executeUpdate();
         return results;
     }
+
+
+
 
     public static void select() throws SQLException {
         String sqls = "SELECT * FROM appointments AS a INNER JOIN customers AS c ON a.Customer_ID = c.Customer_ID";

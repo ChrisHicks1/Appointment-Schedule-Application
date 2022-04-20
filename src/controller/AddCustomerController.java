@@ -56,9 +56,11 @@ public class AddCustomerController implements Initializable {
         Countries Country = comAddCusCountry.getValue();
         Division Division = comAddCusDiv.getValue();
 
-      //  Customer newCustomer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
-     //   Customer.addCustomer(newCustomer);
+     //   Customer newCustomer = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division);
+     //   Customer.add(newCustomer);
         CustomerQuery.createCustomer(Customer_Name, Address, Postal_Code, Phone, Country.getCountryName(), Division.getDivision());
+
+
 
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));

@@ -36,10 +36,10 @@
         <Label layoutX="52.0" layoutY="435.0" prefHeight="25" prefWidth="110.0" text="Contact_ID" />
 
         <ComboBox fx:id="modifyStartHour" layoutX="270.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
-        <DatePicker fx:id="modifyStartDate" layoutX="170.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
+        <DatePicker fx:id="modifyStartDate" layoutX="170.0" layoutY="295.0" onAction="#onStartDate" prefHeight="25.0" prefWidth="100.0" />
 
         <ComboBox fx:id="modifyEndHour" layoutX="270.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
-        <DatePicker fx:id="modifyEndDate" layoutX="170.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
+        <DatePicker fx:id="modifyEndDate" layoutX="170.0" layoutY="330.0" onAction="#onEndDate" prefHeight="25.0" prefWidth="100.0" />
 
 
 

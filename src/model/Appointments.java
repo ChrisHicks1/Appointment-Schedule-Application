@@ -20,15 +20,15 @@ public class Appointments {
     private String Contact_Name;
     private String Type;
     private LocalDateTime Start;
-
+    private LocalDate startDate;
     private LocalDateTime End;
-
+    private LocalDate endDate;
     private int Customer_ID;
     private int User_ID;
     private int Contact_ID;
 
 
-    public Appointments(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID){
+    public Appointments(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDate startDate, LocalDateTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID){
         this.Appointment_ID = Appointment_ID;
         this.Title = Title;
         this.Description = Description;
@@ -36,9 +36,9 @@ public class Appointments {
         this.Contact_Name = Contact_Name;
         this.Type = Type;
         this.Start = Start;
-
+        this.startDate = startDate;
         this.End = End;
-
+        this.endDate = endDate;
         this.Customer_ID = Customer_ID;
         this.User_ID = User_ID;
         this.Contact_ID = Contact_ID;
@@ -76,10 +76,11 @@ public class Appointments {
     public String getContact_Name() {
         return Contact_Name;
     }
-
     public void setContact_Name(String Contact_Name) {
         this.Contact_Name = Contact_Name;
     }
+
+
 
     public String getType() {
         return Type;
@@ -87,6 +88,7 @@ public class Appointments {
     public void setType(String Type) {
         this.Type = Type;
     }
+
 
 
     public LocalDateTime getStart() {
@@ -97,7 +99,8 @@ public class Appointments {
     }
 
 
-
+    public LocalDate getStartDate() { return startDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
 
 
     public LocalDateTime getEnd() {
@@ -107,6 +110,9 @@ public class Appointments {
         this.End = End;
     }
 
+
+    public LocalDate getEndDate() { return endDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 
 
 
