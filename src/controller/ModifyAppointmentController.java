@@ -84,11 +84,11 @@ public class ModifyAppointmentController implements Initializable {
         txtModifyContactId.setText(Integer.toString(appointments.getContact_ID()));
     }
 
+//private Appointments appToModify = null;
 
 
 
-
-    public void onSave(ActionEvent actionEvent) throws SQLException {
+    public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
         int Appointment_ID = Integer.parseInt(txtModifyAppId.getId());
         String Title = txtModifyTitle.getText();
         String Description = txtModifyDesc.getText();
@@ -104,6 +104,15 @@ public class ModifyAppointmentController implements Initializable {
         int Contact_ID = Integer.parseInt(txtModifyContactId.getId());
 
         AppointmentQuery.modifyAppointment(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+
+
+
+        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(addPartCancel, 1000, 450);
+        stage.setTitle("Appointment Calendar");
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
@@ -129,8 +138,6 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-
-
         LocalTime start = LocalTime.of(5, 0);
         LocalTime end = LocalTime.of(16, 45);
 
@@ -150,15 +157,6 @@ public class ModifyAppointmentController implements Initializable {
         modifyStartHour.getSelectionModel().select(start);
         modifyEndHour.getSelectionModel().select(start1);
 
-/*
-        LocalTime start1 = modifyStartHour.getValue();
-        LocalTime end1 = modifyEndHour.getValue();
-
-        while(start1.isBefore(end1.plusSeconds(1))){
-            modifyEndHour.getItems().add(LocalTime.from(start1));
-            start1 = start1.plusMinutes(15);
-        }
-*/
 
     }
 

@@ -36,7 +36,7 @@ public class CustomerQuery {
                 String Postal_Code = rs.getString("Postal_Code");
                 String Phone = rs.getString("Phone");
                 String Country = rs.getString("Country");
-                String Division = rs.getString("Division");
+                String Division = rs.getString("Division");//.getString("Division");
                 int Division_ID = rs.getInt("Division_ID");
 
                 Customer c = new Customer(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Country, Division, Division_ID);
@@ -92,7 +92,7 @@ public class CustomerQuery {
     }
 
 
-    public static boolean updateCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division) throws SQLException {
+    public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, Countries Country, Division Division) throws SQLException {
 
         String sql = "UPDATE customers SET Customer_Name = ? AND Address = ? AND Postal_Code = ? AND Phone = ? AND Country = ? AND Division = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
@@ -107,7 +107,7 @@ public class CustomerQuery {
 
 
         int rowsAffected = ps.executeUpdate();
-        return true;
+        return rowsAffected;
 
     }
 

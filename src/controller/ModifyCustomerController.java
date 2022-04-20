@@ -20,6 +20,8 @@ import model.Division;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -52,33 +54,26 @@ public class ModifyCustomerController implements Initializable {
         txtModifyCusName.setText(customer.getCustomer_Name());
         txtModifyCusAddress.setText(customer.getAddress());
         txtModifyPostal.setText(customer.getPostal_Code());
-        txtModifyPhone.setText(customer.getPostal_Code());
+        txtModifyPhone.setText(customer.getPhone());
         comModifyCountry.setPromptText(customer.getCountry());
-       comModifyDivision.setPromptText(customer.getDivision());
+        comModifyDivision.setPromptText/*setValue*/(customer.getDivision());
 
     }
 
 
 
-    public void onSave(ActionEvent actionEvent) {
-     /*   boolean valid = notEmpty(txtModifyCusName.getText(),
-                txtModifyCusAddress.getText(),
-                txtModifyPostal.getText(),
-                txtModifyPhone.getText(),
-                comModifyCountry.setItems(CountryQuery.getAllCountries()),
-                comModifyDivision.getValue());
-    }
-        if(valid) {
-            try {
-               boolean success = CustomerQuery.updateCustomer((Integer.parseInt(txtModifyCusId.getText())),
-                       txtModifyCusName.getText(),
-                       txtModifyCusAddress.getText(),
-                       txtModifyPostal.getText(),
-                       txtModifyPhone.getText(),
-                       comModifyCountry.getPromptText(),
-                       comModifyDivision.getPromptText());
+    public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
+        int Customer_ID = Integer.parseInt(txtModifyCusId.getId());
+        String Customer_Name = txtModifyCusName.getText();
+        String Address = txtModifyCusAddress.getText();
+        String Postal = txtModifyPostal.getText();
+        String Phone = txtModifyPhone.getText();
+        Countries Country = comModifyCountry.getValue();
+        Division Division = comModifyDivision.getValue();
 
-                if (success) {
+        CustomerQuery.modifyCustomer(Customer_ID, Customer_Name, Address, Postal, Phone, Country, Division);
+
+/*
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                     alert.setTitle("Success");
                     alert.setHeaderText("Modify Success");
@@ -106,7 +101,7 @@ public class ModifyCustomerController implements Initializable {
             alert.setTitle("Error");
             alert.setContentText("Failed to Modify Customer");
         }
-
+*/
 
         {
             Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
@@ -115,7 +110,7 @@ public class ModifyCustomerController implements Initializable {
             stage.setTitle("Customer View");
             stage.setScene(scene);
             stage.show();
-        }*/
+        }
     }
 
 
