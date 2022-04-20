@@ -131,20 +131,31 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-   /*     LocalDateTime start = modifyStartHour.getValue();
-        LocalDateTime end = modifyEndHour.getValue();
+        LocalTime start = LocalTime.of(5, 0);
+        LocalTime end = LocalTime.of(16, 45);
 
         while(start.isBefore(end.plusSeconds(1))){
-            modifyStartHour.getItems().add(LocalDateTime.from(start));
+            modifyStartHour.getItems().add(LocalTime.from(start));
             start = start.plusMinutes(15);
         }
 
-
-        LocalDateTime start1 = modifyStartHour.getValue();
-        LocalDateTime end1 = modifyEndHour.getValue();
+        LocalTime start1 = LocalTime.of(5, 15);
+        LocalTime end1 = LocalTime.of(17, 0);
 
         while(start1.isBefore(end1.plusSeconds(1))){
-            modifyEndHour.getItems().add(LocalDateTime.from(start1));
+            modifyEndHour.getItems().add(LocalTime.from(start1));
+            start1 = start1.plusMinutes(15);
+        }
+
+        modifyStartHour.getSelectionModel().select(start);
+        modifyEndHour.getSelectionModel().select(start1);
+
+/*
+        LocalTime start1 = modifyStartHour.getValue();
+        LocalTime end1 = modifyEndHour.getValue();
+
+        while(start1.isBefore(end1.plusSeconds(1))){
+            modifyEndHour.getItems().add(LocalTime.from(start1));
             start1 = start1.plusMinutes(15);
         }
 */
