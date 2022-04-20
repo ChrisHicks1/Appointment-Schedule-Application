@@ -72,7 +72,7 @@ public class AppointmentQuery {
     }
 
 
-    public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDate startDate, LocalDateTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID) throws SQLException{
+    public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalTime Start, LocalDate startDate, LocalTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID) throws SQLException{
         String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Contact_Name = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Customer_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
         ps.setString(1, Title);
@@ -80,9 +80,9 @@ public class AppointmentQuery {
         ps.setString(3, Location);
         ps.setString(4, Contact_Name);
         ps.setString(5, Type);
-        ps.setTimestamp(6, Timestamp.valueOf(Start));
+        ps.setTimestamp(6, Timestamp.valueOf(String.valueOf(Start)));
         ps.setDate(6, Date.valueOf(startDate));
-        ps.setTimestamp(7, Timestamp.valueOf(End));
+        ps.setTimestamp(7, Timestamp.valueOf(String.valueOf(End)));
         ps.setDate(7, Date.valueOf(endDate));
         ps.setInt(8, Customer_ID);
         ps.setInt(9, User_ID);

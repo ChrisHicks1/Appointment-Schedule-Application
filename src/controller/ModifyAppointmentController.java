@@ -74,9 +74,9 @@ public class ModifyAppointmentController implements Initializable {
         modifyContact.setValue(appointments.getContact_Name());
         txtModifyType.setText(appointments.getType());
 
-        modifyStartHour.setValue(String.valueOf(LocalDateTime.of(appointments.getStart())));
+        modifyStartHour.setValue(appointments.getStart().toLocalTime());
         modifyStartDate.setValue(appointments.getStartDate());
-        modifyEndHour.setValue(LocalTime.of(appointments.getEnd()));
+        modifyEndHour.setValue(appointments.getEnd().toLocalTime());
         modifyEndDate.setValue(appointments.getEndDate());
 
         txtModifyCusId.setText(Integer.toString(appointments.getCustomer_ID()));
@@ -95,9 +95,9 @@ public class ModifyAppointmentController implements Initializable {
         String Location = txtModifyLocation.getText();
         String Contact_Name = modifyContact.getId();
         String Type = txtModifyType.getText();
-        LocalDateTime Start = modifyStartHour.getValue();
+        LocalTime Start = modifyStartHour.getValue();
         LocalDate startDate = modifyStartDate.getValue();
-        LocalDateTime End = modifyEndHour.getValue();
+        LocalTime End = modifyEndHour.getValue();
         LocalDate endDate = modifyEndDate.getValue();
         int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
         int User_ID = Integer.parseInt(txtModifyUserId.getId());
