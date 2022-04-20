@@ -61,9 +61,9 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
-
+//needs to save to sql table as only divisionID while saving to our table as country division and divisionID
     public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
-        int Customer_ID = Integer.parseInt(txtModifyCusId.getId());
+        int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
         String Customer_Name = txtModifyCusName.getText();
         String Address = txtModifyCusAddress.getText();
         String Postal = txtModifyPostal.getText();
@@ -72,6 +72,7 @@ public class ModifyCustomerController implements Initializable {
         Division Division = comModifyDivision.getValue();
 
         CustomerQuery.modifyCustomer(Customer_ID, Customer_Name, Address, Postal, Phone, Country, Division);
+
 
 /*
                     Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
