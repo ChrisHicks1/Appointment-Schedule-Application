@@ -34,4 +34,25 @@ public class DivisionQuery {
             ex.printStackTrace();
         } return dlist;
     }
+
+    public static ObservableList<Division> getStates(){
+        ObservableList<Division> slist = FXCollections.observableArrayList();
+
+        try{
+            String sqls = "SELECT Division FROM first_level_divisions WHERE Country_ID = 1";
+            PreparedStatement pss = DBConnection.getConnection().prepareStatement(sqls);
+            ResultSet rs = pss.executeQuery();
+
+            while(rs.next()){
+                int Division_ID = rs.getInt("Division_ID");
+                String Division = rs.getString("Division");
+                int Country_ID = rs.getInt("Country_ID");
+
+                Division s = new Division(Division_ID, Division, Country_ID);
+                slist.add(s);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }return slist;
+    }
 }

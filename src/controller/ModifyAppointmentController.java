@@ -21,10 +21,10 @@ import model.Contacts;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 public class ModifyAppointmentController implements Initializable {
     @FXML
@@ -58,9 +58,7 @@ public class ModifyAppointmentController implements Initializable {
 
     public static Appointments selectedApp;
     public int selectedAppIndex;
-
-
-
+    private Object DateTimeFormatter;
 
 
     public void init(Appointments appointments){
@@ -84,24 +82,24 @@ public class ModifyAppointmentController implements Initializable {
         txtModifyContactId.setText(Integer.toString(appointments.getContact_ID()));
     }
 
-//private Appointments appToModify = null;
+
 
 
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-        int Appointment_ID = Integer.parseInt(txtModifyAppId.getId());
+        int Appointment_ID = Integer.parseInt(txtModifyAppId.getText());
         String Title = txtModifyTitle.getText();
         String Description = txtModifyDesc.getText();
         String Location = txtModifyLocation.getText();
         String Contact_Name = modifyContact.getId();
         String Type = txtModifyType.getText();
-        LocalTime Start = modifyStartHour.getValue();
-        LocalDate startDate = modifyStartDate.getValue();
-        LocalTime End = modifyEndHour.getValue();
-        LocalDate endDate = modifyEndDate.getValue();
+        LocalTime Start = LocalTime.parse(modifyStartHour.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_TIME));//modifyStartHour.getValue();
+        LocalDate startDate = LocalDate.parse(modifyStartDate.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE));
+        LocalTime End = LocalTime.parse(modifyEndHour.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_TIME));//LocalTime.parse(modifyEndHour.getValue().format((java.time.format.DateTimeFormatter) DateTimeFormatter));
+        LocalDate endDate = LocalDate.parse(modifyEndDate.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE));//modifyEndDate.getValue();
         int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
-        int User_ID = Integer.parseInt(txtModifyUserId.getId());
-        int Contact_ID = Integer.parseInt(txtModifyContactId.getId());
+        int User_ID = Integer.parseInt(txtModifyUserId.getText());
+        int Contact_ID = Integer.parseInt(txtModifyContactId.getText());
 
         AppointmentQuery.modifyAppointment(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
 
@@ -138,16 +136,16 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-        LocalTime start = LocalTime.of(5, 0);
-        LocalTime end = LocalTime.of(16, 45);
+        LocalTime start = LocalTime.of(5, 0, 0);
+        LocalTime end = LocalTime.of(16, 45, 0);
 
         while(start.isBefore(end.plusSeconds(1))){
             modifyStartHour.getItems().add(LocalTime.from(start));
             start = start.plusMinutes(15);
         }
 
-        LocalTime start1 = LocalTime.of(5, 15);
-        LocalTime end1 = LocalTime.of(17, 0);
+        LocalTime start1 = LocalTime.of(5, 15, 0);
+        LocalTime end1 = LocalTime.of(17, 0, 0);
 
         while(start1.isBefore(end1.plusSeconds(1))){
             modifyEndHour.getItems().add(LocalTime.from(start1));
@@ -160,9 +158,11 @@ public class ModifyAppointmentController implements Initializable {
 
     }
 
+
     public void onStartDate(ActionEvent actionEvent) {
     }
 
     public void onEndDate(ActionEvent actionEvent) {
+
     }
 }

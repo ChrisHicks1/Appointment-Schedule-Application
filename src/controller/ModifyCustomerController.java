@@ -55,7 +55,7 @@ public class ModifyCustomerController implements Initializable {
         txtModifyCusAddress.setText(customer.getAddress());
         txtModifyPostal.setText(customer.getPostal_Code());
         txtModifyPhone.setText(customer.getPhone());
-        comModifyCountry.setPromptText(customer.getCountry());
+       // comModifyCountry.setValue(customer.getCountry());
         comModifyDivision.setPromptText/*setValue*/(customer.getDivision());
 
     }
@@ -70,8 +70,9 @@ public class ModifyCustomerController implements Initializable {
         String Phone = txtModifyPhone.getText();
         Countries Country = comModifyCountry.getValue();
         Division Division = comModifyDivision.getValue();
+        int Division_ID = comModifyDivision.getValue().getDivisionId();
 
-        CustomerQuery.modifyCustomer(Customer_ID, Customer_Name, Address, Postal, Phone, Country, Division);
+        CustomerQuery.modifyCustomer(Customer_ID, Customer_Name, Address, Postal, Phone, Division_ID);//Country, Division);
 
 
 /*
@@ -184,6 +185,19 @@ public class ModifyCustomerController implements Initializable {
 
         ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
         ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
+        ObservableList<Division> states = DivisionQuery.getStates();
+
+        try {
+        if (comModifyCountry.getValue().getCountryName().equals("U.S")) {
+            comModifyDivision.setItems(states);
+        } else {
+
+            comModifyDivision.setItems(allDivisions);
+            comModifyDivision.setPromptText("Select Division");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
 
         comModifyCountry.setItems(allCountries);

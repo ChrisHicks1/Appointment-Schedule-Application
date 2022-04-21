@@ -92,9 +92,9 @@ public class CustomerQuery {
     }
 
 
-    public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, Countries Country, Division Division) throws SQLException {
+    public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, /*Countries Country, Division Division*/ int Division_ID) throws SQLException {
 
-        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Country = ?, Division = ? WHERE Customer_ID = ?";
+        String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
 
@@ -102,9 +102,10 @@ public class CustomerQuery {
         ps.setString(2, Address);
         ps.setString(3, Postal_Code);
         ps.setString(4, Phone);
-        ps.setString(5, String.valueOf(Country));
-        ps.setString(6, String.valueOf(Division));
-        ps.setInt(7, Customer_ID);
+        ps.setInt(5, Division_ID);
+        // ps.setString(5, String.valueOf(Country));
+       // ps.setString(5, String.valueOf(Division));
+        ps.setInt(6, Customer_ID);
 
 
         int rowsAffected = ps.executeUpdate();

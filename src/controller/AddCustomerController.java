@@ -22,6 +22,7 @@ import model.Division;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AddCustomerController implements Initializable {
@@ -95,12 +96,19 @@ public class AddCustomerController implements Initializable {
         comAddCusCountry.setItems(allCountries);
         comAddCusCountry.setPromptText("Select Country");
 
-        comAddCusDiv.setItems(allDivisions);
-        comAddCusDiv.setPromptText("Select Division");
+        try {
+            if (comAddCusCountry.getValue().getCountryId() == 1) {
+                comAddCusDiv.setItems(DivisionQuery.getStates());
+            } else {
 
-
-        comAddCusCountry.setItems(CountryQuery.getAllCountries());
-        comAddCusDiv.setItems(DivisionQuery.getAllDivisions());
+                comAddCusDiv.setItems(allDivisions);
+                comAddCusDiv.setPromptText("Select Division");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        //comAddCusCountry.setItems(CountryQuery.getAllCountries());
+        //comAddCusDiv.setItems(DivisionQuery.getAllDivisions());
 
 
 
