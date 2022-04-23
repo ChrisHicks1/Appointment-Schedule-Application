@@ -131,6 +131,12 @@ public class AddAppointmentController implements Initializable {
     }
 
 
+    //check for empty
+    //check for overlap
+    //timezone
+
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 

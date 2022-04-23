@@ -143,7 +143,6 @@ public class LoginController implements Initializable {
 
 
     private void alertAppointment(){
-
     }
 
 

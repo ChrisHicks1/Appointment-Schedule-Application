@@ -133,9 +133,9 @@ public class AppointmentQuery {
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
         LocalDateTime today = LocalDateTime.now();
-        LocalDateTime Month = today.minusDays(30);
+        LocalDateTime Month = today.plusDays(30);
 
-        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start < ? AND Start > ?";
+        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start > ? AND Start < ?";
 
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
@@ -163,13 +163,14 @@ public class AppointmentQuery {
         }
         return appointments;
 }
+
     public static ObservableList<Appointments> getWeek() throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
         LocalDateTime today = LocalDateTime.now();
-        LocalDateTime Week = today.minusDays(7);
+        LocalDateTime Week = today.plusDays(7);
 
-        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start < ? AND Start > ?";
+        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start > ? AND Start < ?";
 
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
@@ -201,10 +202,9 @@ public class AppointmentQuery {
 
 
 
-
-
-
-
+//associated customers
+//appointments within 15mins
+//appointments not in 15mins
 
 
 

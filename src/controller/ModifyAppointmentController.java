@@ -11,10 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Contacts;
@@ -27,6 +24,7 @@ import java.time.*;
 import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.TimeZone;
 
@@ -92,32 +90,38 @@ public class ModifyAppointmentController implements Initializable {
 
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-        try {
-            AppointmentQuery.modifyAppointment(
-                    Integer.parseInt(txtModifyAppId.getText()),
-                    txtModifyTitle.getText(),
-                    txtModifyDesc.getText(),
-                    txtModifyLocation.getText(),
-                    txtModifyType.getText(),
-                    LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())),
-                    LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())),
-                    Integer.parseInt(txtModifyCusId.getText()),
-                    Integer.parseInt(txtModifyUserId.getText()),
-                    modifyContact.getSelectionModel().getSelectedItem());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Modify Appointment");
+        alert.setContentText("Are you sure you want to Modify this Appointment?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            try {
+                AppointmentQuery.modifyAppointment(
+                        Integer.parseInt(txtModifyAppId.getText()),
+                        txtModifyTitle.getText(),
+                        txtModifyDesc.getText(),
+                        txtModifyLocation.getText(),
+                        txtModifyType.getText(),
+                        LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())),
+                        LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())),
+                        Integer.parseInt(txtModifyCusId.getText()),
+                        Integer.parseInt(txtModifyUserId.getText()),
+                        modifyContact.getSelectionModel().getSelectedItem());
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+
+            Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(addPartCancel, 1000, 450);
+            stage.setTitle("Appointment Calendar");
+            stage.setScene(scene);
+            stage.show();
         }
-
-
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 1000, 450);
-        stage.setTitle("Appointment Calendar");
-        stage.setScene(scene);
-        stage.show();
     }
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
@@ -149,6 +153,11 @@ public class ModifyAppointmentController implements Initializable {
         modifyContact.setItems(modifyContacts);
 
     }
+
+
+    //check for empty
+    //check for overlap
+    //timezone
 
 
 

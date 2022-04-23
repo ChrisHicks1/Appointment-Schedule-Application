@@ -2,6 +2,7 @@ package controller;
 
 import Database.*;
 import com.sun.jdi.Value;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.stage.Stage;
+import model.Contacts;
 import model.Countries;
 import model.Customer;
 import model.Division;
@@ -39,9 +41,9 @@ public class ModifyCustomerController implements Initializable {
     @FXML
     private TextField txtModifyPhone;
     @FXML
-    private ComboBox<Countries> comModifyCountry;
+    private ComboBox<String> comModifyCountry;
     @FXML
-    private ComboBox<Division> comModifyDivision;
+    private ComboBox<String> comModifyDivision;
 
     private static Customer selectedCustomer;
 
@@ -55,24 +57,30 @@ public class ModifyCustomerController implements Initializable {
         txtModifyCusAddress.setText(customer.getAddress());
         txtModifyPostal.setText(customer.getPostal_Code());
         txtModifyPhone.setText(customer.getPhone());
-       // comModifyCountry.setValue(customer.getCountry());
-        comModifyDivision.setPromptText/*setValue*/(customer.getDivision());
+        comModifyCountry.setValue(customer.getCountry());
+        comModifyDivision.setValue(customer.getDivision());
 
     }
 
 
 //needs to save to sql table as only divisionID while saving to our table as country division and divisionID
     public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
-        int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
-        String Customer_Name = txtModifyCusName.getText();
-        String Address = txtModifyCusAddress.getText();
-        String Postal = txtModifyPostal.getText();
-        String Phone = txtModifyPhone.getText();
-        Countries Country = comModifyCountry.getValue();
-        Division Division = comModifyDivision.getValue();
-        int Division_ID = comModifyDivision.getValue().getDivisionId();
 
-        CustomerQuery.modifyCustomer(Customer_ID, Customer_Name, Address, Postal, Phone, Division_ID);//Country, Division);
+        try {
+            CustomerQuery.modifyCustomer(
+                    Integer.parseInt(txtModifyCusId.getText()),
+                    txtModifyCusName.getText(),
+                    txtModifyCusAddress.getText(),
+                    txtModifyPostal.getText(),
+                    txtModifyPhone.getText(),
+                    //comModifyCountry.getValue(),
+                    //comModifyDivision.getValue(),
+                    (comModifyCountry.getValue() + comModifyDivision.getValue()));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
 
 /*
@@ -180,10 +188,49 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
+    private void countryBox(){
+        ObservableList<String> modifyCountries = FXCollections.observableArrayList();
+
+        try {
+            ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
+            for(Countries countries: allCountries){
+                if(!modifyCountries.contains(countries.getCountryName())){
+                    modifyCountries.add(countries.getCountryName());
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        comModifyCountry.setItems(modifyCountries);
+
+    }
+
+    private void divisionBox(){
+        ObservableList<String> modifyDivision = FXCollections.observableArrayList();
+
+        try {
+            ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
+            for(Division division: allDivisions){
+                if(!modifyDivision.contains(division.getDivision())){
+                    modifyDivision.add(division.getDivision());
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        comModifyDivision.setItems(modifyDivision);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
+        divisionBox();
+        countryBox();
+
+  /*      ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
         ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
         ObservableList<Division> states = DivisionQuery.getStates();
 
@@ -204,7 +251,7 @@ public class ModifyCustomerController implements Initializable {
 
 
         comModifyDivision.setItems(allDivisions);
-
+*/
 
 
     }

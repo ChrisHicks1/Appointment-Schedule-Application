@@ -3,6 +3,8 @@ package Database;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import model.Contacts;
+import model.Countries;
 import model.Division;
 
 import java.sql.PreparedStatement;
@@ -55,4 +57,50 @@ public class DivisionQuery {
             ex.printStackTrace();
         }return slist;
     }
+
+    public static Division getDivision_ID( String divisionName) throws SQLException {
+        String sql = "SELECT * FROM first_level_divisions WHERE Division_Name = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+
+
+        ps.setString(1, divisionName);
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+                Division division = new Division(
+                        rs.getInt("Division_ID"),
+                        rs.getString("Division_Name"),
+                        rs.getInt("Country_ID"));
+                return division;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }return null;
+    }
+
+    public static Countries getCountry_ID( String countryName) throws SQLException {
+        String sql = "SELECT * FROM countries WHERE Country_ID = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+
+
+        ps.setString(1, countryName);
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+                Countries countries = new Countries(
+                        rs.getInt("Country_ID"),
+                        rs.getString("Country_Name"));
+                return countries;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }return null;
+    }
+
 }
