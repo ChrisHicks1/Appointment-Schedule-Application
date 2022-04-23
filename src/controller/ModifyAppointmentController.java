@@ -31,6 +31,11 @@ import java.util.ResourceBundle;
 import java.util.TimeZone;
 
 public class ModifyAppointmentController implements Initializable {
+
+    private ZonedDateTime StartDateTimeZone;
+    private ZonedDateTime EndDateTimeZone;
+
+
     @FXML
     private TextField txtModifyContactId;
     @FXML
@@ -145,6 +150,8 @@ public class ModifyAppointmentController implements Initializable {
 
     }
 
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -173,6 +180,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
     }
+
 
 
     public void onStartDate(ActionEvent actionEvent) {

@@ -82,7 +82,9 @@ public class AppointmentQuery {
         Contacts contacts = ContactQuery.getContact_ID(contactName);
 
         String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
+
         ps.setString(1, Title);
         ps.setString(2, Description);
         ps.setString(3, Location);
@@ -125,11 +127,84 @@ public class AppointmentQuery {
     }
 
 
-/*    get appointment month
-    LocalDateTime today = LocalDateTime.now();
-    LocalDateTime lastMonth = today.minusDays(30);
+
+
+    public static ObservableList<Appointments> getMonth() throws SQLException{
+        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime Month = today.minusDays(30);
+
+        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start < ? AND Start > ?";
+
+        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
+
         ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
-        ps.setDate(2, java.sql.Date.valueOf(lastMonth.toLocalDate()));*/
+        ps.setDate(2, java.sql.Date.valueOf(Month.toLocalDate()));
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            int Appointment_ID = rs.getInt("Appointment_ID");
+            String Title = rs.getString("Title");
+            String Description = rs.getString("Description");
+            String Location = rs.getString("Location");
+            String Contact_Name = rs.getString("Contact_Name");
+            String Type = rs.getString("Type");
+            LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDate startDate = rs.getDate("Start").toLocalDate();
+            LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+            LocalDate endDate = rs.getDate("End").toLocalDate();
+            int Customer_ID = rs.getInt("Customer_ID");
+            int User_ID = rs.getInt("User_ID");
+            int Contact_ID = rs.getInt("Contact_ID");
+            Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+            appointments.add(aList);
+        }
+        return appointments;
+}
+    public static ObservableList<Appointments> getWeek() throws SQLException{
+        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime Week = today.minusDays(7);
+
+        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start < ? AND Start > ?";
+
+        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
+
+        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
+        ps.setDate(2, java.sql.Date.valueOf(Week.toLocalDate()));
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            int Appointment_ID = rs.getInt("Appointment_ID");
+            String Title = rs.getString("Title");
+            String Description = rs.getString("Description");
+            String Location = rs.getString("Location");
+            String Contact_Name = rs.getString("Contact_Name");
+            String Type = rs.getString("Type");
+            LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDate startDate = rs.getDate("Start").toLocalDate();
+            LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+            LocalDate endDate = rs.getDate("End").toLocalDate();
+            int Customer_ID = rs.getInt("Customer_ID");
+            int User_ID = rs.getInt("User_ID");
+            int Contact_ID = rs.getInt("Contact_ID");
+            Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+            appointments.add(aList);
+        }
+        return appointments;
+    }
+}
+
+
+
+
+
+
+
 
 
 
@@ -173,5 +248,5 @@ public class AppointmentQuery {
 
 
 
-}
+
 

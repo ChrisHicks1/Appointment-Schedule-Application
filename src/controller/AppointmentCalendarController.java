@@ -24,7 +24,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class AppointmentCalendarController implements Initializable{
+public class AppointmentCalendarController implements Initializable {
 
 
     static ObservableList<Appointments> appointments;
@@ -48,7 +48,6 @@ public class AppointmentCalendarController implements Initializable{
 
     private static Appointments selectedApp;
     private static int selectedAppIndex;
-
 
 
     public void toAppAdd(ActionEvent actionEvent) throws IOException {
@@ -82,21 +81,21 @@ public class AppointmentCalendarController implements Initializable{
                 stage.setTitle("Modify Appointment");
                 stage.setScene(scene);
                 stage.show();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void toAppDelete(ActionEvent actionEvent) throws SQLException{
+    public void toAppDelete(ActionEvent actionEvent) throws SQLException {
         selectedApp = appTableView.getSelectionModel().getSelectedItem();
-        if(selectedApp == null){
+        if (selectedApp == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Appointment can NOT be Deleted");
             alert.setContentText("No Appointment Selected");
             alert.showAndWait();
-        }else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Delete");
             alert.setHeaderText("Are You Sure You Want To Delete?");
@@ -109,9 +108,9 @@ public class AppointmentCalendarController implements Initializable{
         }
     }
 
-    public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
-
-
+    public void toMain(ActionEvent actionEvent) throws IOException {
+        goToMain(actionEvent);
+    }
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
@@ -144,12 +143,28 @@ public class AppointmentCalendarController implements Initializable{
 
     }
 
-    public void onMonth(ActionEvent actionEvent) {
+
+    public void onMonth(ActionEvent actionEvent) throws SQLException {
+        if (radioMonth.isSelected()) {
+            appointments = AppointmentQuery.getMonth();
+            appTableView.setItems(appointments);
+            appTableView.refresh();
+        }
     }
 
-    public void onWeek(ActionEvent actionEvent) {
+    public void onWeek(ActionEvent actionEvent) throws SQLException {
+        if (radioWeek.isSelected()) {
+            appointments = AppointmentQuery.getWeek();
+            appTableView.setItems(appointments);
+            appTableView.refresh();
+        }
     }
 
     public void onAll(ActionEvent actionEvent) {
+        if (radioAll.isSelected()) {
+            appointments = AppointmentQuery.getAllAppointments();
+            appTableView.setItems(appointments);
+            appTableView.refresh();
+        }
     }
 }
