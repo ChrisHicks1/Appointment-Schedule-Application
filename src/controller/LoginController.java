@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
             loginLabel.setText(resourceBundle.getString("login"));
             location.setText(resourceBundle.getString("location"));
             country.setText(resourceBundle.getString("country"));
-            timeField.setText(resourceBundle.getString("timezone"));
+            //timeField.setText(String.valueOf(TimeZone.getDefault().getDisplayName()));
             timeZone.setText(String.valueOf(TimeZone.getDefault().getID()));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -114,21 +114,23 @@ public class LoginController implements Initializable {
             catch (IOException e){
                 e.printStackTrace();
 
-                if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en"));
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(resourceBundle.getString("error"));
-                alert.setContentText(resourceBundle.getString("loadError"));
-                alert.showAndWait();
+                if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle(resourceBundle.getString("error"));
+                    alert.setContentText(resourceBundle.getString("loadError"));
+                    alert.showAndWait();
+                }
             }
         }
         else {
             loginFail();
 
-            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en"));
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle(resourceBundle.getString("error"));
-            alert.setContentText(resourceBundle.getString("invalidLogin"));
-            alert.showAndWait();
+            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle(resourceBundle.getString("error"));
+                alert.setContentText(resourceBundle.getString("invalidLogin"));
+                alert.showAndWait();
+            }
         }
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -154,9 +156,9 @@ public class LoginController implements Initializable {
 
         try {
             FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
-            fileWriter.write("Successful Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + simpleDateFormat);
+            fileWriter.write("\nSuccessful Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + date + "\n");
             fileWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -167,9 +169,9 @@ public class LoginController implements Initializable {
     private void loginFail(){
         try{
             FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
-            fileWriter.write("Failed Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + simpleDateFormat);
+            fileWriter.write("\nFailed Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + date + "\n");
             fileWriter.close();
         } catch (IOException e){
             e.printStackTrace();

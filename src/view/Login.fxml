@@ -22,6 +22,6 @@
       <Label fx:id="location" layoutX="369.0" layoutY="25.0" prefHeight="25.0" prefWidth="67.0" />
       <TextField fx:id="country" layoutX="369.0" layoutY="50.0" prefHeight="25.0" prefWidth="67.0" />
       <Label fx:id="timeZone" layoutX="14.0" layoutY="25.0" prefHeight="25.0" prefWidth="67.0" />
-      <TextField fx:id="timeField" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="67.0" />
+      <TextField fx:id="timeField" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="80.0" />
    </children>
 </AnchorPane>
