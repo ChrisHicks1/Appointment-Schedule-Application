@@ -3,6 +3,7 @@ import javafx.scene.control.Alert;
 import model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import model.Contacts;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -14,7 +15,6 @@ public class AppointmentQuery {
 
     public static ObservableList<Appointments> getAllAppointments() {
         ObservableList<Appointments> aList = FXCollections.observableArrayList();
-
 
         try {
 
@@ -47,47 +47,52 @@ public class AppointmentQuery {
         return aList;
     }
 
-    public static int createAppointment(String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, int Contact_ID) throws SQLException {
 
-        String sqla = "INSERT INTO appointments(Title, Description, Location, Contact_Name, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
+    public static int createAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, String contactName) throws SQLException {
+
+        Contacts contacts = ContactQuery.getContact_ID(contactName);
+
+        String sqla = "INSERT INTO appointments(Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement psa = DBConnection.getConnection().prepareStatement(sqla);
 
         psa.setString(1, Title);
         psa.setString(2, Description);
         psa.setString(3, Location);
-        psa.setString(4, Contact_Name);
-        psa.setString(5, Type);
-        psa.setTimestamp(6, Timestamp.valueOf(Start));
-        psa.setTimestamp(7, Timestamp.valueOf(End));
-        psa.setInt(8, Customer_ID);
-        psa.setInt(9, User_ID);
-        psa.setInt(10, Contact_ID);
+        psa.setString(4, Type);
+        psa.setTimestamp(5, Timestamp.valueOf(Start));
+        psa.setTimestamp(6, Timestamp.valueOf(End));
+        psa.setInt(7, Customer_ID);
+        psa.setInt(8, User_ID);
+        psa.setInt(9, contacts.getContact_ID());
+
 
         int rowsAffected = psa.executeUpdate();
 
         return rowsAffected;
-        //  ResultSet rs = psa.getResultSet();
-        //  rs.next();
     }
 
 
-    public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalTime Start, LocalDate startDate, LocalTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID) throws SQLException{
-        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Contact_Name = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Customer_ID = ? WHERE Appointment_ID = ?";
+
+
+
+    public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, String contactName) throws SQLException{
+        Contacts contacts = ContactQuery.getContact_ID(contactName);
+
+        String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
         ps.setString(1, Title);
         ps.setString(2, Description);
         ps.setString(3, Location);
-        ps.setString(4, Contact_Name);
-        ps.setString(5, Type);
-        ps.setTimestamp(6, Timestamp.valueOf(String.valueOf(Start)));
-        ps.setDate(6, Date.valueOf(startDate));
-        ps.setTimestamp(7, Timestamp.valueOf(String.valueOf(End)));
-        ps.setDate(7, Date.valueOf(endDate));
-        ps.setInt(8, Customer_ID);
-        ps.setInt(9, User_ID);
-        ps.setInt(10, Contact_ID);
-        ps.setInt(11, Appointment_ID);
+        ps.setString(4, Type);
+        ps.setTimestamp(5, Timestamp.valueOf(Start));
+        ps.setTimestamp(6, Timestamp.valueOf(End));
+        ps.setInt(7, Customer_ID);
+        ps.setInt(8, User_ID);
+        ps.setInt(9, contacts.getContact_ID());
+        ps.setInt(10, Appointment_ID);
 
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
@@ -118,6 +123,15 @@ public class AppointmentQuery {
             System.out.print(Customer_Name + "\n");
         }
     }
+
+
+/*    get appointment month
+    LocalDateTime today = LocalDateTime.now();
+    LocalDateTime lastMonth = today.minusDays(30);
+        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
+        ps.setDate(2, java.sql.Date.valueOf(lastMonth.toLocalDate()));*/
+
+
 
 
   /*  public static ObservableList<Appointments> getAssocCustomers(int Customer_ID) throws SQLException{

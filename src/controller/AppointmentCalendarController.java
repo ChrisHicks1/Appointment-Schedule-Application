@@ -103,7 +103,7 @@ public class AppointmentCalendarController implements Initializable{
             alert.setContentText("Press OK to delete this Appointment. \nPress Cancel to cancel.");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                CustomerQuery.deleteCustomer(selectedApp.getAppointment_ID());
+                AppointmentQuery.deleteAppointment(selectedApp.getAppointment_ID());
                 appTableView.setItems(AppointmentQuery.getAllAppointments());
             }
         }
@@ -141,9 +141,6 @@ public class AppointmentCalendarController implements Initializable{
         appEnd.setCellValueFactory(new PropertyValueFactory<>("End"));
         appCusId.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
         appUserId.setCellValueFactory(new PropertyValueFactory<>("User_ID"));
-        appContactId.setCellValueFactory(new PropertyValueFactory<>("Contact_ID"));
-
-
 
     }
 

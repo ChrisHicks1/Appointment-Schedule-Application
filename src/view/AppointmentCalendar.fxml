@@ -23,7 +23,7 @@
             <TableColumn fx:id="appEnd" prefWidth="140.0" text="End Date and Time" />
             <TableColumn fx:id="appCusId" prefWidth="70.0" text="Customer ID" />
             <TableColumn fx:id="appUserId" prefWidth="70.0" text="User ID" />
-            <TableColumn fx:id="appContactId" prefWidth="70.0" text="Contact ID" />
+
 
         </columns>
       </TableView>

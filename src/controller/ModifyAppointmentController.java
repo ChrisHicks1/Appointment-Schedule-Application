@@ -2,6 +2,7 @@ package controller;
 
 import Database.AppointmentQuery;
 import Database.ContactQuery;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,10 +22,13 @@ import model.Contacts;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.ResourceBundle;
+import java.util.TimeZone;
 
 public class ModifyAppointmentController implements Initializable {
     @FXML
@@ -40,7 +44,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     private TextField txtModifyLocation;
     @FXML
-    private ComboBox modifyContact;
+    private ComboBox<String> modifyContact;
     @FXML
     private TextField txtModifyType;
     @FXML
@@ -48,38 +52,34 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     private TextField txtModifyUserId;
     @FXML
-    private ComboBox<LocalTime> modifyStartHour;
+    private ComboBox<String> modifyStartHour;
     @FXML
     private DatePicker modifyStartDate;
     @FXML
-    private ComboBox<LocalTime> modifyEndHour;
+    private ComboBox<String> modifyEndHour;
     @FXML
     private DatePicker modifyEndDate;
 
     public static Appointments selectedApp;
     public int selectedAppIndex;
-    private Object DateTimeFormatter;
+
 
 
     public void init(Appointments appointments){
         selectedAppIndex = Appointments.getAllAppointments().indexOf(appointments);
 
-
         txtModifyAppId.setText(Integer.toString(appointments.getAppointment_ID()));
         txtModifyTitle.setText(appointments.getTitle());
         txtModifyDesc.setText(appointments.getDescription());
         txtModifyLocation.setText(appointments.getLocation());
-        modifyContact.setValue(appointments.getContact_Name());
         txtModifyType.setText(appointments.getType());
-
-        modifyStartHour.setValue(appointments.getStart().toLocalTime());
+        modifyContact.setValue(appointments.getContact_Name());
+        modifyStartHour.setValue(String.valueOf(appointments.getStart().toLocalTime()));
         modifyStartDate.setValue(appointments.getStartDate());
-        modifyEndHour.setValue(appointments.getEnd().toLocalTime());
+        modifyEndHour.setValue(String.valueOf(appointments.getEnd().toLocalTime()));
         modifyEndDate.setValue(appointments.getEndDate());
-
         txtModifyCusId.setText(Integer.toString(appointments.getCustomer_ID()));
         txtModifyUserId.setText(Integer.toString(appointments.getUser_ID()));
-        txtModifyContactId.setText(Integer.toString(appointments.getContact_ID()));
     }
 
 
@@ -87,22 +87,24 @@ public class ModifyAppointmentController implements Initializable {
 
 
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
-        int Appointment_ID = Integer.parseInt(txtModifyAppId.getText());
-        String Title = txtModifyTitle.getText();
-        String Description = txtModifyDesc.getText();
-        String Location = txtModifyLocation.getText();
-        String Contact_Name = modifyContact.getId();
-        String Type = txtModifyType.getText();
-        LocalTime Start = LocalTime.parse(modifyStartHour.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_TIME));//modifyStartHour.getValue();
-        LocalDate startDate = LocalDate.parse(modifyStartDate.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE));
-        LocalTime End = LocalTime.parse(modifyEndHour.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_TIME));//LocalTime.parse(modifyEndHour.getValue().format((java.time.format.DateTimeFormatter) DateTimeFormatter));
-        LocalDate endDate = LocalDate.parse(modifyEndDate.getValue().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE));//modifyEndDate.getValue();
-        int Customer_ID = Integer.parseInt(txtModifyCusId.getText());
-        int User_ID = Integer.parseInt(txtModifyUserId.getText());
-        int Contact_ID = Integer.parseInt(txtModifyContactId.getText());
+        try {
+            AppointmentQuery.modifyAppointment(
+                    Integer.parseInt(txtModifyAppId.getText()),
+                    txtModifyTitle.getText(),
+                    txtModifyDesc.getText(),
+                    txtModifyLocation.getText(),
+                    txtModifyType.getText(),
+                    LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())),
+                    LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())),
+                    Integer.parseInt(txtModifyCusId.getText()),
+                    Integer.parseInt(txtModifyUserId.getText()),
+                    modifyContact.getSelectionModel().getSelectedItem());
 
-        AppointmentQuery.modifyAppointment(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
-
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
 
 
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
@@ -125,35 +127,49 @@ public class ModifyAppointmentController implements Initializable {
         stage.show();
     }
 
+    private void contactIDBox(){
+        ObservableList<String> modifyContacts = FXCollections.observableArrayList();
+
+        try {
+            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+                for(Contacts contacts: allContacts){
+                    if(!modifyContacts.contains(contacts.getContact_Name())){
+                        modifyContacts.add(contacts.getContact_Name());
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        modifyContact.setItems(modifyContacts);
+
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
-
-        ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
-
-        modifyContact.setItems(allContacts);
+        contactIDBox();
 
 
 
-        LocalTime start = LocalTime.of(5, 0, 0);
+        LocalTime start = LocalTime.of(6, 0, 0);
         LocalTime end = LocalTime.of(16, 45, 0);
 
         while(start.isBefore(end.plusSeconds(1))){
-            modifyStartHour.getItems().add(LocalTime.from(start));
+            modifyStartHour.getItems().add(String.valueOf(LocalTime.from(start)));
             start = start.plusMinutes(15);
         }
 
-        LocalTime start1 = LocalTime.of(5, 15, 0);
+        LocalTime start1 = LocalTime.of(6, 15, 0);
         LocalTime end1 = LocalTime.of(17, 0, 0);
 
         while(start1.isBefore(end1.plusSeconds(1))){
-            modifyEndHour.getItems().add(LocalTime.from(start1));
+            modifyEndHour.getItems().add(String.valueOf(LocalTime.from(start1)));
             start1 = start1.plusMinutes(15);
         }
 
-        modifyStartHour.getSelectionModel().select(start);
-        modifyEndHour.getSelectionModel().select(start1);
+        modifyStartHour.getSelectionModel().select(String.valueOf(start));
+        modifyEndHour.getSelectionModel().select(String.valueOf(start1));
 
 
     }

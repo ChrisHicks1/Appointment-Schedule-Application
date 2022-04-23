@@ -1,6 +1,7 @@
 package Database;
 
 import Database.DBConnection;
+import model.Contacts;
 import model.Countries;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -50,4 +51,5 @@ public class CountryQuery {
             throwables.printStackTrace();
         }
     }
+
 }

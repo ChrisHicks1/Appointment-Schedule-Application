@@ -36,4 +36,25 @@ public class ContactQuery {
         }
         return coList;
     }
+    public static Contacts getContact_ID(String contactName) throws SQLException {
+        String sql = "SELECT * FROM contacts WHERE Contact_Name = ?";
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
+
+
+        ps.setString(1, contactName);
+        try {
+            ps.execute();
+            ResultSet rs = ps.getResultSet();
+
+            while (rs.next()) {
+                Contacts contacts = new Contacts(
+                        rs.getInt("Contact_ID"),
+                        rs.getString("Contact_Name"),
+                        rs.getString("Email"));
+                return contacts;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }return null;
+    }
 }

@@ -3,8 +3,6 @@ package model;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.time.LocalDateTime;
-
 public class Contacts {
 
     private static ObservableList<Contacts> allContacts = FXCollections.observableArrayList();
