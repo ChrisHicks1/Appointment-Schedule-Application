@@ -11,34 +11,37 @@
                 <Font name="System Bold" size="36.0" />
             </font>
         </Label>
-        <TextField fx:id="txtAddAppId" alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="25" prefWidth="200.0" promptText="Appointment ID" />
-        <TextField fx:id="txtAddTitle" alignment="CENTER" layoutX="170.0" layoutY="120.0" prefHeight="25" prefWidth="200.0" promptText="Title" />
-        <TextField fx:id="txtAddDesc" alignment="CENTER" layoutX="170.0" layoutY="155.0" prefHeight="25" prefWidth="200.0" promptText="Description" />
-        <TextField fx:id="txtAddLocation" alignment="CENTER" layoutX="170.0" layoutY="190.0" prefHeight="25" prefWidth="200.0" promptText="Location" />
-        <ComboBox fx:id="addContact" layoutX="170.0" layoutY="225.0" prefHeight="25" prefWidth="200.0" />
-        <TextField fx:id="addTextType" alignment="CENTER" layoutX="170.0" layoutY="260.0" prefHeight="25" prefWidth="200.0" promptText="Type" />
-        <TextField fx:id="addTextCustId" alignment="CENTER" layoutX="170.0" layoutY="365.0" prefHeight="25" prefWidth="200.0" promptText="Customer_ID" />
-        <TextField fx:id="addTextUserId" alignment="CENTER" layoutX="170.0" layoutY="400.0" prefHeight="25" prefWidth="200.0" promptText="User_ID" />
+        <TextField fx:id="txtAddAppId" alignment="CENTER" editable="false" layoutX="170.0" layoutY="85.0" prefHeight="30" prefWidth="200.0" promptText="Appointment ID" />
+        <TextField fx:id="txtAddTitle" alignment="CENTER" layoutX="170.0" layoutY="125.0" prefHeight="30" prefWidth="200.0" promptText="Title" />
+        <TextField fx:id="txtAddDesc" alignment="CENTER" layoutX="170.0" layoutY="165.0" prefHeight="30" prefWidth="200.0" promptText="Description" />
+        <TextField fx:id="txtAddLocation" alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="30" prefWidth="200.0" promptText="Location" />
+        <ComboBox fx:id="addContact" layoutX="170.0" layoutY="245.0" prefHeight="30" prefWidth="200.0" />
+        <TextField fx:id="addTextType" alignment="CENTER" layoutX="170.0" layoutY="285.0" prefHeight="30" prefWidth="200.0" promptText="Type" />
+
+        <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="325.0" prefHeight="25.0" prefWidth="100.0" />
+        <DatePicker fx:id="addStartDate" layoutX="170.0" layoutY="325.0" prefHeight="25.0" prefWidth="100.0" />
+
+        <ComboBox fx:id="addEndHour" layoutX="270.0" layoutY="365.0" prefHeight="25.0" prefWidth="100.0" />
+        <DatePicker fx:id="addEndDate" layoutX="170.0" layoutY="365.0" prefHeight="25.0" prefWidth="100.0" />
+
+        <TextField fx:id="addTextCustId" alignment="CENTER" layoutX="170.0" layoutY="405.0" prefHeight="30" prefWidth="200.0" promptText="Customer_ID" />
+        <TextField fx:id="addTextUserId" alignment="CENTER" layoutX="170.0" layoutY="445.0" prefHeight="30" prefWidth="200.0" promptText="User_ID" />
 
 
 
-        <Label layoutX="52.0" layoutY="85.0" prefHeight="25" prefWidth="110.0" text="Appointment ID" />
-        <Label layoutX="52.0" layoutY="120.0" prefHeight="25" prefWidth="110.0" text="Title" />
-        <Label layoutX="52.0" layoutY="155.0" prefHeight="25" prefWidth="110.0" text="Description" />
-        <Label layoutX="52.0" layoutY="190.0" prefHeight="25" prefWidth="110.0" text="Location" />
-        <Label layoutX="52.0" layoutY="225.0" prefHeight="25" prefWidth="110" text="Contact" />
-        <Label layoutX="52.0" layoutY="260.0" prefHeight="25" prefWidth="110.0" text="Type" />
-        <Label layoutX="52.0" layoutY="295.0" prefHeight="25" prefWidth="110.0" text="Start Date and Time" />
-        <Label layoutX="52.0" layoutY="330.0" prefHeight="25" prefWidth="110.0" text="End Date and Time" />
-        <Label layoutX="52.0" layoutY="365.0" prefHeight="25" prefWidth="110.0" text="Customer_ID" />
-        <Label layoutX="52.0" layoutY="400.0" prefHeight="25" prefWidth="110.0" text="User_ID" />
+        <Label layoutX="52.0" layoutY="85.0" prefHeight="30" prefWidth="110.0" text="Appointment ID" />
+        <Label layoutX="52.0" layoutY="125.0" prefHeight="30" prefWidth="110.0" text="Title" />
+        <Label layoutX="52.0" layoutY="165.0" prefHeight="30" prefWidth="110.0" text="Description" />
+        <Label layoutX="52.0" layoutY="205.0" prefHeight="30" prefWidth="110.0" text="Location" />
+        <Label layoutX="52.0" layoutY="245.0" prefHeight="30" prefWidth="110" text="Contact" />
+        <Label layoutX="52.0" layoutY="285.0" prefHeight="30" prefWidth="110.0" text="Type" />
+        <Label layoutX="52.0" layoutY="325.0" prefHeight="30" prefWidth="110.0" text="Start Date and Time" />
+        <Label layoutX="52.0" layoutY="365.0" prefHeight="30" prefWidth="110.0" text="End Date and Time" />
+        <Label layoutX="52.0" layoutY="405.0" prefHeight="30" prefWidth="110.0" text="Customer_ID" />
+        <Label layoutX="52.0" layoutY="445.0" prefHeight="30" prefWidth="110.0" text="User_ID" />
 
 
-        <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
-        <DatePicker fx:id="addStartDate" layoutX="170.0" layoutY="295.0" prefHeight="25.0" prefWidth="100.0" />
 
-        <ComboBox fx:id="addEndHour" layoutX="270.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
-        <DatePicker fx:id="addEndDate" layoutX="170.0" layoutY="330.0" prefHeight="25.0" prefWidth="100.0" />
 
 
 
