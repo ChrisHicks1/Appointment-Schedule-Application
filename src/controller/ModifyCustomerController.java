@@ -1,7 +1,6 @@
 package controller;
 
 import Database.*;
-import com.sun.jdi.Value;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.stage.Stage;
-import model.Contacts;
 import model.Countries;
 import model.Customer;
 import model.Division;
@@ -22,9 +20,6 @@ import model.Division;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ModifyCustomerController implements Initializable {
@@ -45,7 +40,6 @@ public class ModifyCustomerController implements Initializable {
     @FXML
     private ComboBox<String> comModifyDivision;
 
-    private static Customer selectedCustomer;
 
     int customerIndex;
 
@@ -63,63 +57,35 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
-//needs to save to sql table as only divisionID while saving to our table as country division and divisionID
-    public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
+    public void onSave(ActionEvent actionEvent) throws IOException {
 
-        try {
-            CustomerQuery.modifyCustomer(
-                    Integer.parseInt(txtModifyCusId.getText()),
-                    txtModifyCusName.getText(),
-                    txtModifyCusAddress.getText(),
-                    txtModifyPostal.getText(),
-                    txtModifyPhone.getText(),
-                    //comModifyCountry.getValue(),
-                    //comModifyDivision.getValue(),
-                    (comModifyCountry.getValue() + comModifyDivision.getValue()));
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
+        boolean valid = notEmpty(
+                txtModifyCusName.getText(),
+                txtModifyCusAddress.getText(),
+                txtModifyPostal.getText(),
+                txtModifyPhone.getText(),
+                comModifyCountry.getValue(),
+                comModifyDivision.getValue());
+        if (valid) {
+            try {
+                CustomerQuery.modifyCustomer(
+                        Integer.parseInt(txtModifyCusId.getText()),
+                        txtModifyCusName.getText(),
+                        txtModifyCusAddress.getText(),
+                        txtModifyPostal.getText(),
+                        txtModifyPhone.getText(),
+                        comModifyDivision.getValue());
 
+                Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+                Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+                Scene scene = new Scene(modifyCancel, 900, 400);
+                stage.setTitle("Customer View");
+                stage.setScene(scene);
+                stage.show();
 
-/*
-                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                    alert.setTitle("Success");
-                    alert.setHeaderText("Modify Success");
-                    alert.setContentText("Successfully Modified Customer");
-                    Optional<ButtonType> result = alert.showAndWait();
-
-                        if (result.isPresent() && (result.get() == ButtonType.OK)) {
-                            Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
-                            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                            Scene scene = new Scene(modifyCancel, 900, 400);
-                            stage.setTitle("Customer View");
-                            stage.setScene(scene);
-                            stage.show();
-                        }
-                    }} catch (IOException | SQLException e) {
-                        e.printStackTrace();
-                        Alert newAlert = new Alert(Alert.AlertType.ERROR);
-                        newAlert.setTitle("Error");
-                        newAlert.setContentText("Error Loading");
-                    }
-
-
-            }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Failed to Modify Customer");
-        }
-*/
-
-        {
-            Parent modifyCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            Scene scene = new Scene(modifyCancel, 900, 400);
-            stage.setTitle("Customer View");
-            stage.setScene(scene);
-            stage.show();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -127,9 +93,7 @@ public class ModifyCustomerController implements Initializable {
 
 
 
-
-
-    public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
+public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
@@ -170,14 +134,14 @@ public class ModifyCustomerController implements Initializable {
             alert.showAndWait();
             return false;
         }
-        if(Country.isEmpty()){
+        if(comModifyCountry.getValue() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Country Required");
             alert.showAndWait();
             return false;
         }
-        if(Division.isEmpty()){
+        if(comModifyDivision.getValue() == null){
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Division Required");
@@ -196,15 +160,14 @@ public class ModifyCustomerController implements Initializable {
             for(Countries countries: allCountries){
                 if(!modifyCountries.contains(countries.getCountryName())){
                     modifyCountries.add(countries.getCountryName());
-
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         comModifyCountry.setItems(modifyCountries);
-
     }
+
 
     private void divisionBox(){
         ObservableList<String> modifyDivision = FXCollections.observableArrayList();
@@ -214,49 +177,32 @@ public class ModifyCustomerController implements Initializable {
             for(Division division: allDivisions){
                 if(!modifyDivision.contains(division.getDivision())){
                     modifyDivision.add(division.getDivision());
-
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         comModifyDivision.setItems(modifyDivision);
-
     }
 
+    public void onComboCountry(ActionEvent actionEvent){
+        ObservableList<String> dlist = FXCollections.observableArrayList();
+        try{
+            ObservableList<Division> divisions = DivisionQuery.getStates(comModifyCountry.getSelectionModel().getSelectedItem());
+
+            assert divisions != null;
+            for (Division division : divisions) {
+                dlist.add(division.getDivision());
+            }
+            comModifyDivision.setItems(dlist);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
         divisionBox();
         countryBox();
-
-  /*      ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
-        ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
-        ObservableList<Division> states = DivisionQuery.getStates();
-
-        try {
-        if (comModifyCountry.getValue().getCountryName().equals("U.S")) {
-            comModifyDivision.setItems(states);
-        } else {
-
-            comModifyDivision.setItems(allDivisions);
-            comModifyDivision.setPromptText("Select Division");
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
-
-
-        comModifyCountry.setItems(allCountries);
-
-
-        comModifyDivision.setItems(allDivisions);
-*/
-
-
-    }
-
-    public void onComboCountry(ActionEvent actionEvent) {
     }
 
     public void onComboDivision(ActionEvent actionEvent) {

@@ -51,9 +51,10 @@ public class CustomerQuery {
         return customersList;
     }
 
-    public static void createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
-        try{
-            String sqlcc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?)";
+    public static int createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
+        Division division = DivisionQuery.getDivision_ID(divisionName);
+
+            String sqlcc = "INSERT INTO customers(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(NULL, ?, ?, ?, ?, ?)";
 
             PreparedStatement pscc = DBConnection.getConnection().prepareStatement(sqlcc);
 
@@ -62,40 +63,20 @@ public class CustomerQuery {
             pscc.setString(2, Address);
             pscc.setString(3, Postal_Code);
             pscc.setString(4, Phone);
-            pscc.setString(5, String.valueOf(Country));
-            pscc.setString(6, String.valueOf(Division));
-
-            pscc.execute();
-
-            ResultSet rs = pscc.getResultSet();
-            rs.next();
-            int Customer_ID = rs.getInt(1);
-/*
-            String sqlc = "INSERT INTO customers VALUES(NULL, ?, ?, ?, ?, ?, ?)";
-            PreparedStatement psc = DBConnection.getConnection().prepareStatement(sqlc);
+            pscc.setInt(5, division.getDivisionId());
 
 
-            psc.setInt(1, Customer_ID);
-            psc.setString(2, Customer_Name);
-            pscc.setString(3, Address);
-            pscc.setString(4, Postal_Code);
-            pscc.setString(5, Phone);
-            pscc.setString(6, String.valueOf(Country));
-            pscc.setString(7, String.valueOf(Division));
 
-            psc.execute();
+            int rowsAffected = pscc.executeUpdate();
 
-*/
-        }catch (SQLException ex) {
-            ex.printStackTrace();
-        }
+            return rowsAffected;
+
     }
 
 
     public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
 
         Division division = DivisionQuery.getDivision_ID(divisionName);
-        //Countries countries = DivisionQuery.getCountry_ID(countryName);
 
         String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
@@ -105,7 +86,6 @@ public class CustomerQuery {
         ps.setString(2, Address);
         ps.setString(3, Postal_Code);
         ps.setString(4, Phone);
-       // ps.setInt(5, division.getCountryId());
         ps.setInt(5, division.getDivisionId());
         ps.setInt(6, Customer_ID);
 
