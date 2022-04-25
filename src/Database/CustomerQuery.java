@@ -1,6 +1,7 @@
 package Database;
 
 import javafx.scene.control.ComboBox;
+import model.Appointments;
 import model.Countries;
 import model.Customer;
 import model.Division;
@@ -14,7 +15,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class CustomerQuery {
-
 
     public static ObservableList<Customer> getCustomer() throws SQLException{
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
@@ -120,6 +120,8 @@ public class CustomerQuery {
                 System.out.print(Customer_Name + "\n");
             }
         }
+
+
 
 
 }

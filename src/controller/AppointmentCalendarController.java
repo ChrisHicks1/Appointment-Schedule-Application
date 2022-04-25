@@ -104,6 +104,10 @@ public class AppointmentCalendarController implements Initializable {
             if (alert.getResult() == ButtonType.OK) {
                 AppointmentQuery.deleteAppointment(selectedApp.getAppointment_ID());
                 appTableView.setItems(AppointmentQuery.getAllAppointments());
+                Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
+                alert1.setTitle("Cancel Appointment");
+                alert1.setContentText("Appointment has been canceled");
+                alert1.showAndWait();
             }
         }
     }

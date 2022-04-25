@@ -1,6 +1,7 @@
 package controller;
 
 
+import Database.AppointmentQuery;
 import Database.UserQuery;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -140,16 +142,28 @@ public class LoginController implements Initializable {
 
 
     // alert to appointment on loginSuccess
-
-
-    private void alertAppointment(){
+    private void alertAppointment() throws SQLException {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        LocalDateTime localDateTime15 = localDateTime.plusMinutes(15);
+       /* if(AppointmentQuery.getMinutes()){
+            Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
+            appAlert.setTitle("Appointment");
+            appAlert.setContentText("You have an Appointment in 15 minutes or less");
+            appAlert.showAndWait();
+        }
+        else{
+            Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
+            appAlert1.setTitle("Appointment");
+            appAlert1.setContentText("You do NOT have an upcoming Appointment");
+            appAlert1.showAndWait();
+        }*/
     }
 
 
 
 
     /**Writes Successful login attempt*/
-    private void loginSuccess(){
+    private void loginSuccess() throws SQLException {
 
     alertAppointment();
 

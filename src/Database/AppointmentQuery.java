@@ -1,5 +1,4 @@
 package Database;
-import javafx.scene.control.Alert;
 import model.Appointments;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,7 +7,6 @@ import model.Contacts;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 
 public class AppointmentQuery {
@@ -114,21 +112,6 @@ public class AppointmentQuery {
 
 
 
-    public static void select() throws SQLException {
-        String sqls = "SELECT * FROM appointments AS a INNER JOIN customers AS c ON a.Customer_ID = c.Customer_ID";
-        PreparedStatement ps = DBConnection.conn.prepareStatement(sqls);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            int Appointment_ID = rs.getInt("Appointment_ID");
-            String Customer_Name = rs.getString("Customer_Name");
-            System.out.print(Appointment_ID + " | ");
-            System.out.print(Customer_Name + "\n");
-        }
-    }
-
-
-
-
     public static ObservableList<Appointments> getMonth() throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
@@ -198,27 +181,74 @@ public class AppointmentQuery {
         }
         return appointments;
     }
-}
+
+
+    public static ObservableList<Appointments> getMinutes() throws SQLException{
+        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
+
+        LocalDateTime today = LocalDateTime.now();
+        LocalDateTime Minutes = today.plusMinutes(15);
+
+        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start > ? AND Start < ?";
+
+        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
+
+        ps.setTime(1, java.sql.Time.valueOf(today.toLocalTime()));
+        ps.setTime(2, java.sql.Time.valueOf(Minutes.toLocalTime()));
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            int Appointment_ID = rs.getInt("Appointment_ID");
+            String Title = rs.getString("Title");
+            String Description = rs.getString("Description");
+            String Location = rs.getString("Location");
+            String Contact_Name = rs.getString("Contact_Name");
+            String Type = rs.getString("Type");
+            LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+            LocalDate startDate = rs.getDate("Start").toLocalDate();
+            LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+            LocalDate endDate = rs.getDate("End").toLocalDate();
+            int Customer_ID = rs.getInt("Customer_ID");
+            int User_ID = rs.getInt("User_ID");
+            int Contact_ID = rs.getInt("Contact_ID");
+            Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+            appointments.add(aList);
+        }
+        return appointments;
+    }
+
 
 
 
 //associated customers
 //appointments within 15mins
 //appointments not in 15mins
+public static void select() throws SQLException {
+    String sqls = "SELECT * FROM appointments AS a INNER JOIN customers AS c ON a.Customer_ID = c.Customer_ID";
+    PreparedStatement ps = DBConnection.conn.prepareStatement(sqls);
+    ResultSet rs = ps.executeQuery();
 
+    while (rs.next()) {
+        int Appointment_ID = rs.getInt("Appointment_ID");
+        String Customer_Name = rs.getString("Customer_Name");
+        System.out.print(Appointment_ID + " | ");
+        System.out.print(Customer_Name + "\n");
+    }
+}
 
-
-
-  /*  public static ObservableList<Appointments> getAssocCustomers(int Customer_ID) throws SQLException{
+    public static boolean getAssocCustomers(int Customer_ID) throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
-        String sqlac = "SELECT * FROM appointments AS a INNER JOIN contacts AS c ON a.Contact_ID = c.Contact_ID NOT WHERE Customer_ID = ?";
+        String sqlac = "SELECT Appointment_ID FROM appointments WHERE Customer_ID = 1 AND Appointment_ID = ?";
 
         PreparedStatement ps = DBConnection.conn.prepareStatement(sqlac);
         ps.setInt(1, Customer_ID);
 
-        try {
-            ps.executeUpdate();
+
+        return true;
+      /*  try {
+            ps.execute();
             ResultSet rs = ps.getResultSet();
 
             while (rs.next()) {
@@ -238,13 +268,13 @@ public class AppointmentQuery {
                         rs.getInt("Contact_ID")
                 );
                 appointments.add(newAppointment);
-            } return appointments;
+            } return true;
         }catch (SQLException ex){
             ex.printStackTrace();
-            return null;
-        }
-        }
+            return false;
         }*/
+        }
+        }
 
 
 

@@ -102,35 +102,41 @@ public class CustomerViewController implements Initializable {
             alert.setContentText("No Customer Selected");
             alert.showAndWait();
 
-        }/* else if (AppointmentQuery.getAllAssociatedCustomers(selectedCustomer.getCustomer_ID(i).size) > 0) {
-            Alert alert1 = new Alert(Alert.AlertType.ERROR);
-            alert1.setTitle("Error");
-            alert1.setHeaderText("Associated Appointments");
-            alert1.setContentText("Can NOT Delete Customers With Appointments");
+        }
+        else {
+                if (AppointmentQuery.getAssocCustomers(selectedCustomerIndex)){
 
-        }*/ else {//if(AppointmentQuery.getAllAssociatedCustomers(selectedCustomer.getCustomer_ID()) == 0) {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Delete");
-            alert.setHeaderText("Are You Sure You Want To Delete?");
-            alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
-            alert.showAndWait();
-            if (alert.getResult() == ButtonType.OK) {
-                for (int i = 0; i < AppointmentQuery.getAllAppointments().size(); i++) {
-                    if (AppointmentQuery.getAllAppointments().get(i).getAllAssociatedCustomers().contains(selectedCustomer)) {
-                        Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                        alert1.setTitle("Error");
-                        alert1.setHeaderText("Associated Appointments");
-                        alert1.setContentText("Can NOT Delete Customers With Appointments");
-                    } else {
+                    Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                    alert1.setTitle("Error");
+                    alert1.setHeaderText("Associated Appointments");
+                    alert1.setContentText("Can NOT Delete Customers With Appointments");
+                    alert1.showAndWait();
+                } else {
+
+                    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                    alert.setTitle("Delete");
+                    alert.setHeaderText("Are You Sure You Want To Delete?");
+                    alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
+                    alert.showAndWait();
+
+                    if (alert.getResult() == ButtonType.OK) {
                         CustomerQuery.deleteCustomer(selectedCustomer.getCustomer_ID());
                         cusTableView.setItems(CustomerQuery.getCustomer());
+                        Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
+                        alert2.setTitle("Deleted");
+                        alert2.setContentText("Customer has been Deleted");
+                        alert2.showAndWait();
                     }
-
-
                 }
             }
         }
-    }
+    /* for (int i = 0; i < AppointmentQuery.getAllAppointments().size(); i++) {
+                if (Appointments.getAllAppointments().contains(selectedCustomer)) {*/
+
+
+
+
+
 
 
 

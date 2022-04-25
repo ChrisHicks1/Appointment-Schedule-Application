@@ -142,11 +142,5 @@ public class Appointments {
     public static ObservableList<Appointments> getAllAppointments(){ return allAppointments; }
 
 
-    //Doesnt really work need to fix
-    private static ObservableList<AppointmentQuery> associatedCustomers = FXCollections.observableArrayList();
-
-    public static ObservableList<AppointmentQuery> getAllAssociatedCustomers() {
-        return associatedCustomers;
-    }
 
 }

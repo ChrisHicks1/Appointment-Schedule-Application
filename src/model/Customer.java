@@ -1,11 +1,13 @@
 package model;
 
+import Database.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Customer {
 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
+    private static ObservableList<Appointments> associatedAppointment = FXCollections.observableArrayList();
 
 
     private int Customer_ID;
@@ -62,6 +64,8 @@ public class Customer {
     public void setDivision_ID(int Division_ID){this.Division_ID = Division_ID;}
 
     public static ObservableList<Customer> getAllCustomers(){ return allCustomers; }
+
+    public static ObservableList<Appointments> getAssociatedAppointment(){ return  associatedAppointment; }
 
 
 }
