@@ -237,20 +237,18 @@ public static void select() throws SQLException {
     }
 }
 
-    public static boolean getAssocCustomers(int Customer_ID) throws SQLException{
+    public static ObservableList<Appointments>getAssocCustomers(int Customer_ID) throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
-        String sqlac = "SELECT Appointment_ID FROM appointments WHERE Customer_ID = 1 AND Appointment_ID = ?";
+        String sqlac = "SELECT * FROM appointments WHERE Customer_ID = ?";
 
         PreparedStatement ps = DBConnection.conn.prepareStatement(sqlac);
         ps.setInt(1, Customer_ID);
 
 
-        return true;
-      /*  try {
             ps.execute();
             ResultSet rs = ps.getResultSet();
-
+             try{
             while (rs.next()) {
                 Appointments newAppointment = new Appointments(
                         rs.getInt("Appointment_ID"),
@@ -268,11 +266,10 @@ public static void select() throws SQLException {
                         rs.getInt("Contact_ID")
                 );
                 appointments.add(newAppointment);
-            } return true;
+            } return appointments;
         }catch (SQLException ex){
             ex.printStackTrace();
-            return false;
-        }*/
+        }return null;
         }
         }
 
