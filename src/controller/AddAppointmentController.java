@@ -319,22 +319,29 @@ public class AddAppointmentController implements Initializable {
             return false;
         }
 
-//fix overlap
-        /**Checks appointments do not overlap*/
-        LocalDateTime start1 = startDate.atTime(startHour);
-        LocalDateTime end1 = endDate.atTime(endHour);
 
-        LocalDateTime pickedStart;
-        LocalDateTime pickedEnd;
+        /**Checks Customer appointments do not overlap*/
+        LocalDateTime pickedStart = startDate.atTime(startHour);
+        LocalDateTime pickedEnd = endDate.atTime(endHour);
+
+        LocalDateTime start1;
+        LocalDateTime end1;
 
         try{
             ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
-            assert appointments != null;
             for(Appointments appointments1 : appointments){
-                pickedStart = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
-                pickedEnd = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
+                start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
+                end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
+
 
                 if(pickedStart.isAfter(start1) && pickedStart.isBefore(end1)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointments can NOT overlap");
+                    alert.showAndWait();
+                    return false;
+                }
+                else if(pickedStart.isBefore(start1) && (pickedEnd.isBefore(end1) || pickedEnd.isEqual(end1))){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("Appointments can NOT overlap");
@@ -348,7 +355,14 @@ public class AddAppointmentController implements Initializable {
                     alert.showAndWait();
                     return false;
                 }
-                else if(pickedStart.isEqual(end1)){
+                else if(pickedStart.isEqual(start1) && pickedEnd.isEqual(end1)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointments can NOT overlap");
+                    alert.showAndWait();
+                    return false;
+                }
+                else if(pickedStart.isEqual(pickedEnd)){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("Appointment time must be at least 15 minutes");
