@@ -1,6 +1,8 @@
 package controller;
 
 import Database.ContactQuery;
+import Database.CustomerQuery;
+import Database.UserQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,31 +12,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import Database.AppointmentQuery;
+import model.Appointments;
 import model.Contacts;
+import model.Customer;
+import model.Users;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeFormatterBuilder;
-import java.time.temporal.TemporalAccessor;
+import java.time.*;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 public class AddAppointmentController implements Initializable {
+
     @FXML
     private TextField addTextContactId;
     @FXML
@@ -52,9 +45,9 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private TextField addTextType;
     @FXML
-    private TextField addTextCustId;
+    private ComboBox<Integer> ComCustId;
     @FXML
-    private TextField addTextUserId;
+    private ComboBox<Integer> comUserId;
     @FXML
     private ComboBox<String> addStartHour;
     @FXML
@@ -64,38 +57,54 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private DatePicker addEndDate;
 
-    public void onSave(ActionEvent actionEvent) throws IOException {
 
-
-        try {
-            AppointmentQuery.createAppointment(
-
-                    txtAddTitle.getText(),
-                    txtAddDesc.getText(),
-                    txtAddLocation.getText(),
-                    addTextType.getText(),
-                    LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())),
-                    LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())),
-                    Integer.parseInt(addTextCustId.getText()),
-                    Integer.parseInt(addTextUserId.getText()),
-                    addContact.getSelectionModel().getSelectedItem());
-
-
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-        }
-
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 1000, 450);
-        stage.setTitle("Appointment Calendar");
-        stage.setScene(scene);
-        stage.show();
-
+    private ZonedDateTime ESTconversion(LocalDateTime time){
+        return ZonedDateTime.of(time, ZoneId.of("America/New_York"));
     }
 
+
+
+
+
+    public void onSave(ActionEvent actionEvent) throws IOException {
+        boolean valid = appSuccess(
+                txtAddTitle.getText(),
+                txtAddDesc.getText(),
+                txtAddLocation.getText(),
+                addTextType.getText(),
+                ComCustId.getSelectionModel().getSelectedItem(),
+                comUserId.getSelectionModel().getSelectedItem(),
+                addContact.getSelectionModel().getSelectedItem());
+        if (valid) {
+            try {
+                AppointmentQuery.createAppointment(
+
+                        txtAddTitle.getText(),
+                        txtAddDesc.getText(),
+                        txtAddLocation.getText(),
+                        addTextType.getText(),
+                        LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())),
+                        LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())),
+                        ComCustId.getSelectionModel().getSelectedItem(),
+                        comUserId.getSelectionModel().getSelectedItem(),
+                        addContact.getSelectionModel().getSelectedItem());
+
+
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+
+            Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+            Scene scene = new Scene(addPartCancel, 1000, 450);
+            stage.setTitle("Appointment Calendar");
+            stage.setScene(scene);
+            stage.show();
+
+        }
+    }
 
 
 
@@ -110,6 +119,40 @@ public class AddAppointmentController implements Initializable {
         stage.setTitle("Appointment Calendar");
         stage.setScene(scene);
         stage.show();
+    }
+
+
+
+    private void customerIDBox(){
+        ObservableList<Integer> addCustomers = FXCollections.observableArrayList();
+
+        try{
+            ObservableList<Customer> allCustomers = CustomerQuery.getCustomer();
+            for(Customer customer : allCustomers){
+                if(!addCustomers.contains(customer.getCustomer_ID())){
+                    addCustomers.add(customer.getCustomer_ID());
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        ComCustId.setItems(addCustomers);
+    }
+
+    private void userIDBox(){
+        ObservableList<Integer> addUsers = FXCollections.observableArrayList();
+
+        try{
+            ObservableList<Users> allUsers = UserQuery.getAllUsers();
+            for(Users users : allUsers){
+                if(!addUsers.contains(users.getUser_ID())){
+                    addUsers.add(users.getUser_ID());
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        comUserId.setItems(addUsers);
     }
 
 
@@ -130,36 +173,233 @@ public class AddAppointmentController implements Initializable {
 
     }
 
-
-    //check for empty
-    //check for overlap
-    //timezone
+    private void timeBox(){
+        ObservableList<String> Time = FXCollections.observableArrayList();
+        LocalTime start = LocalTime.of(8, 0);
+        LocalTime end = LocalTime.of(21, 45);
+        Time.add(start.toString());
+        try{
+            while(start.isBefore(end.plusSeconds(1))){
+                start = start.plusMinutes(15);
+                Time.add(start.toString());
+            }
+            addStartHour.setItems(Time);
+            addEndHour.setItems(Time);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        customerIDBox();
+        userIDBox();
         contactIDBox();
+        timeBox();
 
-        LocalTime start = LocalTime.of(6, 0);
-        LocalTime end = LocalTime.of(16, 45);
+        addStartHour.getSelectionModel().select(String.valueOf(LocalTime.of(8, 0)));
+        addEndHour.getSelectionModel().select(String.valueOf(LocalTime.of(8, 15)));
 
-        while(start.isBefore(end.plusSeconds(1))){
-            addStartHour.getItems().add(String.valueOf(start));
-            start = start.plusMinutes(15);
+    }
+
+
+    /**Confirms there are no empty fields*/
+    private boolean appSuccess(String Title, String Description, String Location, String Type, Integer customerID, Integer userID, String contactName) {
+        if (Title.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Title Required");
+            alert.showAndWait();
+            return false;
         }
-        addStartHour.getSelectionModel().select(String.valueOf(LocalTime.of(6, 0)));
-
-        LocalTime start1 = LocalTime.of(6, 15);
-        LocalTime end1 = LocalTime.of(17, 0);
-
-        while(start1.isBefore(end1.plusSeconds(1))){
-            addEndHour.getItems().add(String.valueOf(start1));
-            start1 = start1.plusMinutes(15);
+        if (Description.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Description Required");
+            alert.showAndWait();
+            return false;
         }
-        addEndHour.getSelectionModel().select(String.valueOf(LocalTime.of(6, 15)));
+        if (Location.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Location Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (Type.isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Type Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (ComCustId.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Customer Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (comUserId.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("User Required");
+            alert.showAndWait();
+            return false;
+        }
+            if (addContact.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Contact Required");
+            alert.showAndWait();
+            return false;
+        }
 
+
+        /**Checks dates and times are not empty also that start date and time comes before end date and time*/
+        if (addStartDate.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Start Date Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (addStartHour.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Start Time Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (addEndDate.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("End Date Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (addEndHour.getValue() == null) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("End Time Required");
+            alert.showAndWait();
+            return false;
+        }
+        if (addEndDate.getValue().isBefore(addStartDate.getValue())) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Start Date MUST be BEFORE End Date");
+            alert.showAndWait();
+            return false;
+        }
+
+        LocalTime startHour = LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem());
+        LocalTime endHour = LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem());
+
+        if (endHour.isBefore(startHour)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Start Time MUST be BEFORE End Time");
+            alert.showAndWait();
+            return false;
+        }
+
+        /**Checks appointment is on one day*/
+        LocalDate startDate = addStartDate.getValue();
+        LocalDate endDate = addEndDate.getValue();
+
+        if (!startDate.equals(endDate)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Appointments can NOT take more than one day");
+            alert.showAndWait();
+            return false;
+        }
+
+//fix overlap
+        /**Checks appointments do not overlap*/
+        LocalDateTime start1 = startDate.atTime(startHour);
+        LocalDateTime end1 = endDate.atTime(endHour);
+
+        LocalDateTime pickedStart;
+        LocalDateTime pickedEnd;
+
+        try{
+            ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
+            assert appointments != null;
+            for(Appointments appointments1 : appointments){
+                pickedStart = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
+                pickedEnd = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
+
+                if(pickedStart.isAfter(start1) && pickedStart.isBefore(end1)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointments can NOT overlap");
+                    alert.showAndWait();
+                    return false;
+                }
+                else if(pickedEnd.isAfter(start1) && pickedEnd.isBefore(end1)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointments can NOT overlap");
+                    alert.showAndWait();
+                    return false;
+                }
+                else if(pickedStart.isEqual(end1)){
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointment time must be at least 15 minutes");
+                    alert.showAndWait();
+                    return false;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+
+
+        //fix time zone?
+        /**Checks that the Appointment is during business hours*/
+        ZonedDateTime startConversion = ESTconversion(LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())));
+        ZonedDateTime endConversion = ESTconversion(LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())));
+
+        if(startConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+        if(startConversion.toLocalTime().isBefore(LocalTime.of(8, 0))){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        if(endConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        if(endConversion.toLocalTime().isBefore(LocalTime.of(8,0))){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+
+        return true;
     }
 
 }

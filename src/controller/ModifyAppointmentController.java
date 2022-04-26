@@ -168,16 +168,16 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-        LocalTime start = LocalTime.of(6, 0, 0);
-        LocalTime end = LocalTime.of(16, 45, 0);
+        LocalTime start = LocalTime.of(8, 0, 0);
+        LocalTime end = LocalTime.of(22, 0, 0);
 
         while(start.isBefore(end.plusSeconds(1))){
             modifyStartHour.getItems().add(String.valueOf(LocalTime.from(start)));
             start = start.plusMinutes(15);
         }
 
-        LocalTime start1 = LocalTime.of(6, 15, 0);
-        LocalTime end1 = LocalTime.of(17, 0, 0);
+        LocalTime start1 = LocalTime.of(8, 0, 0);
+        LocalTime end1 = LocalTime.of(22, 0, 0);
 
         while(start1.isBefore(end1.plusSeconds(1))){
             modifyEndHour.getItems().add(String.valueOf(LocalTime.from(start1)));

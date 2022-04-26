@@ -3,7 +3,6 @@ package controller;
 import Database.AppointmentQuery;
 import Database.CustomerQuery;
 import Database.DBConnection;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -16,16 +15,28 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Customer;
+import java.time.*;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AppointmentCalendarController implements Initializable {
 
+    //Starting ZoneID and Time
+    Locale myLocale = Locale.getDefault();
+    LocalDateTime nowDateTime = LocalDateTime.now();
+
+    ZonedDateTime zDateTime = ZonedDateTime.of(nowDateTime, ZoneId.of("US/Central"));
+    Locale locEst= new Locale("en", "US/East");
+
+    public Locale getMyLocale() {
+        return myLocale;
+    }
 
     static ObservableList<Appointments> appointments;
 

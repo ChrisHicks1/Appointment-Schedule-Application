@@ -21,12 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.*;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.time.ZoneId;
-import java.time.LocalDate;
 import java.util.*;
 
 
@@ -68,6 +66,13 @@ public class LoginController implements Initializable {
     private Button loginButton;
 
 
+   public static void zoneIds(){
+       ZoneId.getAvailableZoneIds().stream().forEach(System.out::println);
+   }
+
+
+
+    Locale locEst= new Locale("en", "US/East");
 
 
     @Override
@@ -80,8 +85,8 @@ public class LoginController implements Initializable {
             loginLabel.setText(resourceBundle.getString("login"));
             location.setText(resourceBundle.getString("location"));
             country.setText(resourceBundle.getString("country"));
-            //timeField.setText(String.valueOf(TimeZone.getDefault().getDisplayName()));
-            timeZone.setText(String.valueOf(TimeZone.getDefault().getID()));
+            timeField.setText(String.valueOf(ZoneId.of(TimeZone.getDefault().getID())));
+            timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
             loginButton.setText(resourceBundle.getString("login"));

@@ -240,9 +240,9 @@ public static void select() throws SQLException {
     public static ObservableList<Appointments>getAssocCustomers(int Customer_ID) throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
-        String sqlac = "SELECT * FROM appointments WHERE Customer_ID = ?";
+        String sqlac = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Customer_ID = ?";
 
-        PreparedStatement ps = DBConnection.conn.prepareStatement(sqlac);
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqlac);
         ps.setInt(1, Customer_ID);
 
 

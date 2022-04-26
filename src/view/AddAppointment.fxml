@@ -15,7 +15,7 @@
         <TextField fx:id="txtAddTitle" alignment="CENTER" layoutX="170.0" layoutY="125.0" prefHeight="30" prefWidth="200.0" promptText="Title" />
         <TextField fx:id="txtAddDesc" alignment="CENTER" layoutX="170.0" layoutY="165.0" prefHeight="30" prefWidth="200.0" promptText="Description" />
         <TextField fx:id="txtAddLocation" alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="30" prefWidth="200.0" promptText="Location" />
-        <ComboBox fx:id="addContact" layoutX="170.0" layoutY="245.0" prefHeight="30" prefWidth="200.0" />
+        <ComboBox fx:id="addContact" layoutX="170.0" layoutY="245.0" prefHeight="30" prefWidth="200.0" promptText="Contact" />
         <TextField fx:id="addTextType" alignment="CENTER" layoutX="170.0" layoutY="285.0" prefHeight="30" prefWidth="200.0" promptText="Type" />
 
         <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="325.0" prefHeight="25.0" prefWidth="100.0" />
@@ -23,10 +23,8 @@
 
         <ComboBox fx:id="addEndHour" layoutX="270.0" layoutY="365.0" prefHeight="25.0" prefWidth="100.0" />
         <DatePicker fx:id="addEndDate" layoutX="170.0" layoutY="365.0" prefHeight="25.0" prefWidth="100.0" />
-
-        <TextField fx:id="addTextCustId" alignment="CENTER" layoutX="170.0" layoutY="405.0" prefHeight="30" prefWidth="200.0" promptText="Customer_ID" />
-        <TextField fx:id="addTextUserId" alignment="CENTER" layoutX="170.0" layoutY="445.0" prefHeight="30" prefWidth="200.0" promptText="User_ID" />
-
+        <ComboBox fx:id="ComCustId" layoutX="170.0" layoutY="405.0" prefHeight="30" prefWidth="200.0" promptText="Customer" />
+        <ComboBox fx:id="comUserId" layoutX="170.0" layoutY="448.0" prefHeight="30" prefWidth="200.0" promptText="User" />
 
 
         <Label layoutX="52.0" layoutY="85.0" prefHeight="30" prefWidth="110.0" text="Appointment ID" />
@@ -47,6 +45,8 @@
 
         <Button fx:id="addSave" layoutX="310.0" layoutY="494.0" mnemonicParsing="false" onAction="#onSave" text="Save" />
         <Button layoutX="365.0" layoutY="494.0" mnemonicParsing="false" onAction="#toMain" text="Cancel" />
+
+
 
 
 
