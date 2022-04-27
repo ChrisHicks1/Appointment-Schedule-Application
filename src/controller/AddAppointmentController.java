@@ -173,24 +173,6 @@ public class AddAppointmentController implements Initializable {
 
     }
 
-    private void timeBox(){
-        ObservableList<String> Time = FXCollections.observableArrayList();
-        LocalTime start = LocalTime.of(8, 0);
-        LocalTime end = LocalTime.of(21, 45);
-        Time.add(start.toString());
-        try{
-            while(start.isBefore(end.plusSeconds(1))){
-                start = start.plusMinutes(15);
-                Time.add(start.toString());
-            }
-            addStartHour.setItems(Time);
-            addEndHour.setItems(Time);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -198,7 +180,22 @@ public class AddAppointmentController implements Initializable {
         customerIDBox();
         userIDBox();
         contactIDBox();
-        timeBox();
+
+        LocalTime start = LocalTime.of(8, 0, 0);
+        LocalTime end = LocalTime.of(22, 0, 0);
+
+        while(start.isBefore(end.plusSeconds(1))){
+            addStartHour.getItems().add(String.valueOf(LocalTime.from(start)));
+            start = start.plusMinutes(15);
+        }
+
+        LocalTime start1 = LocalTime.of(8, 0, 0);
+        LocalTime end1 = LocalTime.of(22, 0, 0);
+
+        while(start1.isBefore(end1.plusSeconds(1))){
+            addEndHour.getItems().add(String.valueOf(LocalTime.from(start1)));
+            start1 = start1.plusMinutes(15);
+        }
 
         addStartHour.getSelectionModel().select(String.valueOf(LocalTime.of(8, 0)));
         addEndHour.getSelectionModel().select(String.valueOf(LocalTime.of(8, 15)));
@@ -329,6 +326,7 @@ public class AddAppointmentController implements Initializable {
 
         try{
             ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
+            assert appointments != null;
             for(Appointments appointments1 : appointments){
                 start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
                 end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
@@ -341,7 +339,7 @@ public class AddAppointmentController implements Initializable {
                     alert.showAndWait();
                     return false;
                 }
-                else if(pickedStart.isBefore(start1) && (pickedEnd.isBefore(end1) || pickedEnd.isEqual(end1))){
+                else if(pickedStart.isBefore(start1) && (pickedEnd.isAfter(end1) || pickedEnd.isEqual(end1))){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
                     alert.setTitle("Error");
                     alert.setContentText("Appointments can NOT overlap");

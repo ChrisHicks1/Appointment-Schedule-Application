@@ -24,8 +24,8 @@
         <ComboBox fx:id="modifyEndHour" layoutX="270.0" layoutY="365.0" prefHeight="25.0" prefWidth="100.0" />
         <DatePicker fx:id="modifyEndDate" layoutX="170.0" layoutY="365.0" onAction="#onEndDate" prefHeight="25.0" prefWidth="100.0" />
 
-        <TextField fx:id="txtModifyCusId" alignment="CENTER" layoutX="170.0" layoutY="405.0" prefHeight="30" prefWidth="200.0" promptText="Customer_ID" />
-        <TextField fx:id="txtModifyUserId" alignment="CENTER" layoutX="170.0" layoutY="445.0" prefHeight="30" prefWidth="200.0" promptText="User_ID" />
+        <ComboBox fx:id="ComCustId" layoutX="170.0" layoutY="405.0" prefHeight="30" prefWidth="200.0" promptText="Customer" />
+        <ComboBox fx:id="comUserId" layoutX="170.0" layoutY="448.0" prefHeight="30" prefWidth="200.0" promptText="User" />
 
 
 
