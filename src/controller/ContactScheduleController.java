@@ -47,7 +47,8 @@ public class ContactScheduleController implements Initializable {
     @FXML
     public TableColumn customerCol;
     @FXML
-    public ComboBox<Contacts> comContact;
+    public ComboBox<String> comContact;
+
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
@@ -65,31 +66,35 @@ public class ContactScheduleController implements Initializable {
 
 
     public void onCombo(ActionEvent actionEvent) throws SQLException {
-        AppointmentQuery.select();
+        ObservableList<Appointments> appointments = AppointmentQuery.getAssocContacts(comContact.getSelectionModel().getSelectedItem());
+        contactTableView.setItems(appointments);
+        contactTableView.refresh();
+
+    }
+
+
+    private void contactIDBox(){
+        ObservableList<String> addContacts = FXCollections.observableArrayList();
+
+        try {
+            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+            for(Contacts contacts: allContacts){
+                if(!addContacts.contains(contacts.getContact_Name())){
+                    addContacts.add(contacts.getContact_Name());
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        comContact.setItems(addContacts);
+
     }
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
-
-
-        comContact.setItems(allContacts);
-        comContact.setPromptText("Select Contact");
-
-        /*
-        contactTableView.getSelectionModel().selectedIndexProperty().addListener((obs, oldSelection, newSelection) -> {
-            if(newSelection != null){
-                for(int i = 0; i < comContact.getItems().size(); i++){
-                    Contacts abp = comContact.getItems().get(i);
-                    if(abp.getContact_ID() == newSelection.getContact_ID() && abp.getContact_Name().equals(newSelection.getContact_Name())){
-                        comContact.setValue(abp);
-                        break;
-                    }
-                }
-            }
-        }); */
+        contactIDBox();
 
 
         appointments = AppointmentQuery.getAllAppointments();

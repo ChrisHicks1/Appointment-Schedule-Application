@@ -20,7 +20,7 @@ public class Contacts {
 
 
 
-    public int getContact_ID() {
+    public Integer getContact_ID() {
         return Contact_ID;
     }
 

@@ -217,11 +217,10 @@ public class ModifyAppointmentController implements Initializable {
         contactIDBox();
 
 
-
         LocalTime start = LocalTime.of(8, 0, 0);
         LocalTime end = LocalTime.of(22, 0, 0);
 
-        while(start.isBefore(end.plusSeconds(1))){
+        while (start.isBefore(end.plusSeconds(1))) {
             modifyStartHour.getItems().add(String.valueOf(LocalTime.from(start)));
             start = start.plusMinutes(15);
         }
@@ -229,15 +228,13 @@ public class ModifyAppointmentController implements Initializable {
         LocalTime start1 = LocalTime.of(8, 0, 0);
         LocalTime end1 = LocalTime.of(22, 0, 0);
 
-        while(start1.isBefore(end1.plusSeconds(1))){
+        while (start1.isBefore(end1.plusSeconds(1))) {
             modifyEndHour.getItems().add(String.valueOf(LocalTime.from(start1)));
             start1 = start1.plusMinutes(15);
         }
 
         modifyStartHour.getSelectionModel().select(String.valueOf(start));
         modifyEndHour.getSelectionModel().select(String.valueOf(start1));
-
-
     }
 
 

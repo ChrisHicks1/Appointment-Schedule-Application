@@ -221,7 +221,6 @@ public class AppointmentQuery {
 
 
 
-//associated customers
 //appointments within 15mins
 //appointments not in 15mins
 public static void select() throws SQLException {
@@ -271,6 +270,46 @@ public static void select() throws SQLException {
             ex.printStackTrace();
         }return null;
         }
+
+
+
+    public static ObservableList<Appointments>getAssocContacts(String Contact_Name) throws SQLException{
+        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
+
+        String sqlac = "SELECT * FROM appointments AS a LEFT JOIN contacts AS co ON co.Contact_ID = a.Contact_ID WHERE Contact_Name = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqlac);
+        ps.setString(1, Contact_Name);
+
+
+        ps.executeQuery();
+        ResultSet rs = ps.getResultSet();
+        try{
+
+            while (rs.next()) {
+                int Appointment_ID = rs.getInt("Appointment_ID");
+                String Title = rs.getString("Title");
+                String Description = rs.getString("Description");
+                String Location = rs.getString("Location");
+                //String Contact_Name = rs.getString("Contact_Name");
+                String Type = rs.getString("Type");
+                LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDate startDate = rs.getDate("Start").toLocalDate();
+                LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+                LocalDate endDate = rs.getDate("End").toLocalDate();
+                int Customer_ID = rs.getInt("Customer_ID");
+                int User_ID = rs.getInt("User_ID");
+                int Contact_ID = rs.getInt("Contact_ID");
+                Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+                appointments.add(aList);
+            } return appointments;
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }return null;
+    }
+
+
+
         }
 
 

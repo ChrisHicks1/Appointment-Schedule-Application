@@ -4,22 +4,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContactScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ContactScheduleController">
     <children>
         <Label layoutX="14.0" layoutY="14.0" prefHeight="70.0" prefWidth="809.0" text="Contact Appointment Schedule">
             <font>
                 <Font name="System Bold" size="48.0" />
             </font>
         </Label>
-        <TableView fx:id="contactTableView" layoutX="8.0" layoutY="125.0" prefHeight="200.0" prefWidth="737.0">
+        <TableView fx:id="contactTableView" layoutX="8.0" layoutY="125.0" prefHeight="200.0" prefWidth="750.0">
             <columns>
                 <TableColumn fx:id="appCol" prefWidth="120.0" text="Appointment ID" />
-                <TableColumn fx:id="titleCol" prefWidth="80.0" text="Title" />
-                <TableColumn fx:id="descCol" prefWidth="85.0" text="Description" />
-                <TableColumn fx:id="typeCol" prefWidth="85.0" text="Type" />
+                <TableColumn fx:id="titleCol" prefWidth="87.5" text="Title" />
+                <TableColumn fx:id="descCol" prefWidth="87.5" text="Description" />
+                <TableColumn fx:id="typeCol" prefWidth="87.5" text="Type" />
                 <TableColumn fx:id="startCol" prefWidth="140.0" text="Start Date and Time" />
                 <TableColumn fx:id="endCol" prefWidth="140.0" text="End Date and Time" />
-                <TableColumn fx:id="customerCol" prefWidth="85.0" text="Customer ID" />
+                <TableColumn fx:id="customerCol" prefWidth="87.5" text="Customer ID" />
 
             </columns>
         </TableView>
