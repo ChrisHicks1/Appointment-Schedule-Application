@@ -28,10 +28,6 @@ public class AppointmentTypeController implements Initializable {
 
 
 
-
-
-    @FXML
-    private ListView<Appointments> listType;
     @FXML
     private Label monthApp;
     @FXML
@@ -92,11 +88,10 @@ public class AppointmentTypeController implements Initializable {
     typeAmountInterface amount = i -> System.out.println("Some" + i); {
 
         amount.amountCount("thing");
-    };
 
-    public void init(Appointments appointments){
-    listType.setId(appointments.getType());
     }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -104,6 +99,7 @@ public class AppointmentTypeController implements Initializable {
 
         appTypeTable.setItems(appointments);
 
+        monthApp.setText(appointments.size() + " Appointments Scheduled");
         appType.setCellValueFactory(new PropertyValueFactory<>("Type"));
 
 
@@ -111,27 +107,23 @@ public class AppointmentTypeController implements Initializable {
     ObservableList<Integer> jan = FXCollections.observableArrayList();
 
     private void amountMonth() {
-        try {
-            ObservableList<Appointments> typesMonth = AppointmentQuery.getMonth();
+        // ObservableList<Appointments> typesMonth = AppointmentQuery.getMonth();
 
-            ObservableList<Appointments> appointments1 = AppointmentQuery.getAllAppointments();
-            if (appointments1 != null) {
-                for (Appointments appointments : appointments1) {
-                    String Type = appointments.getType();
-                    LocalDate Start = appointments.getStartDate();
+        ObservableList<Appointments> appointments1 = AppointmentQuery.getAllAppointments();
+        if (appointments1 != null) {
+            for (Appointments appointments : appointments1) {
+                //String Type = appointments.getType();
+                LocalDate Start = appointments.getStartDate();
 
-                    if (Start.getMonth().equals(Month.of(1))) {
-                        jan.add(Start.getMonthValue());
-                    }
-
-
-                    monthApp.setText(Integer.toString(typesMonth.size()) + " Appointments this Month");
-
-                    //typeAmount.setCellValueFactory(new PropertyValueFactory<>(typeAmount.getId()));
+                if (Start.getMonth().equals(Month.JANUARY)) {
+                    jan.add(Start.getMonthValue());
                 }
+
+
+                monthApp.setText((appointments1.size()) + " Appointments this Month");
+
+                //typeAmount.setCellValueFactory(new PropertyValueFactory<>(typeAmount.getId()));
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
         }
     }
 
@@ -140,12 +132,12 @@ public class AppointmentTypeController implements Initializable {
 
 
     public void on1(ActionEvent actionEvent) {
-
+        amountMonth();
         appTypeTable.setItems(jan);
         appTypeTable.refresh();
     }
 
-        public void on2(ActionEvent actionEvent) {
+    public void on2(ActionEvent actionEvent) {
 
         appTypeTable.refresh();
     }

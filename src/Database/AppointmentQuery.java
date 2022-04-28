@@ -194,7 +194,9 @@ public class AppointmentQuery {
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
 
         ps.setTime(1, java.sql.Time.valueOf(today.toLocalTime()));
+        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
         ps.setTime(2, java.sql.Time.valueOf(Minutes.toLocalTime()));
+        ps.setDate(2, java.sql.Date.valueOf(Minutes.toLocalDate()));
 
         ResultSet rs = ps.executeQuery();
 
