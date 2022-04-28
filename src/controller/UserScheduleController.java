@@ -1,7 +1,7 @@
 package controller;
 
 import Database.AppointmentQuery;
-import Database.ContactQuery;
+import Database.UserQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,43 +17,38 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
-import model.Contacts;
+import model.Users;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ContactScheduleController implements Initializable {
-
+public class UserScheduleController implements Initializable {
+    @FXML
+    private ComboBox<Integer> comUser;
+    @FXML
+    private TableView userTableView;
+    @FXML
+    private TableColumn appCol;
+    @FXML
+    private TableColumn titleCol;
+    @FXML
+    private TableColumn descCol;
+    @FXML
+    private TableColumn typeCol;
+    @FXML
+    private TableColumn startCol;
+    @FXML
+    private TableColumn endCol;
+    @FXML
+    private TableColumn customerCol;
+    @FXML
+    private TableColumn contCol;
 
     private static ObservableList<Appointments> appointments = FXCollections.observableArrayList();
-    static ObservableList<Contacts> contacts = FXCollections.observableArrayList();
-
-    @FXML
-    public TableView<Appointments> contactTableView;
-    @FXML
-    public TableColumn appCol;
-    @FXML
-    public TableColumn titleCol;
-    @FXML
-    public TableColumn descCol;
-    @FXML
-    public TableColumn typeCol;
-    @FXML
-    public TableColumn startCol;
-    @FXML
-    public TableColumn endCol;
-    @FXML
-    public TableColumn customerCol;
-    @FXML
-    public ComboBox<String> comContact;
-
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
-
-
-
 
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
@@ -64,29 +59,28 @@ public class ContactScheduleController implements Initializable {
         stage.show();
     }
 
-
     public void onCombo(ActionEvent actionEvent) throws SQLException {
-        ObservableList<Appointments> appointments = AppointmentQuery.getAssocContacts(comContact.getSelectionModel().getSelectedItem());
-        contactTableView.setItems(appointments);
-        contactTableView.refresh();
+        ObservableList<Appointments> appointments = AppointmentQuery.getAssocUsers(comUser.getSelectionModel().getSelectedItem());
+        userTableView.setItems(appointments);
+        userTableView.refresh();
 
     }
 
 
-    private void contactIDBox(){
-        ObservableList<String> addContacts = FXCollections.observableArrayList();
+    private void userIDBox(){
+        ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
-            for(Contacts contacts: allContacts){
-                if(!addContacts.contains(contacts.getContact_Name())){
-                    addContacts.add(contacts.getContact_Name());
+            ObservableList<Users> allUsers = UserQuery.getAllUsers();
+            for(Users users: allUsers){
+                if(!addUsers.contains(users.getUser_ID())){
+                    addUsers.add(users.getUser_ID());
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        comContact.setItems(addContacts);
+        comUser.setItems(addUsers);
 
     }
 
@@ -94,7 +88,7 @@ public class ContactScheduleController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        contactIDBox();
+        userIDBox();
 
 
         appointments = AppointmentQuery.getAllAppointments();
@@ -107,8 +101,9 @@ public class ContactScheduleController implements Initializable {
         startCol.setCellValueFactory(new PropertyValueFactory<>("Start"));
         endCol.setCellValueFactory(new PropertyValueFactory<>("End"));
         customerCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
-        contactTableView.setItems(appointments);
+        contCol.setCellValueFactory(new PropertyValueFactory<>("Contact_ID"));
+        userTableView.setItems(appointments);
 
     }
-}
 
+}

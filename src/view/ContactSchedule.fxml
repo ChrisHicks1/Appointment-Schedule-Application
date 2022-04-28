@@ -24,7 +24,7 @@
             </columns>
         </TableView>
       <Button layoutX="704.0" layoutY="360.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
-      <ComboBox fx:id="comContact" layoutX="303.0" layoutY="360.0" onAction="#onCombo" prefWidth="150.0" />
+      <ComboBox fx:id="comContact" promptText="Contact Name" layoutX="303.0" layoutY="360.0" onAction="#onCombo" prefWidth="150.0" />
 
 
     </children>

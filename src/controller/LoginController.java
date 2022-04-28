@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.chrono.ChronoLocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -150,18 +151,18 @@ public class LoginController implements Initializable {
     private void alertAppointment() throws SQLException {
         LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime localDateTime15 = localDateTime.plusMinutes(15);
-       /* if(AppointmentQuery.getMinutes()){
+        if(localDateTime15.isBefore((ChronoLocalDateTime<?>) AppointmentQuery.getMinutes())){
             Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
-            appAlert.setTitle("Appointment");
-            appAlert.setContentText("You have an Appointment in 15 minutes or less");
+            appAlert.setTitle(resourceBundle.getString("Appointment"));
+            appAlert.setContentText(resourceBundle.getString("Appointment"));
             appAlert.showAndWait();
         }
         else{
             Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
-            appAlert1.setTitle("Appointment");
-            appAlert1.setContentText("You do NOT have an upcoming Appointment");
+            appAlert1.setTitle(resourceBundle.getString("Appointment"));
+            appAlert1.setContentText(resourceBundle.getString("Appointment"));
             appAlert1.showAndWait();
-        }*/
+        }
     }
 
 
