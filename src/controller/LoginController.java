@@ -42,7 +42,7 @@ public class LoginController implements Initializable {
         return "login_activity.txt";
     };
 
-    private ResourceBundle resourceBundle;
+
     @FXML
     private Label timeZone;
     @FXML
@@ -84,9 +84,9 @@ public class LoginController implements Initializable {
 
         if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            location.setText(resourceBundle.getString("location"));
-            country.setText(resourceBundle.getString("country"));
-            timeField.setText(String.valueOf(ZoneId.of(TimeZone.getDefault().getID())));
+            location.setText(ZoneId.systemDefault().getId());
+            //country.setText(resourceBundle.getString("country"));
+            timeField.setText(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName())));
             timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -95,20 +95,18 @@ public class LoginController implements Initializable {
         }
     }
 
-
+    ResourceBundle resourceBundle = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 
     /**button logs into app*/
-    public void onLogin(ActionEvent actionEvent) throws IOException{
-
-
-        userNameEmpty(txtUserName.getText());
-        passwordEmpty(txtPassword.getText());
+    public void onLogin(ActionEvent actionEvent) throws SQLException {
 
         fileCreate();
+        boolean valid = loginEmpty(txtUserName.getText(), txtPassword.getText());
+        boolean valid1 = UserQuery.checkUserAndPassword(txtUserName.getText(), txtPassword.getText());
 
         try{
-            boolean valid = UserQuery.checkUserAndPassword(txtUserName.getText(), txtPassword.getText());
-        if (valid) {
+
+        if (valid && valid1) {
             loginSuccess();
 
             try{
@@ -121,24 +119,14 @@ public class LoginController implements Initializable {
         }
             catch (IOException e){
                 e.printStackTrace();
-
-                if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
-                    Alert alert = new Alert(Alert.AlertType.ERROR);
-                    alert.setTitle(resourceBundle.getString("error"));
-                    alert.setContentText(resourceBundle.getString("loadError"));
-                    alert.showAndWait();
-                }
             }
         }
-        else {
+        else if(valid){
+            wrongUserOrPass();
             loginFail();
-
-            if(Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle(resourceBundle.getString("error"));
-                alert.setContentText(resourceBundle.getString("invalidLogin"));
-                alert.showAndWait();
-            }
+        }
+        else if(!valid1) {
+            loginFail();
         }
         }catch (SQLException ex){
             ex.printStackTrace();
@@ -148,8 +136,8 @@ public class LoginController implements Initializable {
 
 
     // alert to appointment on loginSuccess
-    private void alertAppointment() throws SQLException {
-        LocalDateTime localDateTime = LocalDateTime.now();
+    private void alertAppointment() {
+       /* LocalDateTime localDateTime = LocalDateTime.now();
         LocalDateTime localDateTime15 = localDateTime.plusMinutes(15);
         if(localDateTime15.isBefore((ChronoLocalDateTime<?>) AppointmentQuery.getMinutes())){
             Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
@@ -157,12 +145,12 @@ public class LoginController implements Initializable {
             appAlert.setContentText(resourceBundle.getString("Appointment"));
             appAlert.showAndWait();
         }
-        else{
+        else*/if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")){
             Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
-            appAlert1.setTitle(resourceBundle.getString("Appointment"));
-            appAlert1.setContentText(resourceBundle.getString("Appointment"));
+            appAlert1.setTitle(resourceBundle.getString("appointment"));
+            appAlert1.setContentText(resourceBundle.getString("appointment"));
             appAlert1.showAndWait();
-        }
+}
     }
 
 
@@ -171,9 +159,9 @@ public class LoginController implements Initializable {
     /**Writes Successful login attempt*/
     private void loginSuccess() throws SQLException {
 
-    alertAppointment();
-
         try {
+            alertAppointment();
+
             FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
@@ -199,32 +187,45 @@ public class LoginController implements Initializable {
     }
 
 
+    /**Alerts if UserName or Password is incorrect*/
+    private void wrongUserOrPass(){
+        if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle(resourceBundle.getString("error"));
+            alert.setContentText(resourceBundle.getString("incorrectNamePass"));
+            alert.showAndWait();
+        }
+    }
 
-    /**Checks if username field is filled in*/
-    private void userNameEmpty(String txtUserName){
-        if(txtUserName.isEmpty()) {
+
+
+    /**Checks if UserName and Password fields are filled in*/
+    private boolean loginEmpty(String txtUserName, String txtPassword) {
+        if (txtUserName.isEmpty()) {
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(resourceBundle.getString("error"));
                 alert.setContentText(resourceBundle.getString("userNameRequired"));
                 alert.showAndWait();
+                return false;
             }
         }
-    }
-
-    /**Checks if password field is filled in*/
-    private void passwordEmpty(String txtPassword){
-        if(txtPassword.isEmpty()) {
+        else if (txtPassword.isEmpty()) {
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle(resourceBundle.getString("error"));
                 alert.setContentText(resourceBundle.getString("passwordRequired"));
                 alert.showAndWait();
+                return false;
             }
         }
+        return true;
     }
 
 
+
+
+    /**Creates Login File*/
      private void fileCreate(){
         try {
             File file = new File(loginActivity.getFileName());
@@ -232,7 +233,7 @@ public class LoginController implements Initializable {
                 System.out.println("New File Created: " + file.getName());
             }
             else{
-                System.out.println("File Already Exists. Loacted: " + file.getPath());
+                System.out.println("File Already Exists. Located: " + file.getPath());
             }
 
         }catch (IOException e) {
@@ -245,10 +246,11 @@ public class LoginController implements Initializable {
 
     /**button exits app*/
     public void onExitApp(ActionEvent actionEvent){
+        if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Exit Application");
-        alert.setHeaderText("Are you sure you want to exit?");
-        alert.setContentText("Press OK to exit. \nPress Cancel to stay.");
+        alert.setTitle(resourceBundle.getString("exitApp"));
+        alert.setHeaderText(resourceBundle.getString("areyousureexit"));
+        alert.setContentText(resourceBundle.getString("pressOK"));
         alert.showAndWait();
         if (alert.getResult() == ButtonType.OK) {
             Stage stage = (Stage) ((Button)actionEvent.getSource()).getScene().getWindow();
@@ -257,5 +259,6 @@ public class LoginController implements Initializable {
         else{
             alert.close();
         }
+    }
     }
 }
