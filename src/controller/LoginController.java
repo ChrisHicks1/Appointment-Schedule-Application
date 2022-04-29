@@ -3,6 +3,7 @@ package controller;
 
 import Database.AppointmentQuery;
 import Database.UserQuery;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,10 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import model.Appointments;
 
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +22,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.*;
-import java.time.chrono.ChronoLocalDateTime;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -84,9 +83,9 @@ public class LoginController implements Initializable {
 
         if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            location.setText(ZoneId.systemDefault().getId());
-            //country.setText(resourceBundle.getString("country"));
-            timeField.setText(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName())));
+            location.setText(resourceBundle.getString("location"));
+            country.setText(resourceBundle.getString("country"));
+            timeField.setText(TimeZone.getDefault().getDisplayName());//(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName())));
             timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -135,23 +134,37 @@ public class LoginController implements Initializable {
 
 
 
-    // alert to appointment on loginSuccess
-    private void alertAppointment() {
-       /* LocalDateTime localDateTime = LocalDateTime.now();
-        LocalDateTime localDateTime15 = localDateTime.plusMinutes(15);
-        if(localDateTime15.isBefore((ChronoLocalDateTime<?>) AppointmentQuery.getMinutes())){
-            Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
-            appAlert.setTitle(resourceBundle.getString("Appointment"));
-            appAlert.setContentText(resourceBundle.getString("Appointment"));
-            appAlert.showAndWait();
+    /**Alerts if there is an Appointment within 15 minutes, if not then alerts no Appointment in 15 minutes*/
+    private void alertAppointment() throws SQLException {
+        LocalDateTime localDateTimeNow = LocalDateTime.now();
+        LocalDateTime localDateTime15 = localDateTimeNow.plusMinutes(15);
+        ObservableList<Appointments> appointment15 = AppointmentQuery.getAllAppointments();
+
+        for (Appointments appointments : appointment15) {
+            boolean within15 = localDateTimeNow.isBefore(appointments.getStart()) && localDateTime15.isAfter(appointments.getStart()) || (localDateTime15.isEqual(appointments.getStart()));
+            if (within15) {
+                if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                    Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
+                    appAlert.setTitle(resourceBundle.getString("appointment"));
+                    appAlert.setContentText(resourceBundle.getString("appointment15"));
+                    appAlert.showAndWait();
+                    return;
+                }
+            }
         }
-        else*/if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")){
-            Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
-            appAlert1.setTitle(resourceBundle.getString("appointment"));
-            appAlert1.setContentText(resourceBundle.getString("appointment"));
-            appAlert1.showAndWait();
-}
-    }
+            for (Appointments appointments : appointment15) {
+            boolean not15 = (appointments.getStart().isAfter(localDateTime15));
+            if(not15) {
+                if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+                        Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
+                        appAlert1.setTitle(resourceBundle.getString("appointment"));
+                        appAlert1.setContentText(resourceBundle.getString("noAppointment"));
+                        appAlert1.showAndWait();
+                        return;
+                    }
+                }
+            }
+        }
 
 
 
