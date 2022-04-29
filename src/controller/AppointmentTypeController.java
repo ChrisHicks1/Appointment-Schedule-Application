@@ -1,6 +1,7 @@
 package controller;
 
 import Database.AppointmentQuery;
+import Database.DivisionQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
+import model.Division;
+
 
 import java.io.IOException;
 import java.net.URL;
@@ -27,45 +30,19 @@ public class AppointmentTypeController implements Initializable {
     static ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
 
+    @FXML
+    private ComboBox comMonth;
+    @FXML
+    private ComboBox<String> comType;
+    @FXML
+    private Label monthType;
 
-    @FXML
-    private Label monthApp;
-    @FXML
-    private TableColumn typeAmount;
-    @FXML
-    private TableView appTypeTable;
-    @FXML
-    private TableColumn appType;
-    @FXML
-    private ToggleButton january;
-    @FXML
-    private ToggleButton february;
-    @FXML
-    private ToggleButton march;
-    @FXML
-    private ToggleButton april;
-    @FXML
-    private ToggleButton may;
-    @FXML
-    private ToggleButton june;
-    @FXML
-    private ToggleButton july;
-    @FXML
-    private ToggleButton august;
-    @FXML
-    private ToggleButton september;
-    @FXML
-    private ToggleButton october;
-    @FXML
-    private ToggleButton november;
-    @FXML
-    private ToggleButton december;
-    @FXML
-    private ToggleGroup tGroup;
 
 
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
+
+
 
     public interface typeAmountInterface{
         void amountCount(String i);
@@ -81,7 +58,7 @@ public class AppointmentTypeController implements Initializable {
         stage.show();
     }
 
-    //public void typeCount = Appointments.getAllAppointments();
+
 
 
 
@@ -92,104 +69,60 @@ public class AppointmentTypeController implements Initializable {
     }
 
 
+    public void typeBox(){
+        ObservableList<String> addType = FXCollections.observableArrayList();
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        appointments = AppointmentQuery.getAllAppointments();
-
-        appTypeTable.setItems(appointments);
-
-        monthApp.setText(appointments.size() + " Appointments Scheduled");
-        appType.setCellValueFactory(new PropertyValueFactory<>("Type"));
-
+        ObservableList<Appointments> noTypes = AppointmentQuery.getAllAppointments();
+        assert noTypes != null;
+        for(Appointments appointments : noTypes){
+            addType.add(appointments.getType());
 
     }
-    ObservableList<Integer> jan = FXCollections.observableArrayList();
+        comType.setItems(addType);
+    }
 
-    private void amountMonth() {
-        // ObservableList<Appointments> typesMonth = AppointmentQuery.getMonth();
-
-        ObservableList<Appointments> appointments1 = AppointmentQuery.getAllAppointments();
-        if (appointments1 != null) {
-            for (Appointments appointments : appointments1) {
-                //String Type = appointments.getType();
-                LocalDate Start = appointments.getStartDate();
-
-                if (Start.getMonth().equals(Month.JANUARY)) {
-                    jan.add(Start.getMonthValue());
-                }
+    @FXML
+    private void onComType(ActionEvent actionEvent){
+        ObservableList<String> tlist = FXCollections.observableArrayList();
+        try{
+            ObservableList<Appointments> appointments = AppointmentQuery.getAllTypes(comType.getSelectionModel().getSelectedItem());
 
 
-                monthApp.setText((appointments1.size()) + " Appointments this Month");
+            for (Appointments appointments1 : appointments) {
 
-                //typeAmount.setCellValueFactory(new PropertyValueFactory<>(typeAmount.getId()));
+                tlist.add(appointments1.getType());
             }
+            comType.setItems(tlist);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
         }
     }
 
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
+        typeBox();
 
-    public void on1(ActionEvent actionEvent) {
-        amountMonth();
-        appTypeTable.setItems(jan);
-        appTypeTable.refresh();
+       // appointments = AppointmentQuery.getAllAppointments();
+
+      //  monthType.setText(appointments.size() + " Appointments Scheduled");
+
     }
 
-    public void on2(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
 
-    public void on3(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
+    private void amountMonth() {
 
-    public void on4(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
+            }
 
-    public void on5(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
 
-    public void on6(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
 
-    public void on7(ActionEvent actionEvent) {
 
-        appTypeTable.refresh();
-    }
-
-    public void on8(ActionEvent actionEvent) {
-
-        appTypeTable.refresh();
-    }
-
-    public void on9(ActionEvent actionEvent) {
-
-        appTypeTable.refresh();
-    }
-
-    public void on10(ActionEvent actionEvent) {
-
-        appTypeTable.refresh();
-    }
-
-    public void on11(ActionEvent actionEvent) {
-
-        appTypeTable.refresh();
-    }
-
-    public void on12(ActionEvent actionEvent) {
-
-        appTypeTable.refresh();
-    }
 }
 

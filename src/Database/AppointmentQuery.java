@@ -222,7 +222,6 @@ public class AppointmentQuery {
         }
 
 
-
     public static ObservableList<Appointments>getAssocContacts(String Contact_Name) throws SQLException{
         ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
@@ -294,6 +293,42 @@ public class AppointmentQuery {
     }
 
 
+    public static ObservableList<Appointments>getAllTypes(String Type) throws SQLException{
+        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
+
+        String sqlac = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Type = ?";
+
+        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqlac);
+        ps.setString(1, Type);
+
+
+        ps.execute();
+        ResultSet rs = ps.getResultSet();
+        try{
+            while (rs.next()) {
+                int Appointment_ID = rs.getInt("Appointment_ID");
+                String Title = rs.getString("Title");
+                String Description = rs.getString("Description");
+                String Location = rs.getString("Location");
+                String Contact_Name = rs.getString("Contact_Name");
+                //String Type = rs.getString("Type");
+                LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
+                LocalDate startDate = rs.getDate("Start").toLocalDate();
+                LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
+                LocalDate endDate = rs.getDate("End").toLocalDate();
+                int Customer_ID = rs.getInt("Customer_ID");
+                int User_ID = rs.getInt("User_ID");
+                int Contact_ID = rs.getInt("Contact_ID");
+                Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
+                appointments.add(aList);
+            } return appointments;
+
+        }catch (SQLException ex){
+            ex.printStackTrace();
+        }return null;
+    }
+
+
 
     public static void select() throws SQLException {
         String sqls = "SELECT * FROM appointments AS a INNER JOIN customers AS c ON a.Customer_ID = c.Customer_ID";
@@ -309,7 +344,7 @@ public class AppointmentQuery {
     }
 
 
-        }
+}
 
 
 
