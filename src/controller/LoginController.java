@@ -146,7 +146,7 @@ public class LoginController implements Initializable {
                 if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                     Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
                     appAlert.setTitle(resourceBundle.getString("appointment"));
-                    appAlert.setContentText(resourceBundle.getString("appointment15"));
+                    appAlert.setContentText(resourceBundle.getString("appointment15") + " " + appointments.getAppointment_ID() + " " + appointments.getStart());
                     appAlert.showAndWait();
                     return;
                 }
