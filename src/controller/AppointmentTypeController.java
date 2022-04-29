@@ -1,7 +1,6 @@
 package controller;
 
 import Database.AppointmentQuery;
-import Database.DivisionQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,17 +11,14 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
-import model.Division;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AppointmentTypeController implements Initializable {
@@ -31,7 +27,7 @@ public class AppointmentTypeController implements Initializable {
 
 
     @FXML
-    private ComboBox comMonth;
+    private ComboBox<String> comMonth;
     @FXML
     private ComboBox<String> comType;
     @FXML
@@ -98,16 +94,45 @@ public class AppointmentTypeController implements Initializable {
         }
     }
 
+    @FXML
+    private void onComMonth(){
+       /* ObservableList<String> mlist = FXCollections.observableArrayList();
+        try{
+            ObservableList<Appointments> appointments = AppointmentQuery.getAllAppointments();
+
+            for(Appointments appointments1 : appointments){
+                appointments1.getStart().getMonth(January);
+            }
+        }*/
+    }
+    private void monthBox(){
+        ObservableList<String> addMonth = FXCollections.observableArrayList();
+        addMonth.add(0, "January");
+        addMonth.add(1, "February");
+        addMonth.add(2, "March");
+        addMonth.add(3, "April");
+        addMonth.add(4, "May");
+        addMonth.add(5, "June");
+        addMonth.add(6, "July");
+        addMonth.add(7, "August");
+        addMonth.add(8, "September");
+        addMonth.add(9, "October");
+        addMonth.add(10, "November");
+        addMonth.add(11, "December");
+        comMonth.setItems(addMonth);
+    }
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
 
         typeBox();
+        monthBox();
+        appointments = AppointmentQuery.getAllAppointments();
 
-       // appointments = AppointmentQuery.getAllAppointments();
-
-      //  monthType.setText(appointments.size() + " Appointments Scheduled");
+        monthType.setText(appointments.size() + " Appointments Scheduled");
 
     }
 
