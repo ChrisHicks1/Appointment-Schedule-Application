@@ -205,8 +205,6 @@ public class ModifyAppointmentController implements Initializable {
     }
 
 
-    //timezone
-
 
 
     @Override
@@ -414,8 +412,8 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-    //fix time zone?
-    /**Checks that the Appointment is during business hours*/
+
+    /**Checks that the Appointment is during business hours and not on the Weekend*/
     ZonedDateTime startConversion = ESTconversion(LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())));
     ZonedDateTime endConversion = ESTconversion(LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())));
 
@@ -449,6 +447,20 @@ public class ModifyAppointmentController implements Initializable {
         alert.showAndWait();
         return false;
     }
+        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business days are Monday through Friday");
+            alert.showAndWait();
+            return false;
+        }
+        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business days are Monday through Friday");
+            alert.showAndWait();
+            return false;
+        }
 
 
         return true;

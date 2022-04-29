@@ -29,7 +29,7 @@ public class Main extends Application{
 
 
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("fr", "FR/Paris"));
+        Locale.setDefault(new Locale("en", "FR/Paris"));
 
 
         DBConnection.startConnection();

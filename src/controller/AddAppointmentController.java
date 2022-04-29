@@ -374,7 +374,7 @@ public class AddAppointmentController implements Initializable {
 
 
 
-        //fix time zone?
+
         /**Checks that the Appointment is during business hours*/
         ZonedDateTime startConversion = ESTconversion(LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())));
         ZonedDateTime endConversion = ESTconversion(LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())));
@@ -406,6 +406,20 @@ public class AddAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SATURDAY)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business days are Monday through Friday");
+            alert.showAndWait();
+            return false;
+        }
+        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business days are Monday through Friday");
             alert.showAndWait();
             return false;
         }
