@@ -47,11 +47,7 @@ public class LoginController implements Initializable {
     @FXML
     private TextField timeField;
     @FXML
-    private TextField country;
-    @FXML
     private Label loginLabel;
-    @FXML
-    private Label location;
     @FXML
     private Label userName;
     @FXML
@@ -83,9 +79,7 @@ public class LoginController implements Initializable {
 
         if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            location.setText(resourceBundle.getString("location"));
-            country.setText(resourceBundle.getString("country"));
-            timeField.setText(TimeZone.getDefault().getDisplayName());//(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName())));
+            timeField.setText((String.valueOf(ZoneId.systemDefault())));//TimeZone.getDefault().getDisplayName()))); TimeZone.getDefault().getDisplayName());
             timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -146,7 +140,7 @@ public class LoginController implements Initializable {
                 if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                     Alert appAlert = new Alert(Alert.AlertType.INFORMATION);
                     appAlert.setTitle(resourceBundle.getString("appointment"));
-                    appAlert.setContentText(resourceBundle.getString("appointment15") + " " + appointments.getAppointment_ID() + " " + appointments.getStart());
+                    appAlert.setContentText(resourceBundle.getString("appointment15") + " " + "\nAppointment ID: " + appointments.getAppointment_ID() + " " + "\nAppointment is at: " + appointments.getStart());
                     appAlert.showAndWait();
                     return;
                 }

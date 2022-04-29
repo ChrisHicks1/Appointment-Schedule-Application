@@ -447,21 +447,6 @@ public class ModifyAppointmentController implements Initializable {
         alert.showAndWait();
         return false;
     }
-        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SATURDAY)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business days are Monday through Friday");
-            alert.showAndWait();
-            return false;
-        }
-        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business days are Monday through Friday");
-            alert.showAndWait();
-            return false;
-        }
-
 
         return true;
 }

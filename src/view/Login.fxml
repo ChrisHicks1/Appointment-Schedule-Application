@@ -19,8 +19,6 @@
 
       <Button fx:id="loginButton" layoutX="187.0" layoutY="369.0" mnemonicParsing="false" onAction="#onLogin" text="Login" />
       <Button fx:id="exitApp" layoutX="289.0" layoutY="369.0" mnemonicParsing="false" onAction="#onExitApp" text="Exit" />
-      <Label fx:id="location" layoutX="369.0" layoutY="25.0" prefHeight="25.0" prefWidth="67.0" />
-      <TextField fx:id="country" layoutX="369.0" layoutY="50.0" prefHeight="25.0" prefWidth="67.0" />
       <Label fx:id="timeZone" layoutX="14.0" layoutY="25.0" prefHeight="25.0" prefWidth="90.0" />
       <TextField fx:id="timeField" layoutX="14.0" layoutY="50.0" prefHeight="25.0" prefWidth="90.0" />
    </children>

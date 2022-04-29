@@ -29,11 +29,12 @@ public class Main extends Application{
 
 
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("en", "FR/Paris"));
-
+        Locale.setDefault(new Locale("en"));
+        Instant.now(
+                Clock.system(ZoneOffset.UTC));
 
         DBConnection.startConnection();
-        //ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("America")).forEach(System.out::println);
+       /* ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("US")).forEach(System.out::println); //US/Eastern US/Central
 
         LocalDate parisDate = LocalDate.of(2022, 4, 26);
         LocalTime parisTime = LocalTime.of(5, 0);
@@ -49,7 +50,7 @@ public class Main extends Application{
         System.out.println("Paris: " + parisDT);
         System.out.println("Paris -> GMT: " + parisToGMTInstant);
         System.out.println("GMT -> Local: " + gmtToLocalDT);
-
+*/
 
 
 

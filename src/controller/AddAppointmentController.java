@@ -59,8 +59,11 @@ public class AddAppointmentController implements Initializable {
 
 
     private ZonedDateTime ESTconversion(LocalDateTime time){
-        return ZonedDateTime.of(time, ZoneId.of("America/New_York"));
+        return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
     }
+   /* private ZonedDateTime UTCconversion(LocalDateTime time){
+        return ZonedDateTime.of(time, ZoneId.of(US))
+    }*/
 
 
 
@@ -406,20 +409,6 @@ public class AddAppointmentController implements Initializable {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Business hours are between 8AM and 10PM EST");
-            alert.showAndWait();
-            return false;
-        }
-        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SATURDAY)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business days are Monday through Friday");
-            alert.showAndWait();
-            return false;
-        }
-        if(startConversion.toLocalDate().getDayOfWeek().equals(DayOfWeek.SUNDAY)){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business days are Monday through Friday");
             alert.showAndWait();
             return false;
         }
