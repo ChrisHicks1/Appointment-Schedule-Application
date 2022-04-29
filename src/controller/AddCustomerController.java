@@ -65,9 +65,9 @@ public class AddCustomerController implements Initializable {
                         txtAddCusPhone.getText(),
                         comAddCusDiv.getValue());
 
-                Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
+                Parent cusView = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(addPartCancel, 900, 400);
+                Scene scene = new Scene(cusView, 900, 400);
                 stage.setTitle("Customer View");
                 stage.setScene(scene);
                 stage.show();

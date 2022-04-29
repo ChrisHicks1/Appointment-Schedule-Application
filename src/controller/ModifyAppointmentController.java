@@ -131,9 +131,9 @@ public class ModifyAppointmentController implements Initializable {
                 }
 
 
-                Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+                Parent appCal = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
                 Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(addPartCancel, 1000, 450);
+                Scene scene = new Scene(appCal, 1000, 450);
                 stage.setTitle("Appointment Calendar");
                 stage.setScene(scene);
                 stage.show();
@@ -145,9 +145,9 @@ public class ModifyAppointmentController implements Initializable {
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
+        Parent appCal = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 1000, 450);
+        Scene scene = new Scene(appCal, 1000, 450);
         stage.setTitle("Appointment Calendar");
         stage.setScene(scene);
         stage.show();

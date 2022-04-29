@@ -109,7 +109,7 @@ public class MainMenuController {
             stage.show();
         }
 
-    public void toNotYet(ActionEvent actionEvent) throws IOException {
+    public void toUser(ActionEvent actionEvent) throws IOException {
             Parent root = FXMLLoader.load(getClass().getResource("/view/UserSchedule.fxml"));
             Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
             Scene scene = new Scene(root, 900, 450);

@@ -56,9 +56,9 @@ public class ContactScheduleController implements Initializable {
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
-        Parent addPartCancel = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Parent mainMenu = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(addPartCancel, 250, 450);
+        Scene scene = new Scene(mainMenu, 250, 450);
         stage.setTitle("Main Menu");
         stage.setScene(scene);
         stage.show();
