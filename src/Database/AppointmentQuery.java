@@ -183,48 +183,7 @@ public class AppointmentQuery {
     }
 
 
-    public static ObservableList<Appointments> getMinutes() throws SQLException{
-        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
-        LocalDateTime today = LocalDateTime.now();
-        LocalDateTime Minutes = today.plusMinutes(15);
-
-        String sql = "SELECT * FROM appointments AS a INNER JOIN contacts AS co ON a.Contact_ID = co.Contact_ID WHERE Start > ? AND Start < ?";
-
-        PreparedStatement ps = DBConnection.conn.prepareStatement(sql);
-
-        ps.setTime(1, java.sql.Time.valueOf(today.toLocalTime()));
-        ps.setDate(1, java.sql.Date.valueOf(today.toLocalDate()));
-        ps.setTime(2, java.sql.Time.valueOf(Minutes.toLocalTime()));
-        ps.setDate(2, java.sql.Date.valueOf(Minutes.toLocalDate()));
-
-        ResultSet rs = ps.executeQuery();
-
-        while (rs.next()){
-            int Appointment_ID = rs.getInt("Appointment_ID");
-            String Title = rs.getString("Title");
-            String Description = rs.getString("Description");
-            String Location = rs.getString("Location");
-            String Contact_Name = rs.getString("Contact_Name");
-            String Type = rs.getString("Type");
-            LocalDateTime Start = rs.getTimestamp("Start").toLocalDateTime();
-            LocalDate startDate = rs.getDate("Start").toLocalDate();
-            LocalDateTime End = rs.getTimestamp("End").toLocalDateTime();
-            LocalDate endDate = rs.getDate("End").toLocalDate();
-            int Customer_ID = rs.getInt("Customer_ID");
-            int User_ID = rs.getInt("User_ID");
-            int Contact_ID = rs.getInt("Contact_ID");
-            Appointments aList = new Appointments(Appointment_ID, Title, Description, Location, Contact_Name, Type, Start, startDate, End, endDate, Customer_ID, User_ID, Contact_ID);
-            appointments.add(aList);
-        }
-        return appointments;
-    }
-
-
-
-
-//appointments within 15mins
-//appointments not in 15mins
 
 
     public static ObservableList<Appointments>getAssocCustomers(int Customer_ID) throws SQLException{
