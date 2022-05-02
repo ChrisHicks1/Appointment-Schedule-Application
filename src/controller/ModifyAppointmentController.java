@@ -407,7 +407,7 @@ public class ModifyAppointmentController implements Initializable {
             else if(pickedEnd.isAfter(start1) && pickedEnd.isBefore(end1)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("Appointments can NOT be scheduled during another appointment.");
+                alert.setContentText("Appointments can NOT overlap.");
                 alert.showAndWait();
                 return false;
             }
