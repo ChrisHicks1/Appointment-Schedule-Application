@@ -2,7 +2,6 @@ package controller;
 
 import Database.AppointmentQuery;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,11 +17,8 @@ import model.Appointments;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class AppointmentTypeController implements Initializable {
@@ -35,18 +31,14 @@ public class AppointmentTypeController implements Initializable {
     @FXML
     private ComboBox<String> comType;
     @FXML
-    private Label monthType;
+    private Label monthCount;
+    @FXML
+    private Label typeCount;
 
 
 
 
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
-
-
-
-    public interface typeAmountInterface{
-        void amountCount(String i);
-    }
 
 
     void goToMain(ActionEvent actionEvent) throws IOException {
@@ -60,98 +52,140 @@ public class AppointmentTypeController implements Initializable {
 
 
 
-
-
-    typeAmountInterface amount = i -> System.out.println("Some" + i); {
-
-        amount.amountCount("thing");
-
+    public interface monthAmountInterface{
+        void countMonth(String i);
     }
+
+    public interface typeAmountInterface{
+        void countType(String i);
+    }
+
+
 
 
     public void typeBox(){
         ObservableList<String> addType = FXCollections.observableArrayList();
 
-
-        addType.add("De-Briefing");
-        addType.add("Planning Session");
-        addType.add("Hiring Interview 1");
-        addType.add("Hiring Interview 2");
-        addType.add("Hiring Interview 3");
-        addType.add("Exit Interview");
-        addType.add("Coffee Break");
-        addType.add("Town Hall Meeting");
-        addType.add("IT Assistance");
+        addType.add(0, "De-Briefing");
+        addType.add(1, "Planning Session");
+        addType.add(2, "Hiring Interview 1");
+        addType.add(3, "Hiring Interview 2");
+        addType.add(4, "Hiring Interview 3");
+        addType.add(5, "Exit Interview");
+        addType.add(6, "Coffee Break");
+        addType.add(7, "Town Hall Meeting");
+        addType.add(8, "IT Assistance");
 
         comType.setItems(addType);
-
-      /*  ObservableList<Appointments> noTypes = AppointmentQuery.getAllAppointments();
-        assert noTypes != null;
-        for(Appointments appointments : noTypes){
-            addType.add(appointments.getType());
-
-    }
-        comType.setItems(addType);*/
     }
 
     @FXML
     private void onComType(ActionEvent actionEvent){
-        ObservableList<String> tlist = FXCollections.observableArrayList();
-        try{
-            ObservableList<Appointments> appointments = AppointmentQuery.getAllTypes(comMonth.getSelectionModel().getSelectedItem());
+        ObservableList<String> deBriefing = FXCollections.observableArrayList();
+        ObservableList<String> planningSession = FXCollections.observableArrayList();
+        ObservableList<String> interview1 = FXCollections.observableArrayList();
+        ObservableList<String> interview2 = FXCollections.observableArrayList();
+        ObservableList<String> interview3 = FXCollections.observableArrayList();
+        ObservableList<String> exitInterview = FXCollections.observableArrayList();
+        ObservableList<String> coffee = FXCollections.observableArrayList();
+        ObservableList<String> townHall = FXCollections.observableArrayList();
+        ObservableList<String> itAssist = FXCollections.observableArrayList();
 
-            assert appointments != null;
+        try {
+
             for (Appointments appointments1 : appointments) {
-                tlist.add(appointments1.getType());
+                String type = appointments1.getType();
+
+                if (type.equals("De-Briefing")) {
+                    deBriefing.add(type);
+                }
+                if (type.equals("Planning Session")) {
+                    planningSession.add(type);
+                }
+                if (type.equals("Hiring Interview 1")) {
+                    interview1.add(type);
+                }
+                if (type.equals("Hiring Interview 2")) {
+                    interview2.add(type);
+                }
+                if (type.equals("Hiring Interview 3")) {
+                    interview3.add(type);
+                }
+                if (type.equals("Exit Interview")) {
+                    exitInterview.add(type);
+                }
+                if (type.equals("Coffee Break")) {
+                    coffee.add(type);
+                }
+                if (type.equals("Town Hall Meeting")) {
+                    townHall.add(type);
+                }
+                if (type.equals("IT Assistance")) {
+                    itAssist.add(type);
+                }
+
+
+                if(comType.getSelectionModel().isSelected(0)){
+                    typeCount.setText(String.valueOf(deBriefing.size()));
+                }
+                if(comType.getSelectionModel().isSelected(1)){
+                    typeCount.setText(String.valueOf(planningSession.size()));
+                }
+                if(comType.getSelectionModel().isSelected(2)){
+                    typeCount.setText(String.valueOf(interview1.size()));
+                }
+                if(comType.getSelectionModel().isSelected(3)){
+                    typeCount.setText(String.valueOf(interview2.size()));
+                }
+                if(comType.getSelectionModel().isSelected(4)){
+                    typeCount.setText(String.valueOf(interview3.size()));
+                }
+                if(comType.getSelectionModel().isSelected(5)){
+                    typeCount.setText(String.valueOf(exitInterview.size()));
+                }
+                if(comType.getSelectionModel().isSelected(6)){
+                    typeCount.setText(String.valueOf(coffee.size()));
+                }
+                if(comType.getSelectionModel().isSelected(7)){
+                    typeCount.setText(String.valueOf(townHall.size()));
+                }
+                if(comType.getSelectionModel().isSelected(8)){
+                    typeCount.setText(String.valueOf(itAssist.size()));
+                }
+
+                typeAmountInterface amount = i -> typeCount.setText(typeCount.getText() + i);
+                {
+                    if (Integer.parseInt(typeCount.getText()) == 1) {
+                        amount.countType(" appointment of this Type.");
+                    } else {
+                        amount.countType(" appointments of this Type.");
+                    }
+                }
+
             }
-            comType.setItems(tlist);
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     @FXML
     private void onComMonth(ActionEvent actionEvent) {
-        ObservableList<String> addMonth = FXCollections.observableArrayList();
-        try{
-            ObservableList<Appointments> appointments = AppointmentQuery.getAllTypes(comType.getSelectionModel().getSelectedItem());
-            ObservableList<Appointments> appointments1 = FXCollections.observableArrayList();
-
-            for(Appointments appointments2 : appointments) {
-                LocalDate start = appointments2.getStartDate();
-
-                for (String month : addMonth) {
-                    addMonth.add(appointments.indexOf(0), month);
-                }
-                //comType.setItems();
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-
-
-        // ObservableList<String> January = FXCollections.observableArrayList();
-
-       // addMonth.add(January.size(), String.valueOf(January));
-
-       /* ObservableList<Appointments> appointments = FXCollections.observableArrayList();
-
-        for(Appointments appointments1 : appointments) {
-            LocalDate start = appointments1.getStartDate();
-                if(start.getMonth().equals(Month.JANUARY)) {
-                    month.add(String.valueOf(start.getMonthValue()));
-                    //comMonth.setItems(January);
-                }
-
-
-        }
-*/
-
-     /*   ObservableList<Appointments> appointments = AppointmentQuery.getAllAppointments();
-
+        ObservableList<String> January = FXCollections.observableArrayList();
+        ObservableList<String> February = FXCollections.observableArrayList();
+        ObservableList<String> March = FXCollections.observableArrayList();
+        ObservableList<String> April = FXCollections.observableArrayList();
+        ObservableList<String> May = FXCollections.observableArrayList();
+        ObservableList<String> June = FXCollections.observableArrayList();
+        ObservableList<String> July = FXCollections.observableArrayList();
+        ObservableList<String> August = FXCollections.observableArrayList();
+        ObservableList<String> September = FXCollections.observableArrayList();
+        ObservableList<String> October = FXCollections.observableArrayList();
+        ObservableList<String> November = FXCollections.observableArrayList();
+        ObservableList<String> December = FXCollections.observableArrayList();
 
         for (Appointments appointments1 : appointments) {
-            LocalDate start = appointments1.getStartDate();
+            LocalDateTime start = appointments1.getStart();
+
             if (start.getMonth().equals(Month.JANUARY)) {
                 January.add(String.valueOf(start.getMonthValue()));
             }
@@ -161,26 +195,88 @@ public class AppointmentTypeController implements Initializable {
             if (start.getMonth().equals(Month.MARCH)) {
                 March.add(String.valueOf(start.getMonthValue()));
             }
-            */
+            if (start.getMonth().equals(Month.APRIL)) {
+                April.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.MAY)) {
+                May.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.JUNE)) {
+                June.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.JULY)) {
+                July.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.AUGUST)) {
+                August.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.SEPTEMBER)) {
+                September.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.OCTOBER)) {
+                October.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.NOVEMBER)) {
+                November.add(String.valueOf(start.getMonthValue()));
+            }
+            if (start.getMonth().equals(Month.DECEMBER)) {
+                December.add(String.valueOf(start.getMonthValue()));
+            }
+
+
+            if (start.getMonth().equals(Month.JANUARY)) {
+                January.add(String.valueOf(start.getMonthValue()));
+            }
+            if (comMonth.getSelectionModel().isSelected(0)) {
+                monthCount.setText(String.valueOf(January.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(1)) {
+                monthCount.setText(String.valueOf(February.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(2)) {
+                monthCount.setText(String.valueOf(March.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(3)) {
+                monthCount.setText(String.valueOf(April.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(4)) {
+                monthCount.setText(String.valueOf(May.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(5)) {
+                monthCount.setText(String.valueOf(June.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(6)) {
+                monthCount.setText(String.valueOf(July.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(7)) {
+                monthCount.setText(String.valueOf(August.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(8)) {
+                monthCount.setText(String.valueOf(September.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(9)) {
+                monthCount.setText(String.valueOf(October.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(10)) {
+                monthCount.setText(String.valueOf(November.size()));
+            }
+            if (comMonth.getSelectionModel().isSelected(11)) {
+                monthCount.setText(String.valueOf(December.size()));
+            }
+
+            monthAmountInterface amount = i -> monthCount.setText(monthCount.getText() + i);
+            {
+                if (Integer.parseInt(monthCount.getText()) == 1) {
+                    amount.countMonth(" appointment this Month.");
+                } else {
+                    amount.countMonth(" appointments this Month.");
+                }
+            }
+
+        }
     }
 
     private void monthBox(){
-      /*  ObservableList<String> month = FXCollections.observableArrayList();
-
-       // month.add("January");
-        month.add("February");
-        month.add("March");
-        month.add("April");
-        month.add("May");
-        month.add("June");
-        month.add("July");
-        month.add("August");
-        month.add("September");
-        month.add("October");
-        month.add("November");
-        month.add("December");
-
-        comMonth.setItems(month);*/
 
         ObservableList<String> addMonth = FXCollections.observableArrayList();
         addMonth.add(0, "January");
@@ -196,55 +292,19 @@ public class AppointmentTypeController implements Initializable {
         addMonth.add(10, "November");
         addMonth.add(11, "December");
 
-        ObservableList<String> January = FXCollections.observableArrayList();
-        // addMonth.add(String.valueOf(January));
-
-
         comMonth.setItems(addMonth);
 
-        ObservableList<Appointments> appointments = FXCollections.observableArrayList();
-
-        for(Appointments appointments1 : appointments) {
-            LocalDate start = appointments1.getStartDate();
-            String Type = appointments1.getType();
-            if(start.getMonth().equals(Month.valueOf("January"))) {
-                addMonth.add(String.valueOf(start.getMonthValue()));
-
-
             }
-
-
-        }
-
-    }
-
-
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-
         typeBox();
         monthBox();
         appointments = AppointmentQuery.getAllAppointments();
 
-        monthType.setText(appointments.size() + " Appointments Scheduled");
-
     }
-
-
-
-
-    private void amountMonth() {
-
-
-            }
-
-
-
-
-
 
 }
 

@@ -11,13 +11,15 @@
             <Font name="System Bold" size="36.0" />
          </font></Label>
 
-      <Label fx:id="monthType" layoutX="341.0" layoutY="95.0" prefHeight="25.0" prefWidth="202.0" text="asdf" />
+      <Label fx:id="monthCount" layoutX="289.0" layoutY="150.0" prefHeight="25.0" prefWidth="202.0" />
+      <Label fx:id="typeCount" layoutX="289.0" layoutY="184.0" prefHeight="25.0" prefWidth="202.0" />
       <ComboBox fx:id="comMonth" layoutX="41.0" layoutY="150.0" onAction="#onComMonth" prefWidth="150.0" />
       <ComboBox fx:id="comType" layoutX="41.0" layoutY="184.0" onAction="#onComType" prefWidth="150.0" />
 
 
 
       <Button layoutX="450.0" layoutY="310.0" mnemonicParsing="false" onAction="#toMain" text="Back" />
+
 
 
 
