@@ -1,8 +1,8 @@
 package controller;
 
 
-import Database.AppointmentQuery;
-import Database.UserQuery;
+import Database.AppointmentDB;
+import Database.UserDB;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +25,6 @@ import java.time.*;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.*;
 
 
 interface LoginActivity{
@@ -37,9 +36,9 @@ public class LoginController implements Initializable {
 
 
 
-    LoginActivity loginActivity = () -> {
-        return "login_activity.txt";
-    };
+//    LoginActivity loginActivity = () -> {
+  //      return "login_activity.txt";
+    //};
 
 
     @FXML
@@ -95,7 +94,7 @@ public class LoginController implements Initializable {
 
         fileCreate();
         boolean valid = loginEmpty(txtUserName.getText(), txtPassword.getText());
-        boolean valid1 = UserQuery.checkUserAndPassword(txtUserName.getText(), txtPassword.getText());
+        boolean valid1 = UserDB.checkUserAndPassword(txtUserName.getText(), txtPassword.getText());
 
         try{
 
@@ -132,7 +131,7 @@ public class LoginController implements Initializable {
     private void alertAppointment() throws SQLException {
         LocalDateTime localDateTimeNow = LocalDateTime.now();
         LocalDateTime localDateTime15 = localDateTimeNow.plusMinutes(15);
-        ObservableList<Appointments> appointment15 = AppointmentQuery.getAllAppointments();
+        ObservableList<Appointments> appointment15 = AppointmentDB.getAllAppointments();
 
         for (Appointments appointments : appointment15) {
             boolean within15 = localDateTimeNow.isBefore(appointments.getStart()) && localDateTime15.isAfter(appointments.getStart()) || (localDateTime15.isEqual(appointments.getStart()));
@@ -169,7 +168,7 @@ public class LoginController implements Initializable {
         try {
             alertAppointment();
 
-            FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
+            FileWriter fileWriter = new FileWriter("login_activity.txt", true);
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
             fileWriter.write("\nSuccessful Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + date + "\n");
@@ -182,8 +181,7 @@ public class LoginController implements Initializable {
     /**Writes failed login attempt*/
     private void loginFail(){
         try{
-            FileWriter fileWriter = new FileWriter(loginActivity.getFileName(), true);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+            FileWriter fileWriter = new FileWriter("login_activity.txt", true);
             Date date = new Date(System.currentTimeMillis());
             fileWriter.write("\nFailed Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + date + "\n");
             fileWriter.close();
@@ -233,20 +231,9 @@ public class LoginController implements Initializable {
 
 
     /**Creates Login File*/
-     private void fileCreate(){
-        try {
-            File file = new File(loginActivity.getFileName());
-            if(file.createNewFile()){
-                System.out.println("New File Created: " + file.getName());
-            }
-            else{
-                System.out.println("File Already Exists. Located: " + file.getPath());
-            }
-
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+     private void fileCreate() {
+         File file = new File("login_activity.txt");
+     }
 
 
 

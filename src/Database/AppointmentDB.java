@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
-public class AppointmentQuery {
+public class AppointmentDB {
 
     public static ObservableList<Appointments> getAllAppointments() {
         ObservableList<Appointments> aList = FXCollections.observableArrayList();
@@ -50,7 +50,7 @@ public class AppointmentQuery {
 
     public static int createAppointment(String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, String contactName) throws SQLException {
 
-        Contacts contacts = ContactQuery.getContact_ID(contactName);
+        Contacts contacts = ContactDB.getContact_ID(contactName);
 
         String sqla = "INSERT INTO appointments(Appointment_ID, Title, Description, Location, Type, Start, End, Customer_ID, User_ID, Contact_ID) VALUES(NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -77,7 +77,7 @@ public class AppointmentQuery {
 
 
     public static int modifyAppointment(int Appointment_ID, String Title, String Description, String Location, String Type, LocalDateTime Start, LocalDateTime End, int Customer_ID, int User_ID, String contactName) throws SQLException{
-        Contacts contacts = ContactQuery.getContact_ID(contactName);
+        Contacts contacts = ContactDB.getContact_ID(contactName);
 
         String sql = "UPDATE appointments SET Title = ?, Description = ?, Location = ?, Type = ?,  Start = ?, End = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
 

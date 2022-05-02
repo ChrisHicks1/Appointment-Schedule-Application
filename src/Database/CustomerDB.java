@@ -1,20 +1,15 @@
 package Database;
 
-import javafx.scene.control.ComboBox;
-import model.Appointments;
-import model.Countries;
 import model.Customer;
 import model.Division;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-public class CustomerQuery {
+public class CustomerDB {
 
     public static ObservableList<Customer> getCustomer() throws SQLException{
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
@@ -52,7 +47,7 @@ public class CustomerQuery {
     }
 
     public static int createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
-        Division division = DivisionQuery.getDivision_ID(divisionName);
+        Division division = DivisionDB.getDivision_ID(divisionName);
 
             String sqlcc = "INSERT INTO customers(Customer_ID, Customer_Name, Address, Postal_Code, Phone, Division_ID) VALUES(NULL, ?, ?, ?, ?, ?)";
 
@@ -76,7 +71,7 @@ public class CustomerQuery {
 
     public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
 
-        Division division = DivisionQuery.getDivision_ID(divisionName);
+        Division division = DivisionDB.getDivision_ID(divisionName);
 
         String sql = "UPDATE customers SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sql);

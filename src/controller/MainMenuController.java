@@ -1,26 +1,20 @@
 package controller;
 
-import Database.AppointmentQuery;
-import Database.CustomerQuery;
+import Database.CustomerDB;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.fxml.Initializable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.stage.Stage;
-import model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainMenuController {
@@ -43,7 +37,7 @@ public class MainMenuController {
     private TableColumn endCol;
 
     @FXML
-    private TableView <CustomerQuery> cusTableView;
+    private TableView <CustomerDB> cusTableView;
     @FXML
     private TableColumn  cusIdCol;
     @FXML

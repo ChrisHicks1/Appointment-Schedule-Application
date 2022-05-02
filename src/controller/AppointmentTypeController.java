@@ -1,6 +1,6 @@
 package controller;
 
-import Database.AppointmentQuery;
+import Database.AppointmentDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -302,7 +302,7 @@ public class AppointmentTypeController implements Initializable {
 
         typeBox();
         monthBox();
-        appointments = AppointmentQuery.getAllAppointments();
+        appointments = AppointmentDB.getAllAppointments();
 
     }
 

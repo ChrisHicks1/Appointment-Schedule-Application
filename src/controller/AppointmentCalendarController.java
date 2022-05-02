@@ -1,8 +1,6 @@
 package controller;
 
-import Database.AppointmentQuery;
-import Database.CustomerQuery;
-import Database.DBConnection;
+import Database.AppointmentDB;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +18,6 @@ import java.time.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -113,8 +110,8 @@ public class AppointmentCalendarController implements Initializable {
             alert.setContentText("Press OK to delete this Appointment. \nPress Cancel to cancel.");
             alert.showAndWait();
             if (alert.getResult() == ButtonType.OK) {
-                AppointmentQuery.deleteAppointment(selectedApp.getAppointment_ID());
-                appTableView.setItems(AppointmentQuery.getAllAppointments());
+                AppointmentDB.deleteAppointment(selectedApp.getAppointment_ID());
+                appTableView.setItems(AppointmentDB.getAllAppointments());
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert1.setTitle("Cancel Appointment");
                 alert1.setContentText("Appointment has been canceled");
@@ -141,7 +138,7 @@ public class AppointmentCalendarController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        appointments = AppointmentQuery.getAllAppointments();
+        appointments = AppointmentDB.getAllAppointments();
 
         appTableView.setItems(appointments);
 
@@ -161,7 +158,7 @@ public class AppointmentCalendarController implements Initializable {
 
     public void onMonth(ActionEvent actionEvent) throws SQLException {
         if (radioMonth.isSelected()) {
-            appointments = AppointmentQuery.getMonth();
+            appointments = AppointmentDB.getMonth();
             appTableView.setItems(appointments);
             appTableView.refresh();
         }
@@ -169,7 +166,7 @@ public class AppointmentCalendarController implements Initializable {
 
     public void onWeek(ActionEvent actionEvent) throws SQLException {
         if (radioWeek.isSelected()) {
-            appointments = AppointmentQuery.getWeek();
+            appointments = AppointmentDB.getWeek();
             appTableView.setItems(appointments);
             appTableView.refresh();
         }
@@ -177,7 +174,7 @@ public class AppointmentCalendarController implements Initializable {
 
     public void onAll(ActionEvent actionEvent) {
         if (radioAll.isSelected()) {
-            appointments = AppointmentQuery.getAllAppointments();
+            appointments = AppointmentDB.getAllAppointments();
             appTableView.setItems(appointments);
             appTableView.refresh();
         }

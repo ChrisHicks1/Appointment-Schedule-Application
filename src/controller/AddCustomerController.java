@@ -1,8 +1,8 @@
 package controller;
 
-import Database.CountryQuery;
-import Database.CustomerQuery;
-import Database.DivisionQuery;
+import Database.CountryDB;
+import Database.CustomerDB;
+import Database.DivisionDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -17,7 +17,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import model.Countries;
-import model.Customer;
 import model.Division;
 
 import java.io.IOException;
@@ -58,7 +57,7 @@ public class AddCustomerController implements Initializable {
                 comAddCusDiv.getValue());
         if (valid) {
             try {
-                CustomerQuery.createCustomer(
+                CustomerDB.createCustomer(
                         txtAddCusName.getText(),
                         txtAddCusAddress.getText(),
                         txtAddCusPost.getText(),
@@ -143,7 +142,7 @@ public class AddCustomerController implements Initializable {
         ObservableList<String> addCountries = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
+            ObservableList<Countries> allCountries = CountryDB.getAllCountries();
             for(Countries countries : allCountries){
                 addCountries.add(countries.getCountryName());
             }
@@ -158,7 +157,7 @@ public class AddCustomerController implements Initializable {
         ObservableList<String> addDivision = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
+            ObservableList<Division> allDivisions = DivisionDB.getAllDivisions();
             for(Division division : allDivisions){
                 addDivision.add(division.getDivision());
             }
@@ -171,7 +170,7 @@ public class AddCustomerController implements Initializable {
     public void onComboCountry(ActionEvent actionEvent){
         ObservableList<String> dlist = FXCollections.observableArrayList();
         try{
-            ObservableList<Division> divisions = DivisionQuery.getStates(comAddCusCountry.getSelectionModel().getSelectedItem());
+            ObservableList<Division> divisions = DivisionDB.getStates(comAddCusCountry.getSelectionModel().getSelectedItem());
 
             assert divisions != null;
             for (Division division : divisions) {

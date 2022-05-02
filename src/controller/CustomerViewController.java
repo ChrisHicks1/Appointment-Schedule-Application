@@ -1,7 +1,7 @@
 package controller;
 
-import Database.AppointmentQuery;
-import Database.CustomerQuery;
+import Database.AppointmentDB;
+import Database.CustomerDB;
 import model.Appointments;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -96,7 +96,7 @@ public class CustomerViewController implements Initializable {
      * before promoting to delete customer when Delete button is clicked*/
     public void toCusDelete(ActionEvent actionEvent) throws SQLException {
         selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
-        selectedCustomerIndex = CustomerQuery.getCustomer().indexOf(selectedCustomer);
+        selectedCustomerIndex = CustomerDB.getCustomer().indexOf(selectedCustomer);
 
         if (selectedCustomer == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -114,8 +114,8 @@ public class CustomerViewController implements Initializable {
                     alert.setContentText("Press OK to delete this Customer. \nPress Cancel to cancel.");
                     alert.showAndWait();
                     if (alert.getResult() == ButtonType.OK) {
-                        CustomerQuery.deleteCustomer(selectedCustomer.getCustomer_ID());
-                        cusTableView.setItems(CustomerQuery.getCustomer());
+                        CustomerDB.deleteCustomer(selectedCustomer.getCustomer_ID());
+                        cusTableView.setItems(CustomerDB.getCustomer());
                         Alert alert2 = new Alert(Alert.AlertType.INFORMATION);
                         alert2.setTitle("Deleted");
                         alert2.setContentText("Customer has been Deleted");
@@ -136,7 +136,7 @@ public class CustomerViewController implements Initializable {
         /**Helper to check if Customer has any Appointments*/
         private boolean checkApps(Customer selectedCustomer){
         try{
-            ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(selectedCustomer.getCustomer_ID());
+            ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(selectedCustomer.getCustomer_ID());
             return appointments != null && appointments.size() < 1;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -170,7 +170,7 @@ public class CustomerViewController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         try {
-            customers = CustomerQuery.getCustomer();
+            customers = CustomerDB.getCustomer();
 
             cusIdCol.setCellValueFactory(new PropertyValueFactory<>("Customer_ID"));
             cusNameCol.setCellValueFactory(new PropertyValueFactory<>("Customer_Name"));

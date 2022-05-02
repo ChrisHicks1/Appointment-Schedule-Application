@@ -1,26 +1,22 @@
 package main;
 
 
-import Database.AppointmentQuery;
-import Database.CountryQuery;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Database.DBConnection;
-import Database.CustomerQuery;
 
 import java.sql.SQLException;
 import java.time.*;
 import java.util.Locale;
-import java.util.TimeZone;
 
 
 public class Main extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 450, 450));
         primaryStage.show();

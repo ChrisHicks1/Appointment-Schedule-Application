@@ -68,7 +68,7 @@ public class ModifyCustomerController implements Initializable {
                 comModifyDivision.getValue());
         if (valid) {
             try {
-                CustomerQuery.modifyCustomer(
+                CustomerDB.modifyCustomer(
                         Integer.parseInt(txtModifyCusId.getText()),
                         txtModifyCusName.getText(),
                         txtModifyCusAddress.getText(),
@@ -156,7 +156,7 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         ObservableList<String> modifyCountries = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Countries> allCountries = CountryQuery.getAllCountries();
+            ObservableList<Countries> allCountries = CountryDB.getAllCountries();
             for(Countries countries: allCountries){
                 if(!modifyCountries.contains(countries.getCountryName())){
                     modifyCountries.add(countries.getCountryName());
@@ -173,7 +173,7 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         ObservableList<String> modifyDivision = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Division> allDivisions = DivisionQuery.getAllDivisions();
+            ObservableList<Division> allDivisions = DivisionDB.getAllDivisions();
             for(Division division: allDivisions){
                 if(!modifyDivision.contains(division.getDivision())){
                     modifyDivision.add(division.getDivision());
@@ -188,7 +188,7 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
     public void onComboCountry(ActionEvent actionEvent){
         ObservableList<String> dlist = FXCollections.observableArrayList();
         try{
-            ObservableList<Division> divisions = DivisionQuery.getStates(comModifyCountry.getSelectionModel().getSelectedItem());
+            ObservableList<Division> divisions = DivisionDB.getStates(comModifyCountry.getSelectionModel().getSelectedItem());
 
             assert divisions != null;
             for (Division division : divisions) {

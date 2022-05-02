@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DivisionQuery {
+public class DivisionDB {
 
 
 
@@ -37,7 +37,7 @@ public class DivisionQuery {
     }
 
     public static ObservableList<Division> getStates(String country) throws SQLException {
-        Countries c = CountryQuery.getCountry_ID(country);
+        Countries c = CountryDB.getCountry_ID(country);
         ObservableList<Division> slist = FXCollections.observableArrayList();
         String sqls = "SELECT * FROM first_level_divisions WHERE Country_ID = ?";
 

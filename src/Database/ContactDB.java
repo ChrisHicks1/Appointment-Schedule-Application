@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ContactQuery {
+public class ContactDB {
 
 
     public static ObservableList<Contacts> getAllContacts() {

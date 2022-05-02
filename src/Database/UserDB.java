@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserQuery {
+public class UserDB {
 
     public static ObservableList<Users> getAllUsers() {
         ObservableList<Users> uList = FXCollections.observableArrayList();

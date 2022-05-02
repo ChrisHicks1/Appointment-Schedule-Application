@@ -1,8 +1,8 @@
 package controller;
 
-import Database.ContactQuery;
-import Database.CustomerQuery;
-import Database.UserQuery;
+import Database.ContactDB;
+import Database.CustomerDB;
+import Database.UserDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import Database.AppointmentQuery;
+import Database.AppointmentDB;
 import model.Appointments;
 import model.Contacts;
 import model.Customer;
@@ -80,7 +80,7 @@ public class AddAppointmentController implements Initializable {
                 addContact.getSelectionModel().getSelectedItem());
         if (valid) {
             try {
-                AppointmentQuery.createAppointment(
+                AppointmentDB.createAppointment(
 
                         txtAddTitle.getText(),
                         txtAddDesc.getText(),
@@ -130,7 +130,7 @@ public class AddAppointmentController implements Initializable {
         ObservableList<Integer> addCustomers = FXCollections.observableArrayList();
 
         try{
-            ObservableList<Customer> allCustomers = CustomerQuery.getCustomer();
+            ObservableList<Customer> allCustomers = CustomerDB.getCustomer();
             for(Customer customer : allCustomers){
                 if(!addCustomers.contains(customer.getCustomer_ID())){
                     addCustomers.add(customer.getCustomer_ID());
@@ -146,7 +146,7 @@ public class AddAppointmentController implements Initializable {
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try{
-            ObservableList<Users> allUsers = UserQuery.getAllUsers();
+            ObservableList<Users> allUsers = UserDB.getAllUsers();
             for(Users users : allUsers){
                 if(!addUsers.contains(users.getUser_ID())){
                     addUsers.add(users.getUser_ID());
@@ -163,7 +163,7 @@ public class AddAppointmentController implements Initializable {
         ObservableList<String> addContacts = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+            ObservableList<Contacts> allContacts = ContactDB.getAllContacts();
                 for(Contacts contacts: allContacts){
                     if(!addContacts.contains(contacts.getContact_Name())){
                         addContacts.add(contacts.getContact_Name());
@@ -346,7 +346,7 @@ public class AddAppointmentController implements Initializable {
         LocalDateTime end1;
 
         try{
-            ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
+            ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
             assert appointments != null;
             for(Appointments appointments1 : appointments){
                 start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());

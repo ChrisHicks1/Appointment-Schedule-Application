@@ -1,9 +1,9 @@
 package controller;
 
-import Database.AppointmentQuery;
-import Database.ContactQuery;
-import Database.CustomerQuery;
-import Database.UserQuery;
+import Database.AppointmentDB;
+import Database.ContactDB;
+import Database.CustomerDB;
+import Database.UserDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,14 +23,9 @@ import model.Users;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.time.*;
-import java.time.chrono.ChronoLocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.FormatStyle;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.TimeZone;
 
 public class ModifyAppointmentController implements Initializable {
 
@@ -112,7 +107,7 @@ public class ModifyAppointmentController implements Initializable {
                 Optional<ButtonType> result = alert.showAndWait();
                 if (result.get() == ButtonType.OK) {
                 try {
-                    AppointmentQuery.modifyAppointment(
+                    AppointmentDB.modifyAppointment(
                             Integer.parseInt(txtModifyAppId.getText()),
                             txtModifyTitle.getText(),
                             txtModifyDesc.getText(),
@@ -158,7 +153,7 @@ public class ModifyAppointmentController implements Initializable {
         ObservableList<Integer> addCustomers = FXCollections.observableArrayList();
 
         try{
-            ObservableList<Customer> allCustomers = CustomerQuery.getCustomer();
+            ObservableList<Customer> allCustomers = CustomerDB.getCustomer();
             for(Customer customer : allCustomers){
                 if(!addCustomers.contains(customer.getCustomer_ID())){
                     addCustomers.add(customer.getCustomer_ID());
@@ -174,7 +169,7 @@ public class ModifyAppointmentController implements Initializable {
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try{
-            ObservableList<Users> allUsers = UserQuery.getAllUsers();
+            ObservableList<Users> allUsers = UserDB.getAllUsers();
             for(Users users : allUsers){
                 if(!addUsers.contains(users.getUser_ID())){
                     addUsers.add(users.getUser_ID());
@@ -190,7 +185,7 @@ public class ModifyAppointmentController implements Initializable {
         ObservableList<String> modifyContacts = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+            ObservableList<Contacts> allContacts = ContactDB.getAllContacts();
                 for(Contacts contacts: allContacts){
                     if(!modifyContacts.contains(contacts.getContact_Name())){
                         modifyContacts.add(contacts.getContact_Name());
@@ -383,7 +378,7 @@ public class ModifyAppointmentController implements Initializable {
     LocalDateTime end1;
 
         try{
-        ObservableList<Appointments> appointments = AppointmentQuery.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
+        ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
         for(Appointments appointments1 : appointments){
             start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
             end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());

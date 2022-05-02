@@ -1,6 +1,5 @@
 package model;
 
-import Database.AppointmentQuery;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

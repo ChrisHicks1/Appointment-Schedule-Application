@@ -1,7 +1,7 @@
 package controller;
 
-import Database.AppointmentQuery;
-import Database.ContactQuery;
+import Database.AppointmentDB;
+import Database.ContactDB;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -66,7 +66,7 @@ public class ContactScheduleController implements Initializable {
 
 
     public void onCombo(ActionEvent actionEvent) throws SQLException {
-        ObservableList<Appointments> appointments = AppointmentQuery.getAssocContacts(comContact.getSelectionModel().getSelectedItem());
+        ObservableList<Appointments> appointments = AppointmentDB.getAssocContacts(comContact.getSelectionModel().getSelectedItem());
         contactTableView.setItems(appointments);
         contactTableView.refresh();
 
@@ -77,7 +77,7 @@ public class ContactScheduleController implements Initializable {
         ObservableList<String> addContacts = FXCollections.observableArrayList();
 
         try {
-            ObservableList<Contacts> allContacts = ContactQuery.getAllContacts();
+            ObservableList<Contacts> allContacts = ContactDB.getAllContacts();
             for(Contacts contacts: allContacts){
                 if(!addContacts.contains(contacts.getContact_Name())){
                     addContacts.add(contacts.getContact_Name());
@@ -97,7 +97,7 @@ public class ContactScheduleController implements Initializable {
         contactIDBox();
 
 
-        appointments = AppointmentQuery.getAllAppointments();
+        appointments = AppointmentDB.getAllAppointments();
 
 
         appCol.setCellValueFactory(new PropertyValueFactory<>("Appointment_ID"));
