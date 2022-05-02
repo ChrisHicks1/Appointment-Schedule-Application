@@ -16,7 +16,7 @@
         <TextField fx:id="txtAddDesc" alignment="CENTER" layoutX="170.0" layoutY="165.0" prefHeight="30" prefWidth="200.0" promptText="Description" />
         <TextField fx:id="txtAddLocation" alignment="CENTER" layoutX="170.0" layoutY="205.0" prefHeight="30" prefWidth="200.0" promptText="Location" />
         <ComboBox fx:id="addContact" layoutX="170.0" layoutY="245.0" prefHeight="30" prefWidth="200.0" promptText="Contact" />
-        <TextField fx:id="addTextType" alignment="CENTER" layoutX="170.0" layoutY="285.0" prefHeight="30" prefWidth="200.0" promptText="Type" />
+        <ComboBox fx:id="comAddType" layoutX="170.0" layoutY="285.0" prefHeight="30" prefWidth="200.0" promptText="Type" />
 
         <ComboBox fx:id="addStartHour" layoutX="270.0" layoutY="325.0" prefHeight="25.0" prefWidth="100.0" />
         <DatePicker fx:id="addStartDate" layoutX="170.0" layoutY="325.0" prefHeight="25.0" prefWidth="100.0" />

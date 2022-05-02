@@ -43,7 +43,7 @@ public class AddAppointmentController implements Initializable {
     @FXML
     private ComboBox<String> addContact;
     @FXML
-    private TextField addTextType;
+    private ComboBox<String> comAddType;
     @FXML
     private ComboBox<Integer> ComCustId;
     @FXML
@@ -74,7 +74,7 @@ public class AddAppointmentController implements Initializable {
                 txtAddTitle.getText(),
                 txtAddDesc.getText(),
                 txtAddLocation.getText(),
-                addTextType.getText(),
+                comAddType.getSelectionModel().getSelectedItem(),
                 ComCustId.getSelectionModel().getSelectedItem(),
                 comUserId.getSelectionModel().getSelectedItem(),
                 addContact.getSelectionModel().getSelectedItem());
@@ -85,7 +85,7 @@ public class AddAppointmentController implements Initializable {
                         txtAddTitle.getText(),
                         txtAddDesc.getText(),
                         txtAddLocation.getText(),
-                        addTextType.getText(),
+                        comAddType.getSelectionModel().getSelectedItem(),
                         LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())),
                         LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())),
                         ComCustId.getSelectionModel().getSelectedItem(),
@@ -176,6 +176,23 @@ public class AddAppointmentController implements Initializable {
 
     }
 
+    public void typeBox() {
+        ObservableList<String> addType = FXCollections.observableArrayList();
+
+
+        addType.add("De-Briefing");
+        addType.add("Planning Session");
+        addType.add("Hiring Interview 1");
+        addType.add("Hiring Interview 2");
+        addType.add("Hiring Interview 3");
+        addType.add("Exit Interview");
+        addType.add("Coffee Break");
+        addType.add("Town Hall Meeting");
+        addType.add("IT Assistance");
+
+        comAddType.setItems(addType);
+    }
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -183,6 +200,7 @@ public class AddAppointmentController implements Initializable {
         customerIDBox();
         userIDBox();
         contactIDBox();
+        typeBox();
 
         LocalTime start = LocalTime.of(8, 0, 0);
         LocalTime end = LocalTime.of(22, 0, 0);
@@ -229,7 +247,7 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-        if (Type.isEmpty()) {
+        if (comAddType.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Type Required");

@@ -53,7 +53,7 @@ public class ModifyAppointmentController implements Initializable {
     @FXML
     private ComboBox<String> modifyContact;
     @FXML
-    private TextField txtModifyType;
+    private ComboBox<String> modifyType;
     @FXML
     private ComboBox<Integer> ComCustId;
     @FXML
@@ -82,7 +82,7 @@ public class ModifyAppointmentController implements Initializable {
         txtModifyTitle.setText(appointments.getTitle());
         txtModifyDesc.setText(appointments.getDescription());
         txtModifyLocation.setText(appointments.getLocation());
-        txtModifyType.setText(appointments.getType());
+        modifyType.setValue(appointments.getType());
         modifyContact.setValue(appointments.getContact_Name());
         modifyStartHour.setValue(String.valueOf(appointments.getStart().toLocalTime()));
         modifyStartDate.setValue(appointments.getStartDate());
@@ -101,7 +101,7 @@ public class ModifyAppointmentController implements Initializable {
                     txtModifyTitle.getText(),
                     txtModifyDesc.getText(),
                     txtModifyLocation.getText(),
-                    txtModifyType.getText(),
+                    modifyType.getSelectionModel().getSelectedItem(),
                     ComCustId.getSelectionModel().getSelectedItem(),
                     comUserId.getSelectionModel().getSelectedItem(),
                     modifyContact.getSelectionModel().getSelectedItem());
@@ -117,7 +117,7 @@ public class ModifyAppointmentController implements Initializable {
                             txtModifyTitle.getText(),
                             txtModifyDesc.getText(),
                             txtModifyLocation.getText(),
-                            txtModifyType.getText(),
+                            modifyType.getSelectionModel().getSelectedItem(),
                             LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())),
                             LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())),
                             ComCustId.getSelectionModel().getSelectedItem(),
@@ -201,7 +201,25 @@ public class ModifyAppointmentController implements Initializable {
             e.printStackTrace();
         }
         modifyContact.setItems(modifyContacts);
+    }
 
+
+
+    public void typeBox() {
+        ObservableList<String> addType = FXCollections.observableArrayList();
+
+
+        addType.add("De-Briefing");
+        addType.add("Planning Session");
+        addType.add("Hiring Interview 1");
+        addType.add("Hiring Interview 2");
+        addType.add("Hiring Interview 3");
+        addType.add("Exit Interview");
+        addType.add("Coffee Break");
+        addType.add("Town Hall Meeting");
+        addType.add("IT Assistance");
+
+        modifyType.setItems(addType);
     }
 
 
@@ -213,6 +231,7 @@ public class ModifyAppointmentController implements Initializable {
         customerIDBox();
         userIDBox();
         contactIDBox();
+        typeBox();
 
 
         LocalTime start = LocalTime.of(8, 0, 0);
@@ -267,7 +286,7 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-        if (Type.isEmpty()) {
+        if (modifyType.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText("Type Required");
