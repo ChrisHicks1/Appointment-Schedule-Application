@@ -373,44 +373,54 @@ public class ModifyAppointmentController implements Initializable {
     /**Checks Customer appointments do not overlap*/
     LocalDateTime pickedStart = startDate.atTime(startHour);
     LocalDateTime pickedEnd = endDate.atTime(endHour);
+    int appID1 = Integer.parseInt(txtModifyAppId.getText());
 
     LocalDateTime start1;
     LocalDateTime end1;
+    int appID;
+
+
+
+
 
         try{
         ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
         for(Appointments appointments1 : appointments){
             start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
             end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
-
+            appID = appointments1.getAppointment_ID();
 
             if(pickedStart.isAfter(start1) && pickedStart.isBefore(end1)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("Appointments can NOT overlap");
+                alert.setContentText("Appointments can NOT start before the end of another appointment.");
                 alert.showAndWait();
                 return false;
             }
             else if(pickedStart.isBefore(start1) && (pickedEnd.isAfter(end1) || pickedEnd.isEqual(end1))){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("Appointments can NOT overlap");
+                alert.setContentText("Appointments can NOT end after the start of another appointment.");
                 alert.showAndWait();
                 return false;
             }
             else if(pickedEnd.isAfter(start1) && pickedEnd.isBefore(end1)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
-                alert.setContentText("Appointments can NOT overlap");
+                alert.setContentText("Appointments can NOT be scheduled during another appointment.");
                 alert.showAndWait();
                 return false;
             }
-            else if(pickedStart.isEqual(start1) && pickedEnd.isEqual(end1)){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Appointments can NOT overlap");
-                alert.showAndWait();
-                return false;
+            else if(pickedStart.isEqual(start1) && pickedEnd.isEqual(end1)) {
+                if (appID1 != (appID)) {
+                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                    alert.setTitle("Error");
+                    alert.setContentText("Appointments can NOT be scheduled for the same time.");
+                    alert.showAndWait();
+                    return false;
+                } else {
+                    return true;
+                }
             }
             else if(pickedStart.isEqual(pickedEnd)){
                 Alert alert = new Alert(Alert.AlertType.ERROR);

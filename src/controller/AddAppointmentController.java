@@ -58,8 +58,7 @@ public class AddAppointmentController implements Initializable {
     private DatePicker addEndDate;
 
 
-    private ZonedDateTime ESTconversion(LocalDateTime time){
-        return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
+    private ZonedDateTime ESTconversion(LocalDateTime time){ return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
     }
    /* private ZonedDateTime UTCconversion(LocalDateTime time){
         return ZonedDateTime.of(time, ZoneId.of(US))
