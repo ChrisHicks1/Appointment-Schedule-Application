@@ -24,9 +24,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.*;
 import java.time.chrono.ChronoZonedDateTime;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 public class AddAppointmentController implements Initializable {
 
@@ -391,19 +393,31 @@ public class AddAppointmentController implements Initializable {
 
 
         /**Checks that the Appointment is during business hours*/
-           startConversion = ESTZone(LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())));
-           endConversion = ESTZone(LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())));
+        LocalDateTime startTime = LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem()));
+        LocalDateTime endTime = LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem()));
+
+        ZonedDateTime localStart = startTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime localEnd = endTime.atZone(ZoneId.systemDefault());
 
 
-            if(startConversion.toLocalTime().isAfter(LocalTime.of(22, -5))){
 
+        if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() < 8) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+            if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() >= 22) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("Business hours are between 8AM and 10PM EST");
                 alert.showAndWait();
                 return false;
             }
-            if (startConversion.toLocalTime().isBefore(LocalTime.of(8, 0))) {
+
+            if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() > 22) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("Business hours are between 8AM and 10PM EST");
@@ -411,15 +425,7 @@ public class AddAppointmentController implements Initializable {
                 return false;
             }
 
-            if (endConversion.toLocalTime().isAfter(LocalTime.of(22, 0))) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Error");
-                alert.setContentText("Business hours are between 8AM and 10PM EST");
-                alert.showAndWait();
-                return false;
-            }
-
-            if (endConversion.toLocalTime().isBefore(LocalTime.of(8, 0))) {
+            if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() <= 8) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
                 alert.setContentText("Business hours are between 8AM and 10PM EST");
@@ -429,17 +435,6 @@ public class AddAppointmentController implements Initializable {
 
         return true;
     }
-
-
-
-    private ZonedDateTime startConversion;
-    private ZonedDateTime endConversion;
-
-        private ZonedDateTime ESTZone(LocalDateTime time){
-            return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
-        }
-
-
 
 
 }

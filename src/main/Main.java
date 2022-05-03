@@ -30,8 +30,10 @@ public class Main extends Application{
 
 
         DBConnection.startConnection();
-       /* ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("US")).forEach(System.out::println); //US/Eastern US/Central
 
+
+      //  ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("US")).forEach(System.out::println); //US/Eastern US/Central
+/*
         LocalDate parisDate = LocalDate.of(2022, 4, 26);
         LocalTime parisTime = LocalTime.of(5, 0);
         ZoneId parisId = ZoneId.of("Europe/Paris");
