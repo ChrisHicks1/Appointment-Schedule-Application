@@ -11,6 +11,8 @@ public class Contacts {
     public String Contact_Name;
     public String Email;
 
+
+    /**Contacts Constructor*/
     public Contacts(int Contact_ID, String Contact_Name, String Email){
         this.Contact_ID = Contact_ID;
         this.Contact_Name = Contact_Name;
@@ -19,7 +21,7 @@ public class Contacts {
 
 
 
-
+    /**Contacts Getters and Setters*/
     public Integer getContact_ID() {
         return Contact_ID;
     }
@@ -46,15 +48,4 @@ public class Contacts {
         this.Email = Email;
     }
 
-
-
-    public static ObservableList<Contacts> getAllContacts() {
-        return allContacts;
-    }
-
-
-    @Override
-    public String toString(){
-        return (Integer.toString(Contact_ID) + " " + Contact_Name);
-    }
 }

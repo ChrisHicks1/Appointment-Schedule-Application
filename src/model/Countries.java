@@ -13,12 +13,15 @@ public class Countries {
     private int countryId;
     private String countryName;
 
+
+    /**Country Constructor*/
     public Countries(int countryId, String countryName){
         this.countryId = countryId;
         this.countryName = countryName;
     }
 
 
+    /**Country Getters and Setters*/
     public int getCountryId() {
         return countryId;
     }
@@ -36,15 +39,4 @@ public class Countries {
         this.countryName = countryName;
     }
 
-
-
-    public static ObservableList<Countries> getAllCountries() {
-        return allCountries;
-    }
-
-
-    @Override
-    public String toString(){
-        return (Integer.toString(countryId) + " " + countryName);
-    }
 }

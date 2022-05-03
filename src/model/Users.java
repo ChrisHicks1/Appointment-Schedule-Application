@@ -5,12 +5,14 @@ public class Users {
     private String User_Name;
     private String Password;
 
+    /**User Constructor*/
     public Users(int User_ID, String User_Name, String Password){
         this.User_ID = User_ID;
         this.User_Name = User_Name;
         this.Password = Password;
     }
 
+    /**User Getters and Setters*/
     public int getUser_ID() {
         return User_ID;
     }

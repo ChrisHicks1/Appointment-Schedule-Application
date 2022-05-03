@@ -26,6 +26,7 @@ public class Appointments {
     private int Contact_ID;
 
 
+    /**Appointment Constructor*/
     public Appointments(int Appointment_ID, String Title, String Description, String Location, String Contact_Name, String Type, LocalDateTime Start, LocalDate startDate, LocalDateTime End, LocalDate endDate, int Customer_ID, int User_ID, int Contact_ID){
         this.Appointment_ID = Appointment_ID;
         this.Title = Title;
@@ -44,6 +45,7 @@ public class Appointments {
     }
 
 
+    /**Appointment Getters and Setters*/
     public int getAppointment_ID(){return Appointment_ID;}
     public void setAppointment_ID(int Appointment_ID){this.Appointment_ID = Appointment_ID;}
 
@@ -137,6 +139,8 @@ public class Appointments {
         this.Contact_ID = Contact_ID;
     }
 
+
+    /**Returns a list of all Appointments*/
     public static ObservableList<Appointments> getAllAppointments(){ return allAppointments; }
 
 

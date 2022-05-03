@@ -6,7 +6,6 @@ import javafx.collections.ObservableList;
 public class Customer {
 
     private static ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
-    private static ObservableList<Appointments> associatedAppointment = FXCollections.observableArrayList();
 
 
     private int Customer_ID;
@@ -18,6 +17,8 @@ public class Customer {
     private String Division;
     private int Division_ID;
 
+
+    /**Customer Constructor*/
     public Customer(int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division, int Division_ID){
         this.Customer_ID = Customer_ID;
         this.Customer_Name = Customer_Name;
@@ -30,6 +31,7 @@ public class Customer {
     }
 
 
+    /**Customer Getters and Setters*/
     public int getCustomer_ID(){return Customer_ID;}
 
     public void setCustomer_ID(int Customer_ID){this.Customer_ID = Customer_ID;}
@@ -62,9 +64,10 @@ public class Customer {
 
     public void setDivision_ID(int Division_ID){this.Division_ID = Division_ID;}
 
-    public static ObservableList<Customer> getAllCustomers(){ return allCustomers; }
 
-    public static ObservableList<Appointments> getAssociatedAppointment(){ return  associatedAppointment; }
+
+    /**Returns list of all Customers*/
+    public static ObservableList<Customer> getAllCustomers(){ return allCustomers; }
 
 
 }

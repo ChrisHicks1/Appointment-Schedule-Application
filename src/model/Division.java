@@ -7,11 +7,11 @@ public class Division {
 
     private static ObservableList<Division> allDivisions = FXCollections.observableArrayList();
 
-
     public int divisionId;
     public String division;
     public int countryId;
 
+    /**Division Constructor*/
     public Division(int divisionId, String division, int countryId){
         this.divisionId = divisionId;
         this.division = division;
@@ -19,6 +19,7 @@ public class Division {
     }
 
 
+    /**Division Getters and Setters*/
     public int getDivisionId() {
         return divisionId;
     }
@@ -44,14 +45,4 @@ public class Division {
         this.countryId = countryId;
     }
 
-
-
-    public static ObservableList<Division> getAllDivisions() {
-        return allDivisions;
-    }
-
-    @Override
-    public String toString(){
-        return (Integer.toString(divisionId) + " " + division);
-    }
 }
