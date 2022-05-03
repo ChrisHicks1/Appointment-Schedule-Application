@@ -31,7 +31,6 @@ public class LoginController implements Initializable {
 
 
 
-
     @FXML
     private Label timeZone;
     @FXML
@@ -52,14 +51,6 @@ public class LoginController implements Initializable {
     private Button loginButton;
 
 
-   public static void zoneIds(){
-       ZoneId.getAvailableZoneIds().stream().forEach(System.out::println);
-   }
-
-
-
-    Locale locEst= new Locale("en", "US/East");
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,7 +60,7 @@ public class LoginController implements Initializable {
 
         if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            timeField.setText(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName()))); TimeZone.getDefault().getDisplayName());
+            timeField.setText(String.valueOf(ZoneId.systemDefault()));
             timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -81,7 +72,7 @@ public class LoginController implements Initializable {
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 
-    /**button logs into app*/
+    /**Validates userName and password, logs into app on Log in button*/
     public void onLogin(ActionEvent actionEvent) throws SQLException {
 
         fileCreate();
@@ -161,7 +152,6 @@ public class LoginController implements Initializable {
             alertAppointment();
 
             FileWriter fileWriter = new FileWriter("login_activity.txt", true);
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
             Date date = new Date(System.currentTimeMillis());
             fileWriter.write("\nSuccessful Login: Username: " + txtUserName.getText() + " Password: " + txtPassword.getText() + " TimeStamp: " + date + "\n");
             fileWriter.close();
@@ -180,7 +170,6 @@ public class LoginController implements Initializable {
         } catch (IOException e){
             e.printStackTrace();
         }
-
     }
 
 
@@ -196,7 +185,7 @@ public class LoginController implements Initializable {
 
 
 
-    /**Checks if UserName and Password fields are filled in*/
+    /**Checks if UserName and Password fields are empty*/
     private boolean loginEmpty(String txtUserName, String txtPassword) {
         if (txtUserName.isEmpty()) {
             if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
