@@ -3,6 +3,7 @@ package controller;
 import Database.AppointmentDB;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -13,51 +14,54 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointments;
 import model.Customer;
-import java.time.*;
 
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class AppointmentCalendarController implements Initializable {
 
-    //Starting ZoneID and Time
-    Locale myLocale = Locale.getDefault();
-    LocalDateTime nowDateTime = LocalDateTime.now();
-
-    ZonedDateTime zDateTime = ZonedDateTime.of(nowDateTime, ZoneId.of("US/Central"));
-    Locale locEst= new Locale("en", "US/East");
-
-    public Locale getMyLocale() {
-        return myLocale;
-    }
 
     static ObservableList<Appointments> appointments;
 
-    public TableColumn appID;
-    public TableColumn appTitle;
-    public TableColumn appDesc;
-    public TableColumn appLocation;
-    public TableColumn appContact;
-    public TableColumn appType;
-    public TableColumn appStart;
-    public TableColumn appEnd;
-    public TableColumn appCusId;
-    public TableColumn appUserId;
-    public TableView<Appointments> appTableView;
-    public TableColumn appContactId;
-    public RadioButton radioMonth;
-    public ToggleGroup tGroup;
-    public RadioButton radioWeek;
-    public RadioButton radioAll;
+    @FXML
+    private TableColumn appID;
+    @FXML
+    private TableColumn appTitle;
+    @FXML
+    private TableColumn appDesc;
+    @FXML
+    private TableColumn appLocation;
+    @FXML
+    private TableColumn appContact;
+    @FXML
+    private TableColumn appType;
+    @FXML
+    private TableColumn appStart;
+    @FXML
+    private TableColumn appEnd;
+    @FXML
+    private TableColumn appCusId;
+    @FXML
+    private TableColumn appUserId;
+    @FXML
+    private TableView<Appointments> appTableView;
+    @FXML
+    private RadioButton radioMonth;
+    @FXML
+    private ToggleGroup tGroup;
+    @FXML
+    private RadioButton radioWeek;
+    @FXML
+    private RadioButton radioAll;
 
     private static Appointments selectedApp;
     private static int selectedAppIndex;
 
 
+    /**Goes to Add Appointment Screen*/
     public void toAppAdd(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
         Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
@@ -67,6 +71,8 @@ public class AppointmentCalendarController implements Initializable {
         stage.show();
     }
 
+
+    /**Checks that Appointment is selected, then goes to Modify Appointment screen and passes appointment data*/
     public void toAppModify(ActionEvent actionEvent) throws IOException {
 
         selectedApp = appTableView.getSelectionModel().getSelectedItem();
@@ -95,6 +101,8 @@ public class AppointmentCalendarController implements Initializable {
         }
     }
 
+
+    /**Checks that Appointment is selected, confirms delete, then removes appointment from table*/
     public void toAppDelete(ActionEvent actionEvent) throws SQLException {
         selectedApp = appTableView.getSelectionModel().getSelectedItem();
         if (selectedApp == null) {
@@ -120,11 +128,12 @@ public class AppointmentCalendarController implements Initializable {
         }
     }
 
+    /**Returns to Main Menu on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {
         goToMain(actionEvent);
     }
 
-
+    /**Helper to return to Main Menu*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent mainMenu = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -135,6 +144,7 @@ public class AppointmentCalendarController implements Initializable {
     }
 
 
+    /**Initializes table view*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -156,6 +166,7 @@ public class AppointmentCalendarController implements Initializable {
     }
 
 
+    /**When Month Appointments is selected, shows all appointments this upcoming Month*/
     public void onMonth(ActionEvent actionEvent) throws SQLException {
         if (radioMonth.isSelected()) {
             appointments = AppointmentDB.getMonth();
@@ -164,6 +175,8 @@ public class AppointmentCalendarController implements Initializable {
         }
     }
 
+
+    /**When Week Appointments is selected, shows all appointments this upcoming week*/
     public void onWeek(ActionEvent actionEvent) throws SQLException {
         if (radioWeek.isSelected()) {
             appointments = AppointmentDB.getWeek();
@@ -172,6 +185,7 @@ public class AppointmentCalendarController implements Initializable {
         }
     }
 
+    /**When All is selected, shows all appointments*/
     public void onAll(ActionEvent actionEvent) {
         if (radioAll.isSelected()) {
             appointments = AppointmentDB.getAllAppointments();
