@@ -8,50 +8,30 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Database.DBConnection;
 
-import javax.swing.text.ZoneView;
+
 import java.sql.SQLException;
-import java.time.*;
 import java.util.Locale;
+import java.util.ResourceBundle;
 
 
 public class Main extends Application{
+
+    /**Launches Login Screen, Checks for default language to change Title in login screen*/
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root, 450, 450));
-        primaryStage.show();
-
+        ResourceBundle resourceBundle = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
+        if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
+            Parent root = FXMLLoader.load(getClass().getResource("/view/Login.fxml"));
+            primaryStage.setTitle(resourceBundle.getString("login"));
+            primaryStage.setScene(new Scene(root, 450, 450));
+            primaryStage.show();
+        }
     }
 
-
+/**Starts connection to database when launched and ends connection when program is closed*/
     public static void main(String[] args) throws SQLException {
-        Locale.setDefault(new Locale("en"));
-
 
         DBConnection.startConnection();
-
-
-      //  ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("US")).forEach(System.out::println); //US/Eastern US/Central
-/*
-        LocalDate parisDate = LocalDate.of(2022, 4, 26);
-        LocalTime parisTime = LocalTime.of(5, 0);
-        ZoneId parisId = ZoneId.of("Europe/Paris");
-        ZonedDateTime parisDT = ZonedDateTime.of(parisDate, parisTime, parisId);
-        ZoneId localZoneId = ZoneId.of(TimeZone.getDefault().getID());
-
-        Instant parisToGMTInstant = parisDT.toInstant();
-        ZonedDateTime parisToLocalDT = parisDT.withZoneSameInstant(localZoneId);
-        ZonedDateTime gmtToLocalDT = parisToGMTInstant.atZone(localZoneId);
-
-        System.out.println("Local: " + ZonedDateTime.now());
-        System.out.println("Paris: " + parisDT);
-        System.out.println("Paris -> GMT: " + parisToGMTInstant);
-        System.out.println("GMT -> Local: " + gmtToLocalDT);
-*/
-
-
-
         launch(args);
         DBConnection.closeConnection();
     }

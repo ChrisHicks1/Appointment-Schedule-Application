@@ -50,7 +50,7 @@ public class LoginController implements Initializable {
     private Button loginButton;
 
 
-
+/**Initializes Language ResourceBundle and changes the language of the Texts and Labels based on user Default, also finds ZoneId*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
