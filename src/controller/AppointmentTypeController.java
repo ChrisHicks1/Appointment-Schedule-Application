@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.ResourceBundle;
 
+
+/**Controller for Appointment Type Screen*/
 public class AppointmentTypeController implements Initializable {
 
     static ObservableList<Appointments> appointments = FXCollections.observableArrayList();

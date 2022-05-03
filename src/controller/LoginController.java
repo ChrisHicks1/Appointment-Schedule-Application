@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-
+/**Controller for Login Screen*/
 public class LoginController implements Initializable {
 
 

@@ -26,6 +26,8 @@ import java.sql.SQLException;
 import java.time.*;
 import java.util.ResourceBundle;
 
+
+/**Controller for Add Appointments Screen*/
 public class AddAppointmentController implements Initializable {
 
 

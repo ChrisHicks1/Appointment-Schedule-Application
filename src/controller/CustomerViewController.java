@@ -24,6 +24,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+/**Controller for View Customer Screen*/
 public class CustomerViewController implements Initializable {
 
 

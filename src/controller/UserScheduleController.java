@@ -24,6 +24,8 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+/**Controller for User Schedule Screen*/
 public class UserScheduleController implements Initializable {
     @FXML
     private ComboBox<Integer> comUser;

@@ -22,6 +22,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+
+/**Controller for Modify Customer Screen*/
 public class ModifyCustomerController implements Initializable {
     @FXML
     private Button modifySave;

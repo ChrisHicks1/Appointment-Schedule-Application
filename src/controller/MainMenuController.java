@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
+/**Controller for Main Menu Screen*/
 public class MainMenuController {
 
 

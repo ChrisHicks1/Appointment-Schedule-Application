@@ -24,6 +24,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
+
+
+/**Controller for Add Customer Screen*/
 public class AddCustomerController implements Initializable {
 
     @FXML
