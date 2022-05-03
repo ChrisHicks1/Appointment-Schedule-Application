@@ -46,7 +46,7 @@ public class AddCustomerController implements Initializable {
 
 
 
-
+    /**Validates information, then adds new Customer and returns to Customer view*/
     public void onSave(ActionEvent actionEvent) throws IOException {
         boolean valid = notEmpty(
                 txtAddCusName.getText(),
@@ -78,9 +78,11 @@ public class AddCustomerController implements Initializable {
 
 
 
+    /**Returns to Customer View on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
 
+    /**Helper that returns to Customer View*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent addCustomerCancel = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -91,6 +93,7 @@ public class AddCustomerController implements Initializable {
     }
 
 
+    /**Checks that no information is empty*/
     private boolean notEmpty(String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
         if(Customer_Name.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -138,7 +141,8 @@ public class AddCustomerController implements Initializable {
     }
 
 
-    private void countryBox(){
+    /**Populates Country ComboBox*/
+    private void countrySelect(){
         ObservableList<String> addCountries = FXCollections.observableArrayList();
 
         try {
@@ -153,7 +157,9 @@ public class AddCustomerController implements Initializable {
 
     }
 
-    private void divisionBox(){
+
+    /**Populates Division ComboBox*/
+    private void divisionSelect(){
         ObservableList<String> addDivision = FXCollections.observableArrayList();
 
         try {
@@ -167,6 +173,8 @@ public class AddCustomerController implements Initializable {
         comAddCusDiv.setItems(addDivision);
 
     }
+
+    /**After selecting country, modifies division list to match country selection*/
     public void onComboCountry(ActionEvent actionEvent){
         ObservableList<String> dlist = FXCollections.observableArrayList();
         try{
@@ -182,10 +190,13 @@ public class AddCustomerController implements Initializable {
         }
     }
 
+
+
+    /**Initializing division and country ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        countryBox();
-        divisionBox();
+        divisionSelect();
+        countrySelect();
     }
 
 

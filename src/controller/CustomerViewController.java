@@ -2,6 +2,7 @@ package controller;
 
 import Database.AppointmentDB;
 import Database.CustomerDB;
+import javafx.fxml.FXML;
 import model.Appointments;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -28,23 +29,24 @@ public class CustomerViewController implements Initializable {
 
     static ObservableList<Customer> customers;
 
-    public TableView<Customer> cusTableView;
-
-    public TableColumn cusIdCol;
-
-    public TableColumn cusNameCol;
-
-    public TableColumn addressCol;
-
-    public TableColumn postalCol;
-
-    public TableColumn phoneCol;
-
-    public TableColumn countryCol;
-
-    public TableColumn divisionCol;
-
-    public TableColumn divisionIdCol;
+    @FXML
+    private TableView<Customer> cusTableView;
+    @FXML
+    private TableColumn cusIdCol;
+    @FXML
+    private TableColumn cusNameCol;
+    @FXML
+    private TableColumn addressCol;
+    @FXML
+    private TableColumn postalCol;
+    @FXML
+    private TableColumn phoneCol;
+    @FXML
+    private TableColumn countryCol;
+    @FXML
+    private TableColumn divisionCol;
+    @FXML
+    private TableColumn divisionIdCol;
 
 
     /**Takes user to Add Customer Menu when Add button is clicked*/

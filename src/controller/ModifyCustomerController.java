@@ -44,6 +44,7 @@ public class ModifyCustomerController implements Initializable {
     int customerIndex;
 
 
+    /**Initializes Customer Data in fields*/
     public void init(Customer customer){
         customerIndex = Customer.getAllCustomers().indexOf(customer);
         txtModifyCusId.setText(Integer.toString(customer.getCustomer_ID()));
@@ -57,6 +58,8 @@ public class ModifyCustomerController implements Initializable {
     }
 
 
+
+    /**Validates information, then modifies Customer Information and returns to Customer view*/
     public void onSave(ActionEvent actionEvent) throws IOException {
 
         boolean valid = notEmpty(
@@ -92,10 +95,10 @@ public class ModifyCustomerController implements Initializable {
 
 
 
-
+/**Returns to Customer View on Back button*/
 public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
-
+    /**Helper that returns to Customer View*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent cusView = FXMLLoader.load(getClass().getResource("/view/CustomerView.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -105,6 +108,8 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         stage.show();
     }
 
+
+    /**Checks that no information is empty*/
     private boolean notEmpty(String Customer_Name, String Address, String Postal_Code, String Phone, String Country, String Division){
         if(Customer_Name.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -151,8 +156,8 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         return true;
     }
 
-
-    private void countryBox(){
+    /**Populates Country ComboBox*/
+    private void countrySelect(){
         ObservableList<String> modifyCountries = FXCollections.observableArrayList();
 
         try {
@@ -168,8 +173,8 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         comModifyCountry.setItems(modifyCountries);
     }
 
-
-    private void divisionBox(){
+    /**Populates Division ComboBox*/
+    private void divisionSelect(){
         ObservableList<String> modifyDivision = FXCollections.observableArrayList();
 
         try {
@@ -185,6 +190,7 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
         comModifyDivision.setItems(modifyDivision);
     }
 
+    /**After selecting country, modifies division list to match country selection*/
     public void onComboCountry(ActionEvent actionEvent){
         ObservableList<String> dlist = FXCollections.observableArrayList();
         try{
@@ -199,10 +205,13 @@ public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionE
             ex.printStackTrace();
         }
     }
+
+
+    /**Initializing division and country ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        divisionBox();
-        countryBox();
+        divisionSelect();
+        countrySelect();
     }
 
     public void onComboDivision(ActionEvent actionEvent) {
