@@ -19,7 +19,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.Date;
 import java.util.Locale;
