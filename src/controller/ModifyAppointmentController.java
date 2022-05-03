@@ -29,9 +29,6 @@ import java.util.ResourceBundle;
 
 public class ModifyAppointmentController implements Initializable {
 
-    private ZonedDateTime StartDateTimeZone;
-    private ZonedDateTime EndDateTimeZone;
-
 
     @FXML
     private TextField txtModifyContactId;
@@ -65,11 +62,8 @@ public class ModifyAppointmentController implements Initializable {
     public static Appointments selectedApp;
     public int selectedAppIndex;
 
-    private ZonedDateTime ESTconversion(LocalDateTime time){
-        return ZonedDateTime.of(time, ZoneId.of("America/New_York"));
-    }
 
-
+/**initializes text fields and ComboBoxes from the selected appointment*/
     public void init(Appointments appointments){
         selectedAppIndex = Appointments.getAllAppointments().indexOf(appointments);
 
@@ -90,7 +84,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-
+/**Validates information before modifying the appointment and returning to Appointment Calendar*/
     public void onSave(ActionEvent actionEvent) throws SQLException, IOException {
             boolean valid = modSuccess(
                     txtModifyTitle.getText(),
@@ -136,9 +130,10 @@ public class ModifyAppointmentController implements Initializable {
         }
     }
 
+    /**Returns to Appointment Calendar on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
-
+/**Helper to return to Appointment Calendar*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent appCal = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -148,8 +143,8 @@ public class ModifyAppointmentController implements Initializable {
         stage.show();
     }
 
-
-    private void customerIDBox(){
+    /**Populates Customer ComboBox*/
+    private void customerID(){
         ObservableList<Integer> addCustomers = FXCollections.observableArrayList();
 
         try{
@@ -165,7 +160,8 @@ public class ModifyAppointmentController implements Initializable {
         ComCustId.setItems(addCustomers);
     }
 
-    private void userIDBox(){
+    /**Populates User ComboBox*/
+    private void userID(){
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try{
@@ -181,7 +177,8 @@ public class ModifyAppointmentController implements Initializable {
         comUserId.setItems(addUsers);
     }
 
-    private void contactIDBox(){
+    /**Populates Contact ComboBox*/
+    private void contactName(){
         ObservableList<String> modifyContacts = FXCollections.observableArrayList();
 
         try {
@@ -199,8 +196,8 @@ public class ModifyAppointmentController implements Initializable {
     }
 
 
-
-    public void typeBox() {
+/**Populates Type ComboBox*/
+    public void typeSelection() {
         ObservableList<String> addType = FXCollections.observableArrayList();
 
 
@@ -219,14 +216,14 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-
+/**Initializes ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        customerIDBox();
-        userIDBox();
-        contactIDBox();
-        typeBox();
+        customerID();
+        userID();
+        contactName();
+        typeSelection();
 
 
         LocalTime start = LocalTime.of(8, 0, 0);
@@ -258,7 +255,11 @@ public class ModifyAppointmentController implements Initializable {
 
     }
 
-    /**Checks dates and times are not empty also that start date and time comes before end date and time*/
+    /**Checks dates and times are not empty
+     * Start date and time are before end date and time
+     * Appointment is on one day
+     * Appointments do not overlap and modified appointment retains time slot
+     * Local Appointment Time is within business hours of EST*/
     private boolean modSuccess(String Title, String Description, String Location, String Type, Integer customerID, Integer userID, String contactName){
         if (Title.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -338,6 +339,10 @@ public class ModifyAppointmentController implements Initializable {
         alert.showAndWait();
         return false;
     }
+
+
+
+        //Checks Start Date is before End Date
         if (modifyEndDate.getValue().isBefore(modifyStartDate.getValue())) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -346,8 +351,9 @@ public class ModifyAppointmentController implements Initializable {
         return false;
     }
 
-    LocalTime startHour = LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem());
-    LocalTime endHour = LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem());
+        //Checks Start Hour is before End Hour
+        LocalTime startHour = LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem());
+        LocalTime endHour = LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem());
 
         if (endHour.isBefore(startHour)) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -357,7 +363,7 @@ public class ModifyAppointmentController implements Initializable {
         return false;
     }
 
-    /**Checks appointment is on one day*/
+    //Checks appointment is on one day
     LocalDate startDate = modifyStartDate.getValue();
     LocalDate endDate = modifyEndDate.getValue();
 
@@ -370,7 +376,7 @@ public class ModifyAppointmentController implements Initializable {
     }
 
 
-    /**Checks Customer appointments do not overlap*/
+    //Checks Customer appointments do not overlap but allows modified appointment to remain time slot
     LocalDateTime pickedStart = startDate.atTime(startHour);
     LocalDateTime pickedEnd = endDate.atTime(endHour);
     int appID1 = Integer.parseInt(txtModifyAppId.getText());
@@ -378,9 +384,6 @@ public class ModifyAppointmentController implements Initializable {
     LocalDateTime start1;
     LocalDateTime end1;
     int appID;
-
-
-
 
 
         try{
@@ -437,40 +440,46 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-    /**Checks that the Appointment is during business hours and not on the Weekend*/
-    ZonedDateTime startConversion = ESTconversion(LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem())));
-    ZonedDateTime endConversion = ESTconversion(LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem())));
+    //Checks that the Local Appointment time is during business hours of EST
+        LocalDateTime startTime = LocalDateTime.of(modifyStartDate.getValue(), LocalTime.parse(modifyStartHour.getSelectionModel().getSelectedItem()));
+        LocalDateTime endTime = LocalDateTime.of(modifyEndDate.getValue(), LocalTime.parse(modifyEndHour.getSelectionModel().getSelectedItem()));
 
-        if(startConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Business hours are between 8AM and 10PM EST");
-        alert.showAndWait();
-        return false;
-    }
-        if(startConversion.toLocalTime().isBefore(LocalTime.of(8, 0))){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Business hours are between 8AM and 10PM EST");
-        alert.showAndWait();
-        return false;
-    }
+        ZonedDateTime localStart = startTime.atZone(ZoneId.systemDefault());
+        ZonedDateTime localEnd = endTime.atZone(ZoneId.systemDefault());
 
-        if(endConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Business hours are between 8AM and 10PM EST");
-        alert.showAndWait();
-        return false;
-    }
 
-        if(endConversion.toLocalTime().isBefore(LocalTime.of(8,0))){
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setContentText("Business hours are between 8AM and 10PM EST");
-        alert.showAndWait();
-        return false;
-    }
+
+        if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() < 8) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() >= 22) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() > 22) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
+
+        if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() <= 8) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setContentText("Business hours are between 8AM and 10PM EST");
+            alert.showAndWait();
+            return false;
+        }
 
         return true;
 }
