@@ -11,6 +11,8 @@ import java.sql.SQLException;
 
 public class CustomerDB {
 
+
+    /**Retrieves all Customer information from customers table*/
     public static ObservableList<Customer> getCustomer() throws SQLException{
         ObservableList<Customer> customersList = FXCollections.observableArrayList();
 
@@ -46,6 +48,7 @@ public class CustomerDB {
         return customersList;
     }
 
+/**Creates new customer in customers table*/
     public static int createCustomer(String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
         Division division = DivisionDB.getDivision_ID(divisionName);
 
@@ -69,6 +72,7 @@ public class CustomerDB {
     }
 
 
+    /**Updates customer in customers table based on Customer_ID*/
     public static int modifyCustomer (int Customer_ID, String Customer_Name, String Address, String Postal_Code, String Phone, String divisionName) throws SQLException {
 
         Division division = DivisionDB.getDivision_ID(divisionName);
@@ -91,7 +95,7 @@ public class CustomerDB {
     }
 
 
-
+/**Deletes customer from customers table based on Customer_ID*/
     public static int deleteCustomer(int Customer_ID) throws SQLException {
         String sqld = "DELETE FROM customers WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.conn.prepareStatement(sqld);
@@ -99,24 +103,5 @@ public class CustomerDB {
         int results = ps.executeUpdate();
         return results;
     }
-
-
-
-
-
-    public static void select() throws SQLException {
-        String sqls = "SELECT * FROM customers";
-        PreparedStatement ps = DBConnection.conn.prepareStatement(sqls);
-        ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int Customer_ID = rs.getInt("Customer_ID");
-                String Customer_Name = rs.getString("Customer_Name");
-                System.out.print(Customer_ID + " | ");
-                System.out.print(Customer_Name + "\n");
-            }
-        }
-
-
-
 
 }

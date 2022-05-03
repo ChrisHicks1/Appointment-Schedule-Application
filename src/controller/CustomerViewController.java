@@ -95,7 +95,7 @@ public class CustomerViewController implements Initializable {
 
 
     /**Verifies a customer has been selected, then verifies that no Appointments are associated with Customer
-     * before promoting to delete customer when Delete button is clicked*/
+     * before prompting to delete customer when Delete button is clicked*/
     public void toCusDelete(ActionEvent actionEvent) throws SQLException {
         selectedCustomer = cusTableView.getSelectionModel().getSelectedItem();
         selectedCustomerIndex = CustomerDB.getCustomer().indexOf(selectedCustomer);

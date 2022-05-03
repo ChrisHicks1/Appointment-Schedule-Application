@@ -12,6 +12,7 @@ import java.sql.SQLException;
 public class ContactDB {
 
 
+    /**Retrieves all Contact information from contacts table*/
     public static ObservableList<Contacts> getAllContacts() {
         ObservableList<Contacts> coList = FXCollections.observableArrayList();
 
@@ -36,6 +37,9 @@ public class ContactDB {
         }
         return coList;
     }
+
+
+    /**Retrieves Contact information from contacts table based on Contact_Name*/
     public static Contacts getContact_ID(String contactName) throws SQLException {
         String sql = "SELECT * FROM contacts WHERE Contact_Name = ?";
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);

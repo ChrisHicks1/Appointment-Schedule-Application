@@ -20,7 +20,7 @@ public abstract class DBConnection {
     public static Connection conn; //Connection Interface
 
 
-
+/**Starts connection to Database*/
     public static Connection startConnection(){
         try {
             Class.forName(driver);
@@ -40,7 +40,7 @@ public abstract class DBConnection {
         return conn;
     }
 
-
+/**Ends connection to Database*/
     public static void closeConnection(){
         try{
             conn.close();

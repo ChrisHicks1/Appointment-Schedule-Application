@@ -11,6 +11,7 @@ import java.sql.SQLException;
 
 public class UserDB {
 
+    /**Retrieves all users from users table*/
     public static ObservableList<Users> getAllUsers() {
         ObservableList<Users> uList = FXCollections.observableArrayList();
 
@@ -36,6 +37,7 @@ public class UserDB {
 
     }
 
+    /**Validates userName and password for Login*/
     public static boolean checkUserAndPassword(String User_Name, String Password) throws SQLException {
 
         String sqlus = "SELECT * FROM users WHERE User_Name = ? AND Password = ?";

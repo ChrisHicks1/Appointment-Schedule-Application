@@ -13,9 +13,8 @@ import java.sql.SQLException;
 public class DivisionDB {
 
 
-
-
-    public static ObservableList<Division> getAllDivisions(){
+    /**Retrieves all Divisions from first_level_divisions table*/
+    public static ObservableList<Division> getAllDivisions() {
         ObservableList<Division> dlist = FXCollections.observableArrayList();
         try {
             String sqld = "SELECT * FROM first_level_divisions AS f INNER JOIN countries AS c on c.Country_ID = f.Country_ID";
@@ -31,11 +30,14 @@ public class DivisionDB {
                 Division d = new Division(Division_ID, Division, Country_ID);
                 dlist.add(d);
             }
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
-        } return dlist;
+        }
+        return dlist;
     }
 
+
+    /**Returns list of Divisions in a Country from first_level_divisions table based on selected Country_ID*/
     public static ObservableList<Division> getStates(String country) throws SQLException {
         Countries c = CountryDB.getCountry_ID(country);
         ObservableList<Division> slist = FXCollections.observableArrayList();
@@ -44,26 +46,27 @@ public class DivisionDB {
         PreparedStatement pss = DBConnection.getConnection().prepareStatement(sqls);
         pss.setInt(1, c.getCountryId());
 
-        try{
+        try {
             ResultSet rs = pss.executeQuery();
 
-                while (rs.next()) {
+            while (rs.next()) {
 
-                    int Division_ID = rs.getInt("Division_ID");
-                    String Division = rs.getString("Division");
-                    int Country_ID = rs.getInt("Country_ID");
+                int Division_ID = rs.getInt("Division_ID");
+                String Division = rs.getString("Division");
+                int Country_ID = rs.getInt("Country_ID");
 
-                    Division s = new Division(Division_ID, Division, Country_ID);
-                    slist.add(s);
-                }
-                return slist;
-            }catch (SQLException ex) {
-             ex.printStackTrace();
-             return null;
+                Division s = new Division(Division_ID, Division, Country_ID);
+                slist.add(s);
+            }
+            return slist;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
         }
-        }
+    }
 
 
+    /**Retrieves selected Division information from first_level_divisions table*/
     public static Division getDivision_ID(String divisionName) throws SQLException {
         String sql = "SELECT * FROM first_level_divisions WHERE Division = ?";
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
@@ -83,10 +86,7 @@ public class DivisionDB {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }return null;
+        }
+        return null;
     }
-
-
-   // public static ObservableList<Countries> getStates(){    ObservableList<Countries> slist = FXCollections.observableArrayList();    try{        String sqls = "Select * FROM first_level_divisions WHERE Country_ID = 1";        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqls);        ResultSet rs = ps.executeQuery();        while(rs.next()){            int Country_ID = rs.getInt("Country_ID");            String Country_Name = rs.getString("Country_Name");            Countries c = new Countries(Country_ID, Country_Name);            slist.add(c);        }    } catch (SQLException throwables) {        throwables.printStackTrace();    }return slist;}public static ObservableList<Countries> getProvinces(){    ObservableList<Countries> plist = FXCollections.observableArrayList();    try{        String sqls = "Select * FROM first_level_divisions WHERE Country_ID = 2";        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqls);        ResultSet rs = ps.executeQuery();        while(rs.next()){            int Country_ID = rs.getInt("Country_ID");            String Country_Name = rs.getString("Country_Name");            Countries c = new Countries(Country_ID, Country_Name);            plist.add(c);        }    } catch (SQLException throwables) {        throwables.printStackTrace();    }return plist;}public static ObservableList<Countries> getRegions(){    ObservableList<Countries> rlist = FXCollections.observableArrayList();    try{        String sqls = "Select * FROM first_level_divisions WHERE Country_ID = 3";        PreparedStatement ps = DBConnection.getConnection().prepareStatement(sqls);        ResultSet rs = ps.executeQuery();        while(rs.next()){            int Country_ID = rs.getInt("Country_ID");            String Country_Name = rs.getString("Country_Name");            Countries c = new Countries(Country_ID, Country_Name);            rlist.add(c);        }    } catch (SQLException throwables) {        throwables.printStackTrace();    }return rlist;}
-
 }

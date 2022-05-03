@@ -12,7 +12,7 @@ import java.sql.*;
 public class CountryDB {
 
 
-
+    /**Retrieves all Countries from countries table*/
     public static ObservableList<Countries> getAllCountries(){
         ObservableList<Countries> clist = FXCollections.observableArrayList();
 
@@ -37,6 +37,8 @@ public class CountryDB {
         return clist;
     }
 
+
+    /**Retrieves Country information from countries table based on Country Name*/
     public static Countries getCountry_ID(String countryName) throws SQLException {
         String sql = "SELECT * FROM countries WHERE Country = ?";
         PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
@@ -55,23 +57,6 @@ public class CountryDB {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }return null;
-    }
-
-
-
-    public static void checkDateConversion(){
-        System.out.println("CREATE DATE TEST");
-        String sql = "select Create_Date from countries";
-        try{
-            PreparedStatement ps = DBConnection.getConnection().prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                Timestamp ts = rs.getTimestamp("Create_Date");
-                System.out.println("CD: " + ts.toLocalDateTime().toString());
-            }
-        }catch (SQLException throwables){
-            throwables.printStackTrace();
-        }
     }
 
 }
