@@ -26,7 +26,6 @@
             <TableColumn fx:id="divisionCol" prefWidth="100.0" text="Division" />
             <TableColumn fx:id="divisionIdCol" prefWidth="100.0" text="Division ID" />
 
-
         </columns>
     </TableView>
 
