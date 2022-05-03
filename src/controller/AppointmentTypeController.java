@@ -37,10 +37,10 @@ public class AppointmentTypeController implements Initializable {
 
 
 
-
+    /**Returns to the Main Menu on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
-
+    /**Helper to return to the Main Menu*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent mainMenu = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -51,19 +51,20 @@ public class AppointmentTypeController implements Initializable {
     }
 
 
-
+    /**Lambda interface to assign the amount of appointments for selected Month to textBox*/
     public interface monthAmountInterface{
         void countMonth(String i);
     }
 
+    /**Lambda interface to assign the amount of appointments of selected type to textBox*/
     public interface typeAmountInterface{
         void countType(String i);
     }
 
 
 
-
-    public void typeBox(){
+    /**Populates type ComboBox*/
+    public void typeName(){
         ObservableList<String> addType = FXCollections.observableArrayList();
 
         addType.add(0, "De-Briefing");
@@ -79,6 +80,11 @@ public class AppointmentTypeController implements Initializable {
         comType.setItems(addType);
     }
 
+
+
+    /**Makes each Type its own list, then assigns types from appointments to those list based on type's name,
+     * then assigns each type to the correlating index in the ComboBox
+     * and finally returns the number of appointments of the selected type to a textBox using a lambda */
     @FXML
     private void onComType(ActionEvent actionEvent){
         ObservableList<String> deBriefing = FXCollections.observableArrayList();
@@ -168,6 +174,13 @@ public class AppointmentTypeController implements Initializable {
         }
     }
 
+
+
+
+
+    /**Makes each Month its own list, then adds appointments to those lists based on the appointment's start date,
+     * then assigns each month to the correlating index in the ComboBox
+     * and finally returns the number of appointments in the selected month to a textBox using a lambda*/
     @FXML
     private void onComMonth(ActionEvent actionEvent) {
         ObservableList<String> January = FXCollections.observableArrayList();
@@ -224,9 +237,7 @@ public class AppointmentTypeController implements Initializable {
             }
 
 
-            if (start.getMonth().equals(Month.JANUARY)) {
-                January.add(String.valueOf(start.getMonthValue()));
-            }
+
             if (comMonth.getSelectionModel().isSelected(0)) {
                 monthCount.setText(String.valueOf(January.size()));
             }
@@ -276,7 +287,9 @@ public class AppointmentTypeController implements Initializable {
         }
     }
 
-    private void monthBox(){
+
+    /**Populates Month ComboBox*/
+    private void month(){
 
         ObservableList<String> addMonth = FXCollections.observableArrayList();
         addMonth.add(0, "January");
@@ -297,11 +310,13 @@ public class AppointmentTypeController implements Initializable {
             }
 
 
+
+    /**Initializes ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        typeBox();
-        monthBox();
+        typeName();
+        month();
         appointments = AppointmentDB.getAllAppointments();
 
     }
