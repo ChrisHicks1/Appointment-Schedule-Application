@@ -160,6 +160,7 @@ public class ModifyAppointmentController implements Initializable {
         ComCustId.setItems(addCustomers);
     }
 
+
     /**Populates User ComboBox*/
     private void userID(){
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
@@ -176,6 +177,7 @@ public class ModifyAppointmentController implements Initializable {
         }
         comUserId.setItems(addUsers);
     }
+
 
     /**Populates Contact ComboBox*/
     private void contactName(){
@@ -196,7 +198,7 @@ public class ModifyAppointmentController implements Initializable {
     }
 
 
-/**Populates Type ComboBox*/
+    /**Populates Type ComboBox*/
     public void typeSelection() {
         ObservableList<String> addType = FXCollections.observableArrayList();
 
@@ -216,7 +218,7 @@ public class ModifyAppointmentController implements Initializable {
 
 
 
-/**Initializes ComboBoxes*/
+    /**Initializes ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -255,7 +257,7 @@ public class ModifyAppointmentController implements Initializable {
 
     }
 
-    /**Checks dates and times are not empty
+    /**Checks that all fields are not empty
      * Start date and time are before end date and time
      * Appointment is on one day
      * Appointments do not overlap and modified appointment retains time slot
@@ -310,7 +312,6 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
         if (modifyStartDate.getValue() == null) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Error");
@@ -448,7 +449,6 @@ public class ModifyAppointmentController implements Initializable {
         ZonedDateTime localEnd = endTime.atZone(ZoneId.systemDefault());
 
 
-
         if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() < 8) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -456,7 +456,6 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
         if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() >= 22) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -464,7 +463,6 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
         if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() > 22) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -472,7 +470,6 @@ public class ModifyAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
         if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() <= 8) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");

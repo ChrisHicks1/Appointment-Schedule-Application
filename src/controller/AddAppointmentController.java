@@ -23,12 +23,8 @@ import model.Users;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
 import java.time.*;
-import java.time.chrono.ChronoZonedDateTime;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 public class AddAppointmentController implements Initializable {
 
@@ -61,6 +57,7 @@ public class AddAppointmentController implements Initializable {
     private DatePicker addEndDate;
 
 
+    /**Validates information before saving new Appointment and returning to Appointment Calendar*/
     public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
         boolean valid = appSuccess(
                 txtAddTitle.getText(),
@@ -103,10 +100,10 @@ public class AddAppointmentController implements Initializable {
 
 
 
-
+    /**Returns to Appointment Calendar on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
-
+    /**Helper to return to Appointment Calendar*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent appointmentCal = FXMLLoader.load(getClass().getResource("/view/AppointmentCalendar.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -117,8 +114,8 @@ public class AddAppointmentController implements Initializable {
     }
 
 
-
-    private void customerIDBox(){
+    /**Populates Customer ComboBox*/
+    private void customerID(){
         ObservableList<Integer> addCustomers = FXCollections.observableArrayList();
 
         try{
@@ -134,7 +131,9 @@ public class AddAppointmentController implements Initializable {
         ComCustId.setItems(addCustomers);
     }
 
-    private void userIDBox(){
+
+    /**Populates User ComboBox*/
+    private void userID(){
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try{
@@ -151,7 +150,8 @@ public class AddAppointmentController implements Initializable {
     }
 
 
-    private void contactIDBox(){
+    /**Populates Contact ComboBox*/
+    private void contactName(){
         ObservableList<String> addContacts = FXCollections.observableArrayList();
 
         try {
@@ -168,7 +168,9 @@ public class AddAppointmentController implements Initializable {
 
     }
 
-    public void typeBox() {
+
+    /**Populates Type ComboBox*/
+    public void type() {
         ObservableList<String> addType = FXCollections.observableArrayList();
 
 
@@ -186,13 +188,14 @@ public class AddAppointmentController implements Initializable {
     }
 
 
+    /**Initializes ComboBoxes*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        customerIDBox();
-        userIDBox();
-        contactIDBox();
-        typeBox();
+        customerID();
+        userID();
+        contactName();
+        type();
 
         LocalTime start = LocalTime.of(5, 0, 0);
         LocalTime end = LocalTime.of(23, 0, 0);
@@ -216,7 +219,11 @@ public class AddAppointmentController implements Initializable {
     }
 
 
-    /**Confirms there are no empty fields*/
+    /**Checks that All Fields are not empty
+     * Start date and time are before end date and time
+     * Appointment is on one day
+     * Appointments do not overlap
+     * Local Appointment Time is within business hours of EST*/
     private boolean appSuccess(String Title, String Description, String Location, String Type, Integer customerID, Integer userID, String contactName) throws SQLException {
         if (Title.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -267,9 +274,6 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
-
-        /**Checks dates and times are not empty also that start date and time comes before end date and time*/
         if (addStartDate.getValue() == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -298,6 +302,9 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
+
+
+        //Checks Start Date is before End Date
         if (addEndDate.getValue().isBefore(addStartDate.getValue())) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -306,6 +313,7 @@ public class AddAppointmentController implements Initializable {
             return false;
         }
 
+        //Checks Start Hour is before End Hour
         LocalTime startHour = LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem());
         LocalTime endHour = LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem());
 
@@ -317,7 +325,7 @@ public class AddAppointmentController implements Initializable {
             return false;
         }
 
-        /**Checks appointment is on one day*/
+        //Checks appointment is on one day
         LocalDate startDate = addStartDate.getValue();
         LocalDate endDate = addEndDate.getValue();
 
@@ -330,15 +338,12 @@ public class AddAppointmentController implements Initializable {
         }
 
 
-        /**Checks Customer appointments do not overlap*/
+        //Checks Customer appointments do not overlap
         LocalDateTime pickedStart = startDate.atTime(startHour);
         LocalDateTime pickedEnd = endDate.atTime(endHour);
 
         LocalDateTime start1;
         LocalDateTime end1;
-
-
-
 
         try{
             ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
@@ -346,8 +351,6 @@ public class AddAppointmentController implements Initializable {
             for(Appointments appointments1 : appointments){
                 start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
                 end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
-
-
 
                 if(pickedStart.isAfter(start1) && pickedStart.isBefore(end1)){
                     Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -392,13 +395,12 @@ public class AddAppointmentController implements Initializable {
 
 
 
-        /**Checks that the Appointment is during business hours*/
+        //Checks that the Local Appointment time is during business hours of EST
         LocalDateTime startTime = LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem()));
         LocalDateTime endTime = LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem()));
 
         ZonedDateTime localStart = startTime.atZone(ZoneId.systemDefault());
         ZonedDateTime localEnd = endTime.atZone(ZoneId.systemDefault());
-
 
 
         if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() < 8) {
@@ -408,7 +410,6 @@ public class AddAppointmentController implements Initializable {
             alert.showAndWait();
             return false;
         }
-
             if(localStart.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() >= 22) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -416,7 +417,6 @@ public class AddAppointmentController implements Initializable {
                 alert.showAndWait();
                 return false;
             }
-
             if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() > 22) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
@@ -424,7 +424,6 @@ public class AddAppointmentController implements Initializable {
                 alert.showAndWait();
                 return false;
             }
-
             if (localEnd.withZoneSameInstant(ZoneId.of("US/Eastern")).getHour() <= 8) {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error");
