@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
 
         if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
             loginLabel.setText(resourceBundle.getString("login"));
-            timeField.setText((String.valueOf(ZoneId.systemDefault())));//TimeZone.getDefault().getDisplayName()))); TimeZone.getDefault().getDisplayName());
+            timeField.setText(String.valueOf(ZoneId.systemDefault()));//TimeZone.getDefault().getDisplayName()))); TimeZone.getDefault().getDisplayName());
             timeZone.setText(resourceBundle.getString("timeZone"));
             userName.setText(resourceBundle.getString("userName"));
             password.setText(resourceBundle.getString("passWord"));
@@ -86,6 +86,7 @@ public class LoginController implements Initializable {
             exitApp.setText(resourceBundle.getString("exit"));
         }
     }
+
 
     ResourceBundle resourceBundle = ResourceBundle.getBundle("Language/Nat", Locale.getDefault());
 

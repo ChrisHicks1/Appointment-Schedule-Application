@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import Database.DBConnection;
 
+import javax.swing.text.ZoneView;
 import java.sql.SQLException;
 import java.time.*;
 import java.util.Locale;
@@ -26,8 +27,7 @@ public class Main extends Application{
 
     public static void main(String[] args) throws SQLException {
         Locale.setDefault(new Locale("en"));
-        Instant.now(
-                Clock.system(ZoneOffset.UTC));
+
 
         DBConnection.startConnection();
        /* ZoneId.getAvailableZoneIds().stream().filter(c -> c.contains("US")).forEach(System.out::println); //US/Eastern US/Central

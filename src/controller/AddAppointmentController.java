@@ -23,13 +23,14 @@ import model.Users;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.time.*;
+import java.time.chrono.ChronoZonedDateTime;
 import java.util.ResourceBundle;
 
 public class AddAppointmentController implements Initializable {
 
-    @FXML
-    private TextField addTextContactId;
+
     @FXML
     private Button addSave;
     @FXML
@@ -58,17 +59,7 @@ public class AddAppointmentController implements Initializable {
     private DatePicker addEndDate;
 
 
-    private ZonedDateTime ESTconversion(LocalDateTime time){ return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
-    }
-   /* private ZonedDateTime UTCconversion(LocalDateTime time){
-        return ZonedDateTime.of(time, ZoneId.of(US))
-    }*/
-
-
-
-
-
-    public void onSave(ActionEvent actionEvent) throws IOException {
+    public void onSave(ActionEvent actionEvent) throws IOException, SQLException {
         boolean valid = appSuccess(
                 txtAddTitle.getText(),
                 txtAddDesc.getText(),
@@ -201,16 +192,16 @@ public class AddAppointmentController implements Initializable {
         contactIDBox();
         typeBox();
 
-        LocalTime start = LocalTime.of(8, 0, 0);
-        LocalTime end = LocalTime.of(22, 0, 0);
+        LocalTime start = LocalTime.of(5, 0, 0);
+        LocalTime end = LocalTime.of(23, 0, 0);
 
         while(start.isBefore(end.plusSeconds(1))){
             addStartHour.getItems().add(String.valueOf(LocalTime.from(start)));
             start = start.plusMinutes(15);
         }
 
-        LocalTime start1 = LocalTime.of(8, 0, 0);
-        LocalTime end1 = LocalTime.of(22, 0, 0);
+        LocalTime start1 = LocalTime.of(5, 0, 0);
+        LocalTime end1 = LocalTime.of(23, 0, 0);
 
         while(start1.isBefore(end1.plusSeconds(1))){
             addEndHour.getItems().add(String.valueOf(LocalTime.from(start1)));
@@ -224,7 +215,7 @@ public class AddAppointmentController implements Initializable {
 
 
     /**Confirms there are no empty fields*/
-    private boolean appSuccess(String Title, String Description, String Location, String Type, Integer customerID, Integer userID, String contactName) {
+    private boolean appSuccess(String Title, String Description, String Location, String Type, Integer customerID, Integer userID, String contactName) throws SQLException {
         if (Title.isEmpty()) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
@@ -344,12 +335,16 @@ public class AddAppointmentController implements Initializable {
         LocalDateTime start1;
         LocalDateTime end1;
 
+
+
+
         try{
             ObservableList<Appointments> appointments = AppointmentDB.getAssocCustomers(ComCustId.getSelectionModel().getSelectedItem());
             assert appointments != null;
             for(Appointments appointments1 : appointments){
                 start1 = appointments1.getStartDate().atTime(appointments1.getStart().toLocalTime());
                 end1 = appointments1.getEndDate().atTime(appointments1.getEnd().toLocalTime());
+
 
 
                 if(pickedStart.isAfter(start1) && pickedStart.isBefore(end1)){
@@ -396,42 +391,55 @@ public class AddAppointmentController implements Initializable {
 
 
         /**Checks that the Appointment is during business hours*/
-        ZonedDateTime startConversion = ESTconversion(LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())));
-        ZonedDateTime endConversion = ESTconversion(LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())));
+           startConversion = ESTZone(LocalDateTime.of(addStartDate.getValue(), LocalTime.parse(addStartHour.getSelectionModel().getSelectedItem())));
+           endConversion = ESTZone(LocalDateTime.of(addEndDate.getValue(), LocalTime.parse(addEndHour.getSelectionModel().getSelectedItem())));
 
-        if(startConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business hours are between 8AM and 10PM EST");
-            alert.showAndWait();
-            return false;
-        }
-        if(startConversion.toLocalTime().isBefore(LocalTime.of(8, 0))){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business hours are between 8AM and 10PM EST");
-            alert.showAndWait();
-            return false;
-        }
 
-        if(endConversion.toLocalTime().isAfter(LocalTime.of(22,0))){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business hours are between 8AM and 10PM EST");
-            alert.showAndWait();
-            return false;
-        }
+            if(startConversion.toLocalTime().isAfter(LocalTime.of(22, -5))){
 
-        if(endConversion.toLocalTime().isBefore(LocalTime.of(8,0))){
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setContentText("Business hours are between 8AM and 10PM EST");
-            alert.showAndWait();
-            return false;
-        }
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Business hours are between 8AM and 10PM EST");
+                alert.showAndWait();
+                return false;
+            }
+            if (startConversion.toLocalTime().isBefore(LocalTime.of(8, 0))) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Business hours are between 8AM and 10PM EST");
+                alert.showAndWait();
+                return false;
+            }
 
+            if (endConversion.toLocalTime().isAfter(LocalTime.of(22, 0))) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Business hours are between 8AM and 10PM EST");
+                alert.showAndWait();
+                return false;
+            }
+
+            if (endConversion.toLocalTime().isBefore(LocalTime.of(8, 0))) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setContentText("Business hours are between 8AM and 10PM EST");
+                alert.showAndWait();
+                return false;
+            }
 
         return true;
     }
+
+
+
+    private ZonedDateTime startConversion;
+    private ZonedDateTime endConversion;
+
+        private ZonedDateTime ESTZone(LocalDateTime time){
+            return ZonedDateTime.of(time, ZoneId.of("US/Eastern"));
+        }
+
+
+
 
 }
