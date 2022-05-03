@@ -28,33 +28,31 @@ public class ContactScheduleController implements Initializable {
 
 
     private static ObservableList<Appointments> appointments = FXCollections.observableArrayList();
-    static ObservableList<Contacts> contacts = FXCollections.observableArrayList();
-
-    @FXML
-    public TableView<Appointments> contactTableView;
-    @FXML
-    public TableColumn appCol;
-    @FXML
-    public TableColumn titleCol;
-    @FXML
-    public TableColumn descCol;
-    @FXML
-    public TableColumn typeCol;
-    @FXML
-    public TableColumn startCol;
-    @FXML
-    public TableColumn endCol;
-    @FXML
-    public TableColumn customerCol;
-    @FXML
-    public ComboBox<String> comContact;
 
 
+    @FXML
+    private TableView<Appointments> contactTableView;
+    @FXML
+    private TableColumn appCol;
+    @FXML
+    private TableColumn titleCol;
+    @FXML
+    private TableColumn descCol;
+    @FXML
+    private TableColumn typeCol;
+    @FXML
+    private TableColumn startCol;
+    @FXML
+    private TableColumn endCol;
+    @FXML
+    private TableColumn customerCol;
+    @FXML
+    private ComboBox<String> comContact;
+
+    /**Returns to Main Menu on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
-
-
-
+    /**Helper that returns to Main Menu*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent mainMenu = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -65,6 +63,7 @@ public class ContactScheduleController implements Initializable {
     }
 
 
+    /**Updates table view when Selecting a contact*/
     public void onCombo(ActionEvent actionEvent) throws SQLException {
         ObservableList<Appointments> appointments = AppointmentDB.getAssocContacts(comContact.getSelectionModel().getSelectedItem());
         contactTableView.setItems(appointments);
@@ -73,7 +72,8 @@ public class ContactScheduleController implements Initializable {
     }
 
 
-    private void contactIDBox(){
+    /**Populates contact comboBox*/
+    private void contactName(){
         ObservableList<String> addContacts = FXCollections.observableArrayList();
 
         try {
@@ -91,10 +91,11 @@ public class ContactScheduleController implements Initializable {
     }
 
 
+    /**Initializes Contact ComboBox and Contact table view*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        contactIDBox();
+        contactName();
 
 
         appointments = AppointmentDB.getAllAppointments();

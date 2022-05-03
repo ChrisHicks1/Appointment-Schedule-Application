@@ -48,8 +48,12 @@ public class UserScheduleController implements Initializable {
 
     private static ObservableList<Appointments> appointments = FXCollections.observableArrayList();
 
+
+    /**Returns to Main Menu on Back button*/
     public void toMain(ActionEvent actionEvent) throws IOException {goToMain(actionEvent);}
 
+
+    /**Helper that returns to Main Menu*/
     void goToMain(ActionEvent actionEvent) throws IOException {
         Parent mainMenu = FXMLLoader.load(getClass().getResource("/view/MainMenu.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -59,6 +63,8 @@ public class UserScheduleController implements Initializable {
         stage.show();
     }
 
+
+    /**Updates table view when User is Selected*/
     public void onCombo(ActionEvent actionEvent) throws SQLException {
         ObservableList<Appointments> appointments = AppointmentDB.getAssocUsers(comUser.getSelectionModel().getSelectedItem());
         userTableView.setItems(appointments);
@@ -67,7 +73,8 @@ public class UserScheduleController implements Initializable {
     }
 
 
-    private void userIDBox(){
+    /**Populates user comboBox*/
+    private void userID(){
         ObservableList<Integer> addUsers = FXCollections.observableArrayList();
 
         try {
@@ -85,10 +92,12 @@ public class UserScheduleController implements Initializable {
     }
 
 
+
+    /**Initializes User ComboBox and User table view*/
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        userIDBox();
+        userID();
 
 
         appointments = AppointmentDB.getAllAppointments();
