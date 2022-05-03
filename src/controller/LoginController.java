@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Appointments;
 
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -27,18 +26,10 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 
-interface LoginActivity{
-    public String getFileName();
-}
-
 
 public class LoginController implements Initializable {
 
 
-
-//    LoginActivity loginActivity = () -> {
-  //      return "login_activity.txt";
-    //};
 
 
     @FXML
