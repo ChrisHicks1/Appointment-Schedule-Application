@@ -54,14 +54,10 @@ public class AppointmentTypeController implements Initializable {
 
 
     /**Lambda interface to assign the amount of appointments for selected Month to textBox*/
-    public interface monthAmountInterface{
-        void countMonth(String i);
-    }
+    public interface monthAmountInterface{ void countMonth(String i); }
 
     /**Lambda interface to assign the amount of appointments of selected type to textBox*/
-    public interface typeAmountInterface{
-        void countType(String i);
-    }
+    public interface typeAmountInterface{ void countType(String i);}
 
 
 
@@ -86,7 +82,7 @@ public class AppointmentTypeController implements Initializable {
 
     /**Makes each Type its own list, then assigns types from appointments to those list based on type's name,
      * then assigns each type to the correlating index in the ComboBox
-     * and finally returns the number of appointments of the selected type to a textBox using a lambda */
+     * and finally returns the number of appointments of the selected type to a textBox using a lambda*/
     @FXML
     private void onComType(ActionEvent actionEvent){
         ObservableList<String> deBriefing = FXCollections.observableArrayList();
@@ -161,8 +157,7 @@ public class AppointmentTypeController implements Initializable {
                     typeCount.setText(String.valueOf(itAssist.size()));
                 }
 
-                typeAmountInterface amount = i -> typeCount.setText(typeCount.getText() + i);
-                {
+                typeAmountInterface amount = i -> typeCount.setText(typeCount.getText() + i);{
                     if (Integer.parseInt(typeCount.getText()) == 1) {
                         amount.countType(" appointment of this Type.");
                     } else {

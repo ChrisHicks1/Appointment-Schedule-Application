@@ -1,6 +1,7 @@
 package controller;
 
 import Database.AppointmentDB;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -64,6 +65,8 @@ public class AppointmentCalendarController implements Initializable {
     private static int selectedAppIndex;
 
 
+
+
     /**Goes to Add Appointment Screen*/
     public void toAppAdd(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/view/AddAppointment.fxml"));
@@ -107,6 +110,7 @@ public class AppointmentCalendarController implements Initializable {
 
     /**Checks that Appointment is selected, confirms delete, then removes appointment from table*/
     public void toAppDelete(ActionEvent actionEvent) throws SQLException {
+
         selectedApp = appTableView.getSelectionModel().getSelectedItem();
         if (selectedApp == null) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -125,7 +129,7 @@ public class AppointmentCalendarController implements Initializable {
                 appTableView.setItems(AppointmentDB.getAllAppointments());
                 Alert alert1 = new Alert(Alert.AlertType.INFORMATION);
                 alert1.setTitle("Cancel Appointment");
-                alert1.setContentText("Appointment has been canceled");
+                alert1.setContentText("Appointment " + selectedApp.getAppointment_ID() + " has been canceled" + "\n Type: " + selectedApp.getType());
                 alert1.showAndWait();
             }
         }
