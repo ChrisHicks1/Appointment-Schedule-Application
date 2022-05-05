@@ -14,7 +14,7 @@ The purpose of this application is to schedule appointments for consultation cus
 Author:
     Christopher Hicks
     Contact Information:  chic118@WGU.edu
-    Application Version:  1.0
+    Application Version:  2.0
     Date:  May 3, 2022
 
 
