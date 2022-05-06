@@ -128,7 +128,7 @@ public class LoginController implements Initializable {
             }
         }
             for (Appointments appointments : appointment15) {
-            boolean not15 = (appointments.getStart().isAfter(localDateTime15));
+            boolean not15 = (appointments.getStart().isAfter(localDateTime15) || (appointments.getStart().isBefore(localDateTime15)));
             if(not15) {
                 if (Locale.getDefault().getLanguage().equals("fr") || Locale.getDefault().getLanguage().equals("en")) {
                         Alert appAlert1 = new Alert(Alert.AlertType.INFORMATION);
